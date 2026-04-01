@@ -1,0 +1,21 @@
+/**
+ * Tailwind v4 — CSS-first configuration
+ * Custom properties defined in app.css are exposed here via @theme
+ */
+
+@import 'tailwindcss';
+
+@theme {
+  /* Colors */
+  --color-accent-01: #F46060;
+  --color-accent-art: #FF9E70;
+  --color-accent-music: #FFD770;
+  --color-accent-projects: #92D073;
+  --color-accent-shop: #73B9D0;
+  --color-accent-bless: #D073A5;
+  --color-black: #000000;
+  --color-neutral-01: #7F7F7F;
+  --color-neutral-02: #D2D2D2;
+  --color-neutral-03: #EDEDED;
+  --color-white: #FFFFFF;
+}

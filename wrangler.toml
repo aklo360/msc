@@ -1,0 +1,13 @@
+name = "msc-staging"
+main = "./dist/server/index.js"
+compatibility_date = "2024-10-15"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist/client"
+
+[vars]
+PUBLIC_STORE_DOMAIN = "mock.shop"
+PUBLIC_STOREFRONT_API_TOKEN = "mock"
+PUBLIC_CHECKOUT_DOMAIN = "mock.shop"
+PUBLIC_STOREFRONT_ID = ""

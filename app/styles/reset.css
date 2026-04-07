@@ -52,7 +52,7 @@ li {
 }
 
 img {
-  border-radius: var(--border-radius);
+  border-radius: 0;
 }
 
 fieldset {

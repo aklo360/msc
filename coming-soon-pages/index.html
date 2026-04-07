@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coming Soon | Mr.StarCity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <style>
+      @font-face {
+        font-family: "StarCity";
+        src: url("./fonts/StarCity-Medium.woff2") format("woff2");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "StarCity";
+        src: url("./fonts/StarCity-Bold.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      :root {
+        --peach: #ff9e70;
+        --ink: #000000;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 24px 32px;
+        background: var(--peach);
+        color: var(--ink);
+      }
+
+      main {
+        flex: 1;
+        width: min(100%, 1100px);
+        display: grid;
+        place-items: center;
+      }
+
+      h1 {
+        margin: 0;
+        display: grid;
+        justify-items: center;
+        gap: clamp(10px, 1.6vw, 24px);
+        font-family: "StarCity", sans-serif;
+        font-feature-settings: "dlig" 1;
+        font-size: clamp(4.5rem, 15vw, 11rem);
+        font-weight: 500;
+        line-height: 0.9;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      .word {
+        position: relative;
+        display: block;
+        white-space: nowrap;
+        line-height: 0.9;
+      }
+
+      .measure-word {
+        display: block;
+        visibility: hidden;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .letters-layer {
+        position: absolute;
+        inset: 0;
+      }
+
+      .letter {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: block;
+        transform-origin: left center;
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        will-change: transform;
+      }
+
+      .letter-char {
+        display: block;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .letter {
+          cursor: default;
+        }
+      }
+
+      .page-footer {
+        width: 100%;
+        display: grid;
+        justify-items: center;
+        gap: 12px;
+        padding-top: 24px;
+      }
+
+      .footer-icons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .footer-icon {
+        width: 35px;
+        height: 35px;
+        display: block;
+      }
+
+      .copyright {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        font-size: clamp(0.9rem, 1.2vw, 1rem);
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        text-align: center;
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 20px 20px 28px;
+        }
+
+        .footer-icons {
+          gap: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1 aria-label="Coming Soon">
+        <span class="word" data-word="COMING" aria-hidden="true">
+          <span class="measure-word">COMING</span>
+          <span class="letters-layer"></span>
+        </span>
+        <span class="word" data-word="SOON" aria-hidden="true">
+          <span class="measure-word">SOON</span>
+          <span class="letters-layer"></span>
+        </span>
+      </h1>
+    </main>
+    <footer class="page-footer" aria-label="Site footer">
+      <div class="footer-icons" aria-hidden="true">
+        <img
+          class="footer-icon"
+          src="./icons/icon-search.svg"
+          alt=""
+          width="35"
+          height="35"
+        />
+        <img
+          class="footer-icon"
+          src="./icons/icon-profile.svg"
+          alt=""
+          width="35"
+          height="35"
+        />
+        <img
+          class="footer-icon"
+          src="./icons/icon-cart.svg"
+          alt=""
+          width="35"
+          height="35"
+        />
+      </div>
+      <p class="copyright">&copy; Mr.StarCity 2026</p>
+    </footer>
+    <script>
+      const SQUEEZE_RATIO = 0.58;
+
+      function buildWord(wordElement) {
+        const measureWord = wordElement.querySelector('.measure-word');
+        const lettersLayer = wordElement.querySelector('.letters-layer');
+        const word = wordElement.dataset.word || '';
+
+        if (!measureWord || !lettersLayer || !word) return;
+
+        lettersLayer.replaceChildren();
+
+        for (const [index, char] of Array.from(word).entries()) {
+          const letter = document.createElement('span');
+          const letterChar = document.createElement('span');
+
+          letter.className = 'letter';
+          letter.dataset.index = String(index);
+          letterChar.className = 'letter-char';
+          letterChar.textContent = char;
+
+          letter.appendChild(letterChar);
+          letter.addEventListener('mouseenter', () => {
+            wordElement.dataset.hoveredIndex = String(index);
+            layoutWord(wordElement);
+          });
+
+          lettersLayer.appendChild(letter);
+        }
+
+        wordElement.addEventListener('mouseleave', () => {
+          if (wordElement.dataset.hoveredIndex) {
+            delete wordElement.dataset.hoveredIndex;
+            layoutWord(wordElement);
+          }
+        });
+      }
+
+      function measureWordLayout(wordElement) {
+        const measureWord = wordElement.querySelector('.measure-word');
+        if (!measureWord || !measureWord.firstChild) return null;
+
+        const textNode = measureWord.firstChild;
+        const characters = measureWord.textContent || '';
+        const wordRect = measureWord.getBoundingClientRect();
+        const lefts = [];
+
+        for (let index = 0; index < characters.length; index += 1) {
+          const range = document.createRange();
+          range.setStart(textNode, index);
+          range.setEnd(textNode, index + 1);
+          const rect = range.getBoundingClientRect();
+          lefts.push(rect.left - wordRect.left);
+        }
+
+        const totalWidth = wordRect.width;
+        const advances = lefts.map((left, index) => {
+          const nextLeft = lefts[index + 1];
+          return (nextLeft ?? totalWidth) - left;
+        });
+
+        return {
+          height: wordRect.height,
+          totalWidth,
+          advances,
+        };
+      }
+
+      function layoutWord(wordElement) {
+        const letters = Array.from(wordElement.querySelectorAll('.letter'));
+        const measured = measureWordLayout(wordElement);
+
+        if (!measured || letters.length === 0) return;
+
+        const hoveredIndex = Number.parseInt(
+          wordElement.dataset.hoveredIndex || '-1',
+          10,
+        );
+        const hasHover = hoveredIndex >= 0 && hoveredIndex < letters.length;
+
+        const {advances, height, totalWidth} = measured;
+        const squeezedWidth = hasHover
+          ? advances[hoveredIndex] * SQUEEZE_RATIO
+          : 0;
+        const otherBaseWidth = hasHover
+          ? totalWidth - advances[hoveredIndex]
+          : 0;
+        const otherScale = hasHover
+          ? (totalWidth - squeezedWidth) / otherBaseWidth
+          : 1;
+
+        wordElement.style.width = `${totalWidth}px`;
+        wordElement.style.height = `${height}px`;
+
+        let currentLeft = 0;
+
+        letters.forEach((letter, index) => {
+          const scaleX =
+            hasHover && index === hoveredIndex ? SQUEEZE_RATIO : otherScale;
+
+          letter.style.transform = `translateX(${currentLeft}px) scaleX(${scaleX})`;
+          currentLeft += advances[index] * scaleX;
+        });
+      }
+
+      async function initializeWords() {
+        if (document.fonts?.ready) {
+          await document.fonts.ready;
+        }
+
+        document.querySelectorAll('.word').forEach((wordElement) => {
+          buildWord(wordElement);
+          layoutWord(wordElement);
+        });
+      }
+
+      initializeWords();
+      window.addEventListener('resize', () => {
+        document.querySelectorAll('.word').forEach(layoutWord);
+      });
+    </script>
+  </body>
+</html>

@@ -232,3 +232,41 @@ export const FOOTER_QUERY = `#graphql
   }
   ${MENU_FRAGMENT}
 ` as const;
+
+// ── Metaobject Fragments ──────────────────────────────────────
+
+const METAOBJECT_IMAGE_FRAGMENT = `#graphql
+  fragment MetaobjectImage on MediaImage {
+    image {
+      url
+      altText
+      width
+      height
+    }
+  }
+` as const;
+
+export const METAOBJECT_FIELDS_FRAGMENT = `#graphql
+  fragment MetaobjectFields on Metaobject {
+    id
+    handle
+    type
+    fields {
+      key
+      value
+      reference {
+        ... on MediaImage {
+          ...MetaobjectImage
+        }
+      }
+      references(first: 20) {
+        nodes {
+          ... on MediaImage {
+            ...MetaobjectImage
+          }
+        }
+      }
+    }
+  }
+  ${METAOBJECT_IMAGE_FRAGMENT}
+` as const;

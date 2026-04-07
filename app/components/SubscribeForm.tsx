@@ -1,24 +1,17 @@
-import {useState} from 'react';
+import {useFetcher} from 'react-router';
 
 /**
  * Email & SMS subscribe form module.
- * White card with two inputs side-by-side, privacy text, and pill subscribe button.
+ * White card with two inputs side-by-side, privacy text, and subscribe button.
  * Figma: w-[523px], p-[30px], rounded-[10px], bg-white.
  */
 export function SubscribeForm() {
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const fetcher = useFetcher<{success?: boolean; error?: string}>();
+  const isSubmitting = fetcher.state !== 'idle';
+  const success = fetcher.data?.success;
+  const error = fetcher.data?.error;
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (email.trim()) {
-      setSubmitted(true);
-      // TODO: wire up to Shopify/Klaviyo/etc.
-    }
-  }
-
-  if (submitted) {
+  if (success) {
     return (
       <div
         className="bg-white rounded-[10px] p-[30px] w-[523px] max-md:w-full"
@@ -37,8 +30,9 @@ export function SubscribeForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
+    <fetcher.Form
+      method="post"
+      action="/api/subscribe"
       className="bg-white rounded-[10px] p-[30px] w-[523px] max-md:w-full flex flex-col gap-[40px]"
     >
       {/* Heading */}
@@ -59,11 +53,10 @@ export function SubscribeForm() {
       <div className="flex gap-[20px] items-center max-md:flex-col">
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
           placeholder="Email"
           required
-          className="flex-1 h-[60px] px-[20px] rounded-[5px] bg-[#DCDCDC] border-0 outline-none max-md:w-full"
+          className="flex-1 min-w-0 h-[60px] px-[20px] rounded-[5px] bg-[#DCDCDC] border-0 outline-none max-md:w-full"
           style={{
             fontFamily: 'var(--font-body)',
             fontSize: '18px',
@@ -75,10 +68,9 @@ export function SubscribeForm() {
         />
         <input
           type="tel"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="Phone Number"
-          className="flex-1 h-[60px] px-[20px] rounded-[5px] bg-[#DCDCDC] border-0 outline-none max-md:w-full"
+          name="phone"
+          placeholder="Phone (optional)"
+          className="flex-1 min-w-0 h-[60px] px-[20px] rounded-[5px] bg-[#DCDCDC] border-0 outline-none max-md:w-full"
           style={{
             fontFamily: 'var(--font-body)',
             fontSize: '18px',
@@ -95,23 +87,40 @@ export function SubscribeForm() {
         <p
           style={{
             fontFamily: 'var(--font-body)',
-            fontSize: '18px',
+            fontSize: '11px',
             fontWeight: 400,
-            lineHeight: 1.2,
-            color: 'var(--color-black)',
+            lineHeight: 1.4,
+            color: 'var(--color-neutral-01)',
             fontFeatureSettings: "'salt' 1",
           }}
         >
           By submitting this form you agree to{' '}
           <strong style={{fontWeight: 500}}>MSC</strong>{' '}
-          <a href="/privacy" className="underline">
+          <a href="/policies/privacy-policy" className="underline">
             Privacy Policy
           </a>
           .
         </p>
+
+        {error && (
+          <p
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '14px',
+              fontWeight: 400,
+              lineHeight: 1.2,
+              color: '#F46060',
+              fontFeatureSettings: "'salt' 1",
+            }}
+          >
+            {error}
+          </p>
+        )}
+
         <button
           type="submit"
-          className="w-full h-[60px] rounded-[100px] bg-white border border-black cursor-pointer transition-colors duration-200 hover:bg-black hover:text-white"
+          disabled={isSubmitting}
+          className="w-full h-[60px] rounded-[100px] bg-[#EDEDED] cursor-pointer transition-colors duration-200 hover:bg-[#D2D2D2] disabled:opacity-50 disabled:cursor-not-allowed"
           style={{
             fontFamily: 'var(--font-body)',
             fontSize: '18px',
@@ -122,9 +131,9 @@ export function SubscribeForm() {
             fontFeatureSettings: "'salt' 1",
           }}
         >
-          Subscribe
+          {isSubmitting ? 'Subscribing...' : 'Subscribe'}
         </button>
       </div>
-    </form>
+    </fetcher.Form>
   );
 }

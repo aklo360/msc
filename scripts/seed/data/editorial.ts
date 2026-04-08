@@ -65,7 +65,7 @@ export const EDITORIAL_ENTRIES: EditorialData[] = [
     category: 'Feature',
     date: 'Feb, 2025',
     tag: 'Feature',
-    externalUrl: 'https://www.seegreatart.art/david-mr-starcity-white-frevo-nyc/',
+    externalUrl: 'https://www.seegreatart.art/david-mr-starcity-white-with-exhibition-at-michelin-starred-nyc-restaurant/',
     handle: 'david-mr-starcity-white-exhibits-at-frevo',
   },
   {
@@ -75,27 +75,17 @@ export const EDITORIAL_ENTRIES: EditorialData[] = [
     date: 'Jul, 2024',
     tag: 'Feature',
     externalUrl:
-      'https://artcurrently.com/mr-starcity-unites-poetry-performance-and-painting-at-the-pit-los-angeles/',
+      'https://artcurrently.com/mr-starcity-at-the-pit-los-angeles',
     handle: 'mr-starcity-unites-poetry-performance-and-painting',
-  },
-  {
-    title: 'David \u201CMr.StarCity\u201D White: Garden of Love @ The Pit LA',
-    source: 'Juxtapoz',
-    category: 'Review',
-    date: 'Jun, 2024',
-    tag: 'Review',
-    externalUrl:
-      'https://www.juxtapoz.com/news/painting/david-mrstarcity-white-garden-of-love-the-pit-la/',
-    handle: 'david-mr-starcity-white-garden-of-love-the-pit-la',
   },
   {
     title: 'Garden of Love',
     source: 'The Pit LA',
-    category: 'Press Release',
+    category: 'Gallery',
     date: 'Jun, 2024',
     tag: 'Gallery',
     externalUrl:
-      'https://www.thepitla.com/exhibitions/david-mr-starcity-white-garden-of-love',
+      'https://www.the-pit.la/david-mr-starcity-white',
     handle: 'garden-of-love-the-pit-la',
   },
   {
@@ -125,7 +115,7 @@ export const EDITORIAL_ENTRIES: EditorialData[] = [
     date: 'Feb, 2024',
     tag: 'Listing',
     externalUrl:
-      'https://www.gmanetwork.com/news/lifestyle/artandculture/898205/art-fair-philippines-2024-10-must-sees/story/',
+      'https://www.gmanetwork.com/news/lifestyle/artandculture/897684/art-fair-philippines-2024-here-are-10-must-sees-for-a-worthwhile-visit/story/',
     handle: 'art-fair-philippines-2024-10-must-sees',
   },
   {
@@ -145,7 +135,7 @@ export const EDITORIAL_ENTRIES: EditorialData[] = [
     date: 'Aug, 2021',
     tag: 'Interview',
     externalUrl:
-      'https://beyondthestreets.com/blogs/beyond-the-streets/10-questions-with-david-mr-starcity-white',
+      'https://beyondthestreets.com/blogs/articles/beyond-the-streets-on-paper-10-questions-with-david-mr-starcity-white',
     handle: '10-questions-with-david-mr-starcity-white',
   },
   {
@@ -164,7 +154,7 @@ export const EDITORIAL_ENTRIES: EditorialData[] = [
     date: 'Feb, 2021',
     tag: 'Feature',
     externalUrl:
-      'https://www.juxtapoz.com/news/studio-time/new-years-in-chinatown-with-the-obamas/',
+      'https://www.juxtapoz.com/news/studio-time/new-year-s-in-chinatown-with-the-obamas-by-david-mr-starcity-white/',
     handle: 'new-years-in-chinatown-with-the-obamas',
   },
   {
@@ -185,15 +175,6 @@ export const EDITORIAL_ENTRIES: EditorialData[] = [
     tag: 'Gallery',
     externalUrl: 'https://cfhill.com/exhibition/black-voices-black-microcosm/',
     handle: 'black-voices-black-microcosm',
-  },
-  {
-    title: 'Interview: David \u201CMr. StarCity\u201D White',
-    source: 'CFHILL',
-    category: 'Interview',
-    date: 'Apr, 2020',
-    tag: 'Interview',
-    externalUrl: 'https://cfhill.com/interview-david-mr-starcity-white/',
-    handle: 'interview-david-mr-starcity-white',
   },
   {
     title: 'Gallery Review: Fractured, The Long Road Back to Insanity',

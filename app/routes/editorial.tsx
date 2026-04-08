@@ -13,6 +13,46 @@ export const meta: Route.MetaFunction = () => {
 
 const ACCENT_EDITORIAL = '#D073A5';
 
+/** Article thumbnails crawled from og:image and saved locally */
+const ARTICLE_THUMBNAILS: Record<string, string> = {
+  'let-us-refuse-urban-art-signature-auction':
+    '/images/editorial/ha-let-us-refuse.jpg',
+  'mr-starcity-turns-his-dream-into-a-living-legacy-in-brooklyn':
+    '/images/editorial/mr-starcity-brooklyn-legacy.jpg',
+  'the-royal-court-loverboy-king-of-hearts':
+    '/images/editorial/royal-court-nyc-parks.jpg',
+  'mr-starcitys-when-we-bloom-exhibition-at-frevo-nyc':
+    '/images/editorial/when-we-bloom-frevo.jpg',
+  'art-and-fine-dining-collide':
+    '/images/editorial/cultured-fine-dining.png',
+  'david-mr-starcity-white-exhibits-at-frevo':
+    '/images/editorial/seegreatart-frevo.jpg',
+  'mr-starcity-unites-poetry-performance-and-painting':
+    '/images/editorial/artcurrently-pit-la.jpg',
+  'garden-of-love-the-pit-la':
+    '/images/editorial/thepit-garden-of-love.webp',
+  'multidisciplinary-artist-mr-starcity-on-authenticity':
+    '/images/editorial/vogue-ph-authenticity.jpg',
+  'on-art-spirituality-and-the-human-experience':
+    '/images/editorial/esquire-ph-spirituality.png',
+  'art-fair-philippines-2024-10-must-sees':
+    '/images/editorial/gma-art-fair-ph.jpg',
+  'must-see-works-at-art-fair-philippines-2024':
+    '/images/editorial/artplus-must-see.jpg',
+  '10-questions-with-david-mr-starcity-white':
+    '/images/editorial/beyondthestreets-10q.webp',
+  'mr-starcity-office-magazine':
+    '/images/editorial/office-magazine.jpg',
+  'david-mr-starcity-white-the-year-of-the-big-bless':
+    '/images/editorial/juxtapoz-big-bless.jpg',
+  'black-voices-black-microcosm':
+    '/images/editorial/cfhill-black-microcosm.jpg',
+  'new-years-in-chinatown-with-the-obamas':
+    '/images/editorial/juxtapoz-chinatown-obamas.jpg',
+  'gallery-review-fractured-the-long-road-back-to-insanity':
+    '/images/editorial/artx-fractured.jpg',
+};
+
 export async function loader({context}: Route.LoaderArgs) {
   const {metaobjects} = await context.storefront.query(
     EDITORIAL_QUERY,
@@ -46,12 +86,15 @@ export default function Editorial() {
               const title = getFieldValue(article.fields, 'title');
               const tag = getFieldValue(article.fields, 'tag');
               const externalUrl = getFieldValue(article.fields, 'external_url');
+              const thumbnailUrl = ARTICLE_THUMBNAILS[article.handle];
               return (
                 <GalleryCard
                   key={article.handle}
                   title={title}
                   seriesTag={tag}
                   href={externalUrl}
+                  imageUrl={thumbnailUrl}
+                  external
                 />
               );
             })}

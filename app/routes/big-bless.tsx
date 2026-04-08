@@ -77,20 +77,32 @@ export default function BigBless() {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at
               enim quis ante tristique fringilla vitae non turpis.
             </p>
-            {/* Small photo */}
-            <div className="w-[48%] max-md:w-full aspect-[387/484] bg-[#C8C8C8] rounded-[10px]" />
+            {/* Small photo — flower/bamboo */}
+            <img
+              src="/images/big-bless/flower-bamboo.jpg"
+              alt="Mr.StarCity with flower"
+              className="w-[48%] max-md:w-full aspect-[387/484] object-cover rounded-[10px]"
+            />
           </div>
-          {/* Right column: tall photo */}
+          {/* Right column: tall photo — gallery/painting */}
           <div className="flex-1">
-            <div className="w-full aspect-[794/993] bg-[#D2D2D2] rounded-[10px]" />
+            <img
+              src="/images/big-bless/gallery-painting.jpg"
+              alt="Mr.StarCity viewing painting"
+              className="w-full aspect-[794/993] object-cover rounded-[10px]"
+            />
           </div>
         </div>
 
         {/* Row 2: Tall photo left + quote & small photo right */}
         <div className="flex gap-[20px] max-md:flex-col mb-[20px]">
-          {/* Left column: tall photo */}
+          {/* Left column: tall photo — studio/apron */}
           <div className="flex-1">
-            <div className="w-full aspect-[794/993] bg-[#BEBEBE] rounded-[10px]" />
+            <img
+              src="/images/big-bless/studio-apron.jpg"
+              alt="Mr.StarCity in studio"
+              className="w-full aspect-[794/993] object-cover rounded-[10px]"
+            />
           </div>
           {/* Right column: quote + small photo */}
           <div className="flex-1 flex flex-col gap-[20px]">
@@ -107,16 +119,24 @@ export default function BigBless() {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at
               enim quis ante tristique fringilla vitae non turpis.
             </p>
-            {/* Small photo */}
-            <div className="w-[48%] max-md:w-full aspect-[387/484] bg-[#C8C8C8] rounded-[10px]" />
+            {/* Small photo — Florence bridge */}
+            <img
+              src="/images/big-bless/florence-bridge.jpg"
+              alt="Mr.StarCity walking in Florence"
+              className="w-[48%] max-md:w-full aspect-[387/484] object-cover rounded-[10px]"
+            />
           </div>
         </div>
 
         {/* Row 3: Medium photo left + Social media & tall photo right */}
         <div className="flex gap-[20px] max-md:flex-col">
-          {/* Left column: medium photo */}
+          {/* Left column: medium photo — white stairs */}
           <div className="flex-1 flex items-start justify-center">
-            <div className="w-[66%] max-md:w-full aspect-[523/653] bg-[#D2D2D2] rounded-[10px]" />
+            <img
+              src="/images/big-bless/white-stairs.jpg"
+              alt="Mr.StarCity on white stairs"
+              className="w-[66%] max-md:w-full aspect-[523/653] object-cover rounded-[10px]"
+            />
           </div>
           {/* Right column: social + tall photo */}
           <div className="flex-1 flex flex-col gap-[20px]">
@@ -149,7 +169,12 @@ export default function BigBless() {
                 @mrstarcity
               </a>
             </div>
-            <div className="w-full aspect-[794/987] bg-[#BEBEBE] rounded-[10px]" />
+            {/* Tall photo — bucket hat portrait */}
+            <img
+              src="/images/big-bless/bucket-hat-portrait.jpg"
+              alt="Mr.StarCity portrait"
+              className="w-full aspect-[794/987] object-cover rounded-[10px]"
+            />
           </div>
         </div>
       </div>

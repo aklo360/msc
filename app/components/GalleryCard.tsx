@@ -5,6 +5,8 @@ export type GalleryCardProps = {
   seriesTag?: string;
   imageUrl?: string;
   href: string;
+  /** Use <a target="_blank"> instead of <Link> for external URLs */
+  external?: boolean;
 };
 
 /**
@@ -12,9 +14,13 @@ export type GalleryCardProps = {
  * Image with aspect-[15/10], rounded-[10px], hover scale effect.
  * Title row below: artwork title left (22px Medium), series tag pill right (14px).
  */
-export function GalleryCard({title, seriesTag, imageUrl, href}: GalleryCardProps) {
+export function GalleryCard({title, seriesTag, imageUrl, href, external}: GalleryCardProps) {
+  const Wrapper = external ? 'a' : Link;
+  const wrapperProps = external
+    ? {href, target: '_blank' as const, rel: 'noopener noreferrer'}
+    : {to: href};
   return (
-    <Link to={href} className="group flex flex-col gap-[20px]">
+    <Wrapper {...(wrapperProps as any)} className="group flex flex-col gap-[20px]">
       {/* Image container */}
       <div className="overflow-hidden rounded-[10px]">
         {imageUrl ? (
@@ -56,6 +62,6 @@ export function GalleryCard({title, seriesTag, imageUrl, href}: GalleryCardProps
           </span>
         )}
       </div>
-    </Link>
+    </Wrapper>
   );
 }

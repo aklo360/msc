@@ -62,6 +62,28 @@ interface ImageOrder {
 
 const REORDERS: ImageOrder[] = [
   {
+    handle: 'king-of-hearts-basketball-court',
+    type: 'project',
+    order: [
+      '775393592600d10711781092b5ce537d5c0b2ac0.jpg',
+      'adc7111f22e6eef184d76594efec12e1b4dcdbf4.jpg',
+      '1d43ad4a1b4a08b402973ba3138287f20c5d9e06.jpg',
+      'dad56392b6c8802dfd5f0c6bb37bbf0dac98f811.jpg',
+      'IMG_1697.JPG',
+    ],
+  },
+  {
+    handle: 'loverboy-x-billionaire-boys-club',
+    type: 'project',
+    order: [
+      '787e72fb64c27150460eadda074ffb87adde2863.png',
+      '23653a30c5e6bef3e7cc46f9e143a8a9c1b3d9ed.png',
+      '6c1de2089a0a4dac3dce1144851c35d7eedd6e16.png',
+      'e89d1a01ce237a989a235f71e7b124756c63c835.png',
+      'd02d9ec2d71bcb1e36d0d0b20576423c1730fc8c.png',
+    ],
+  },
+  {
     handle: 'when-we-bloom',
     type: 'art_exhibition',
     order: [
@@ -123,7 +145,7 @@ async function main() {
 
     // First: explicitly ordered images
     for (const filename of entry.order) {
-      const alt = filename.replace(/\.[^.]+$/, '');
+      const alt = filename.replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
       const gid = altToGid.get(alt);
       if (gid) {
         newGids.push(gid);

@@ -14,6 +14,7 @@ dotenv.config({path: path.resolve(__dirname, '../../.env')});
 
 import {adminQuery} from './admin-client.js';
 import {ART_EXHIBITIONS} from './data/art-exhibitions.js';
+import {PROJECTS} from './data/projects.js';
 import {log} from './utils.js';
 
 const UPDATE_METAOBJECT = `
@@ -98,6 +99,38 @@ async function main() {
       log(`  ✓ "${ex.title}" — updated ${fields.map((f) => f.key).join(', ')}`);
     } catch (err) {
       console.error(`  ✗ "${ex.title}":`, err);
+    }
+  }
+
+  // Update projects
+  log('Building project handle map...');
+  const projectHandleMap = await buildHandleMap('project');
+  log(`  Projects: ${projectHandleMap.size} entries`);
+
+  log('Updating projects with text fields...');
+  for (const proj of PROJECTS) {
+    const description = proj.description || DEFAULT_DESCRIPTION;
+    const fields: {key: string; value: string}[] = [
+      {key: 'description', value: description},
+    ];
+    if (proj.body) {
+      fields.push({key: 'body', value: proj.body});
+    }
+
+    const id = projectHandleMap.get(proj.handle);
+    if (!id) {
+      log(`  ⚠ "${proj.title}" (${proj.handle}) not found — skipping`);
+      continue;
+    }
+
+    try {
+      await adminQuery(UPDATE_METAOBJECT, {
+        id,
+        metaobject: {fields},
+      });
+      log(`  ✓ "${proj.title}" — updated ${fields.map((f) => f.key).join(', ')}`);
+    } catch (err) {
+      console.error(`  ✗ "${proj.title}":`, err);
     }
   }
 

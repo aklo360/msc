@@ -9,6 +9,9 @@ export interface ProjectData {
   links: {label: string; url: string}[];
   inquiryEmail?: string;
   folder: string;
+  description?: string;
+  body?: string;
+  hidden?: boolean;
 }
 
 export const PROJECTS: ProjectData[] = [
@@ -31,6 +34,7 @@ export const PROJECTS: ProjectData[] = [
       },
     ],
     folder: 'King of Hearts Basketball Court',
+    body: '\u201CThe court we painted isn\u2019t just for the game, it\u2019s a love letter to Brooklyn, to the kids who dream beneath its skyline.\n\nEvery line, every color, every heart was drawn to remind them: you are seen, you are powerful, and this city beats for you.\u201D',
   },
   {
     title: 'Loverboy x Billionaire Boys Club',
@@ -50,7 +54,7 @@ export const PROJECTS: ProjectData[] = [
         url: 'https://www.bbcicecream.com/collections/billionaire-boys-club-x-mr-starcity-x-league-oto',
       },
     ],
-    folder: '',
+    folder: 'BBC',
   },
   {
     title: 'Loverboy x SLR Pendant',
@@ -68,6 +72,9 @@ export const PROJECTS: ProjectData[] = [
     ],
     inquiryEmail: 'mrstarcity@gmail.com',
     folder: 'SLR x Mr.StarCity Jewelry Collab',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at enim quis ante tristique fringilla vitae non turpis. Sed ac sagittis nibh. Nunc imperdiet neque pretium risus porttitor, nec congue massa rhoncus. Aliquam porttitor efficitur nunc at volutpat. Cras nisl orci, condimentum nec nibh et, viverra venenatis purus. Suspendisse massa est, convallis vel posuere sed, ullamcorper faucibus nibh. Quisque ut sollicitudin tellus. Aliquam eros volutpat. Sed elementum nisi non sapien malesuada, sed rhoncus dolor scelerisque. Etiam laoreet velit vel nibh blandit ullamcorper.',
+    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at enim quis ante tristique fringilla vitae non turpis.',
   },
   {
     title: 'Avant Arte',
@@ -90,5 +97,6 @@ export const PROJECTS: ProjectData[] = [
     handle: 'the-fat-boys-each-one-teach-one',
     links: [],
     folder: '2025_The Fat Boys Each One Teach One',
+    hidden: true,
   },
 ];

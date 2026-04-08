@@ -32,6 +32,7 @@ export function getImageFiles(dir: string): string[] {
     .filter((f) => {
       const ext = path.extname(f).toLowerCase();
       if (!validExts.has(ext)) return false;
+      if (f.startsWith('.')) return false;
       if (f.toLowerCase().startsWith('screencapture-')) return false;
       const size = fs.statSync(path.join(dir, f)).size;
       if (size > 20 * 1024 * 1024) return false; // skip >20MB

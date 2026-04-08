@@ -238,8 +238,7 @@ export const ART_EXHIBITIONS: ArtExhibitionData[] = [
     dateRange: 'Apr\u2013May, 2020',
     seriesTag: 'Group',
     handle: 'black-microcosm',
-    // No dedicated folder
-    folder: '',
+    folder: 'black voices black microcosm',
   },
   {
     title: 'Fractured and The Long Road Back to Insanity',

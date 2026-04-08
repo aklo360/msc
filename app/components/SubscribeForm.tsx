@@ -14,7 +14,7 @@ export function SubscribeForm() {
   if (success) {
     return (
       <div
-        className="bg-white rounded-[10px] p-[30px] w-[523px] max-md:w-full"
+        className="bg-white rounded-[10px] p-[30px] w-full"
         style={{
           fontFamily: 'var(--font-body)',
           fontSize: '18px',
@@ -33,7 +33,7 @@ export function SubscribeForm() {
     <fetcher.Form
       method="post"
       action="/api/subscribe"
-      className="bg-white rounded-[10px] p-[30px] w-[523px] max-md:w-full flex flex-col gap-[40px]"
+      className="bg-white rounded-[10px] p-[30px] w-[40%] max-md:w-full flex flex-col gap-[40px]"
     >
       {/* Heading */}
       <p
@@ -87,7 +87,7 @@ export function SubscribeForm() {
         <p
           style={{
             fontFamily: 'var(--font-body)',
-            fontSize: '11px',
+            fontSize: '12px',
             fontWeight: 400,
             lineHeight: 1.4,
             color: 'var(--color-neutral-01)',

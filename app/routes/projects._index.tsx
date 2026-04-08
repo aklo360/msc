@@ -341,39 +341,51 @@ export default function ProjectsIndex() {
                         />
                       </div>
                     )}
-                    {/* Row C: 2 stacked left (1/3) + 1 tall right (2/3) */}
-                    {images.length >= 5 && (
-                      <div className="grid grid-cols-3 grid-rows-2 max-md:grid-cols-1 gap-[20px]">
-                        <img
-                          src={images[2].url}
-                          alt={images[2].altText}
-                          className="w-full object-cover rounded-[10px]"
-                        />
-                        <img
-                          src={images[3].url}
-                          alt={images[3].altText}
-                          className="col-span-2 row-span-2 w-full h-full object-cover rounded-[10px]"
-                        />
-                        <img
-                          src={images[4].url}
-                          alt={images[4].altText}
-                          className="w-full object-cover rounded-[10px]"
-                        />
-                      </div>
-                    )}
-                    {/* Fallback: remaining images in 2-col grid */}
-                    {images.length > 2 && images.length < 5 && (
-                      <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[20px]">
-                        {images.slice(2).map((img, i) => (
-                          <img
-                            key={i}
-                            src={img.url}
-                            alt={img.altText}
-                            className={IMG}
-                          />
-                        ))}
-                      </div>
-                    )}
+                    {/* Remaining images: alternating wide/narrow zigzag */}
+                    {images.length > 2 &&
+                      (() => {
+                        const rest = images.slice(2);
+                        const rows: React.ReactNode[] = [];
+                        let i = 0;
+                        let rowIdx = 0;
+                        while (i < rest.length) {
+                          if (i + 1 < rest.length) {
+                            // Alternate: wide+narrow, then narrow+wide
+                            const flip = rowIdx % 2 === 1;
+                            rows.push(
+                              <div
+                                key={rowIdx}
+                                className="grid grid-cols-3 max-md:grid-cols-1 gap-[20px]"
+                              >
+                                <img
+                                  src={rest[flip ? i + 1 : i].url}
+                                  alt={rest[flip ? i + 1 : i].altText}
+                                  className="col-span-2 w-full object-cover rounded-[10px]"
+                                />
+                                <img
+                                  src={rest[flip ? i : i + 1].url}
+                                  alt={rest[flip ? i : i + 1].altText}
+                                  className="w-full object-cover rounded-[10px]"
+                                />
+                              </div>,
+                            );
+                            i += 2;
+                          } else {
+                            // Odd image out: full width
+                            rows.push(
+                              <img
+                                key={rowIdx}
+                                src={rest[i].url}
+                                alt={rest[i].altText}
+                                className={IMG}
+                              />,
+                            );
+                            i += 1;
+                          }
+                          rowIdx++;
+                        }
+                        return rows;
+                      })()}
                     {/* Single image fallback */}
                     {images.length === 1 && (
                       <img

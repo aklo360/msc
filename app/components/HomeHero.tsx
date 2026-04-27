@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {NavLink} from 'react-router';
 
 const HERO_LINKS = [
@@ -50,11 +50,59 @@ export function HomeHero({
   backgroundImage,
 }: HomeHeroProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [shouldPreloadVideos, setShouldPreloadVideos] = useState(false);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+  const preloadedVideoIndexes = useRef(new Set<number>());
 
   const activeColor =
     hoveredIndex !== null ? HERO_LINKS[hoveredIndex].color : accentColor;
-  const activeVideo =
-    hoveredIndex !== null ? HERO_LINKS[hoveredIndex].videoSrc : null;
+
+  useEffect(() => {
+    const warmVideos = () => setShouldPreloadVideos(true);
+    const idleCallback =
+      'requestIdleCallback' in window
+        ? window.requestIdleCallback(warmVideos, {timeout: 1500})
+        : window.setTimeout(warmVideos, 900);
+
+    return () => {
+      if ('cancelIdleCallback' in window) {
+        window.cancelIdleCallback(idleCallback as number);
+        return;
+      }
+
+      window.clearTimeout(idleCallback as number);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!shouldPreloadVideos) return;
+
+    videoRefs.current.forEach((video, i) => {
+      if (
+        !video ||
+        hoveredIndex === i ||
+        preloadedVideoIndexes.current.has(i)
+      ) {
+        return;
+      }
+
+      preloadedVideoIndexes.current.add(i);
+      video.load();
+    });
+  }, [hoveredIndex, shouldPreloadVideos]);
+
+  useEffect(() => {
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return;
+
+      if (hoveredIndex === i) {
+        void video.play();
+        return;
+      }
+
+      video.pause();
+    });
+  }, [hoveredIndex]);
 
   // Sync active accent to CSS variable for Header/Footer
   useEffect(() => {
@@ -78,25 +126,31 @@ export function HomeHero({
         isolation: 'isolate',
       }}
     >
-      {/* Background media only appears while a section link is hovered. */}
-      {activeVideo ? (
+      {/* Background media is preloaded, then faded in instantly on hover. */}
+      {HERO_LINKS.map((item, i) => (
         <video
-          key={activeVideo}
-          src={activeVideo}
+          key={item.to}
+          ref={(video) => {
+            videoRefs.current[i] = video;
+          }}
           className="absolute inset-0 z-0 h-full w-full object-cover rounded-none"
-          autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
+          preload={shouldPreloadVideos ? 'auto' : 'metadata'}
           aria-hidden="true"
           style={{
             filter: 'grayscale(1)',
             mixBlendMode: 'luminosity',
-            opacity: 0.5,
+            opacity: hoveredIndex === i ? 0.5 : 0,
+            transition: 'opacity 0.18s ease',
           }}
-        />
-      ) : backgroundImage ? (
+        >
+          <source src={item.videoSrc} type="video/mp4" />
+        </video>
+      ))}
+
+      {hoveredIndex === null && backgroundImage ? (
         <img
           src={backgroundImage}
           alt=""
@@ -129,8 +183,7 @@ export function HomeHero({
                 textDecoration: 'none',
                 fontFeatureSettings: "'dlig' 1",
                 transform: `scale(${scale})`,
-                transition:
-                  'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
               }}
             >
               {item.label}

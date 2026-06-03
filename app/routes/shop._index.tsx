@@ -1,3 +1,4 @@
+import {useLoaderData} from 'react-router';
 import type {Route} from './+types/shop._index';
 import {SectionHero} from '~/components/SectionHero';
 import {ShopCard} from '~/components/ShopCard';
@@ -8,16 +9,22 @@ export const meta: Route.MetaFunction = () => {
 
 const ACCENT_SHOP = '#73B9D0';
 
-const PLACEHOLDER_PRODUCTS = [
-  {title: 'Loverboy Sculpture', price: '$480', seriesTag: 'Loverboy', href: '/products/loverboy-sculpture'},
-  {title: 'Loverboy Bag \u2014 Black', price: '$120', seriesTag: 'Loverboy', href: '/products/loverboy-bag-black'},
-  {title: 'Loverboy Bag \u2014 Green', price: '$120', seriesTag: 'Loverboy', href: '/products/loverboy-bag-green'},
-  {title: 'Love Me Love Me Not Tee', price: '$55', seriesTag: 'Bloomer', href: '/products/love-me-tee'},
-  {title: 'Love Me Love Me Not Hoodie', price: '$95', seriesTag: 'Bloomer', href: '/products/love-me-hoodie'},
-  {title: 'Moonlit Roses Tee', price: '$55', seriesTag: 'Loverboy', href: '/products/moonlit-roses-tee'},
-  {title: 'Moonlit Roses Hoodie', price: '$95', seriesTag: 'Loverboy', href: '/products/moonlit-roses-hoodie'},
-  {title: 'Loverboy Sculpture Mini', price: '$180', seriesTag: 'Loverboy', href: '/products/loverboy-sculpture-mini'},
-];
+export async function loader({context}: Route.LoaderArgs) {
+  // Top-level "All Products" — the full storefront catalog. Shows every
+  // product published to the online store sales channel, so new products
+  // Ruoyi adds appear automatically.
+  const {products} = await context.storefront.query(SHOP_ALL_PRODUCTS_QUERY, {
+    cache: context.storefront.CacheShort(),
+  });
+  return {products: products.nodes};
+}
+
+/** Format a Shopify MoneyV2 into "$200" / "$199.99". */
+function formatPrice(money: {amount: string; currencyCode: string}): string {
+  const num = parseFloat(money.amount);
+  const value = Number.isInteger(num) ? String(num) : num.toFixed(2);
+  return money.currencyCode === 'USD' ? `$${value}` : `${value} ${money.currencyCode}`;
+}
 
 /**
  * Shop menu bar: "SHOP: ALL" left, "SORT: RECOMMENDED" right.
@@ -37,6 +44,8 @@ function ShopMenu() {
 }
 
 export default function ShopIndex() {
+  const {products} = useLoaderData<typeof loader>();
+
   return (
     <div className="bg-[#EDEDED] min-h-screen">
       {/* Hero */}
@@ -47,18 +56,51 @@ export default function ShopIndex() {
 
       {/* Product Grid */}
       <div className="px-[60px] max-md:px-[20px] py-[30px] pb-[120px]">
-        <div className="grid grid-cols-2 max-md:grid-cols-1 gap-x-[20px] gap-y-[60px]">
-          {PLACEHOLDER_PRODUCTS.map((product) => (
-            <ShopCard
-              key={product.href}
-              title={product.title}
-              price={product.price}
-              seriesTag={product.seriesTag}
-              href={product.href}
-            />
-          ))}
-        </div>
+        {products.length > 0 ? (
+          <div className="grid grid-cols-2 max-md:grid-cols-1 gap-x-[20px] gap-y-[60px]">
+            {products.map((product: any) => (
+              <ShopCard
+                key={product.id}
+                title={product.title}
+                price={formatPrice(product.priceRange.minVariantPrice)}
+                seriesTag={product.tags?.[0] || undefined}
+                imageUrl={product.featuredImage?.url}
+                href={`/products/${product.handle}`}
+              />
+            ))}
+          </div>
+        ) : (
+          <p
+            className="text-center text-[#7F7F7F]"
+            style={{fontFamily: 'var(--font-body)', fontSize: '18px'}}
+          >
+            Products coming soon.
+          </p>
+        )}
       </div>
     </div>
   );
 }
+
+const SHOP_ALL_PRODUCTS_QUERY = `#graphql
+  query ShopAllProducts {
+    products(first: 100) {
+      nodes {
+        id
+        title
+        handle
+        tags
+        featuredImage {
+          url
+          altText
+        }
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
+` as const;

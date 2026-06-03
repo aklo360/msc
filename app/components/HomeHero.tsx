@@ -155,7 +155,7 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
           style={{
             filter: 'grayscale(1)',
             mixBlendMode: 'hard-light',
-            opacity: currentIndex === i ? 0.5 : 0,
+            opacity: currentIndex === i ? 1 : 0,
             transition: 'opacity 0.18s ease',
           }}
         >

@@ -21,8 +21,7 @@ export function SectionHero({title, accentColor, imageUrl, videoSrc}: SectionHer
     <section
       className="relative w-full overflow-hidden flex items-center justify-center"
       style={{
-        height: '90vh',
-        paddingBottom: '10vh',
+        height: '100vh',
         backgroundColor: accentColor,
         isolation: 'isolate',
       }}

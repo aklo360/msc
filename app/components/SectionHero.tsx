@@ -39,7 +39,7 @@ export function SectionHero({title, accentColor, imageUrl, videoSrc}: SectionHer
           aria-hidden="true"
           style={{
             filter: 'grayscale(1)',
-            mixBlendMode: 'luminosity',
+            mixBlendMode: 'hard-light',
             opacity: 0.5,
           }}
         >

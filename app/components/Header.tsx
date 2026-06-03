@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {NavLink, useLocation} from 'react-router';
 
 const NAV_ITEMS = [
@@ -97,8 +97,44 @@ export function Header() {
     HERO_ROUTES.includes(location.pathname) ||
     location.pathname.startsWith('/art/');
 
+  // Headroom behavior: the nav follows the scroll, but slides up off-screen
+  // when scrolling down and slides back down when scrolling up. Always shown
+  // near the very top, and never hidden while the mobile menu is open.
+  const [navHidden, setNavHidden] = useState(false);
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      if (y < 80) {
+        setNavHidden(false);
+      } else if (y > lastY + 4) {
+        setNavHidden(true);
+      } else if (y < lastY - 4) {
+        setNavHidden(false);
+      }
+      lastY = y;
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', onScroll, {passive: true});
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  const navHiddenNow = navHidden && !mobileMenuOpen;
+
   return (
-    <header className={`${overlayNav ? 'absolute' : 'sticky'} top-0 z-50 w-full`}>
+    <header
+      className={`${overlayNav ? 'fixed' : 'sticky'} top-0 z-50 w-full`}
+      style={{
+        transform: navHiddenNow ? 'translateY(-100%)' : 'translateY(0)',
+        transition: 'transform 0.35s ease',
+      }}
+    >
       <div
         className="h-[10vh]"
         style={{

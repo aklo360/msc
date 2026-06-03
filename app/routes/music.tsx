@@ -1,5 +1,6 @@
 import {useLoaderData} from 'react-router';
 import type {Route} from './+types/music';
+import {MetaobjectText} from '~/components/MetaobjectText';
 import {SectionHero} from '~/components/SectionHero';
 import {getFieldValue} from '~/lib/metaobjects';
 import {METAOBJECT_FIELDS_FRAGMENT} from '~/lib/fragments';
@@ -23,7 +24,7 @@ export default function Music() {
   return (
     <div className="bg-[#EDEDED] min-h-screen">
       {/* Hero */}
-      <SectionHero title="Music" accentColor={ACCENT_MUSIC} />
+      <SectionHero title="Music" accentColor={ACCENT_MUSIC} videoSrc="/videos/music/page-bg.mp4" />
 
       {entries.length > 0 ? (
         <div className="px-[60px] max-md:px-[20px] py-[80px] flex flex-col gap-[40px]">
@@ -50,7 +51,7 @@ export default function Music() {
                   {title}
                 </h3>
                 {description && (
-                  <p
+                  <MetaobjectText
                     style={{
                       fontFamily: 'var(--font-body)',
                       fontSize: '18px',
@@ -61,7 +62,7 @@ export default function Music() {
                     }}
                   >
                     {description}
-                  </p>
+                  </MetaobjectText>
                 )}
                 {embedUrl && type?.toLowerCase().includes('spotify') && (
                   <iframe

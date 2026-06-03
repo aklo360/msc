@@ -49,7 +49,7 @@ export function GalleryCard({title, seriesTag, imageUrl, href, external}: Galler
         </span>
         {seriesTag && (
           <span
-            className="bg-white rounded-[20px] p-[10px] whitespace-nowrap uppercase"
+            className="bg-white rounded-[20px] px-[10px] py-[5px] whitespace-nowrap uppercase"
             style={{
               fontFamily: 'var(--font-body)',
               fontSize: 'var(--text-nav-sm)',

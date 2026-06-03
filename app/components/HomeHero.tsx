@@ -45,17 +45,19 @@ interface HomeHeroProps {
   backgroundImage?: string;
 }
 
-export function HomeHero({
-  accentColor = '#FF9E70',
-  backgroundImage,
-}: HomeHeroProps) {
+export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
+  // `cycleIndex` is the item highlighted/playing via the auto-cycle.
+  // It starts on Art (index 0) so the loading state shows Art highlighted
+  // with its video playing. Hovering overrides it via `hoveredIndex`.
+  const [cycleIndex, setCycleIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [shouldPreloadVideos, setShouldPreloadVideos] = useState(false);
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
   const preloadedVideoIndexes = useRef(new Set<number>());
 
-  const activeColor =
-    hoveredIndex !== null ? HERO_LINKS[hoveredIndex].color : accentColor;
+  // The currently featured item: hover takes precedence over the auto-cycle.
+  const currentIndex = hoveredIndex !== null ? hoveredIndex : cycleIndex;
+  const activeColor = HERO_LINKS[currentIndex].color;
 
   useEffect(() => {
     const warmVideos = () => setShouldPreloadVideos(true);
@@ -80,7 +82,7 @@ export function HomeHero({
     videoRefs.current.forEach((video, i) => {
       if (
         !video ||
-        hoveredIndex === i ||
+        currentIndex === i ||
         preloadedVideoIndexes.current.has(i)
       ) {
         return;
@@ -89,20 +91,27 @@ export function HomeHero({
       preloadedVideoIndexes.current.add(i);
       video.load();
     });
-  }, [hoveredIndex, shouldPreloadVideos]);
+  }, [currentIndex, shouldPreloadVideos]);
 
+  // Play only the featured video; restart it from the top so each item gets a
+  // full play-through before `onEnded` advances the cycle.
   useEffect(() => {
     videoRefs.current.forEach((video, i) => {
       if (!video) return;
 
-      if (hoveredIndex === i) {
+      if (currentIndex === i) {
+        try {
+          video.currentTime = 0;
+        } catch {
+          // ignore — currentTime may not be settable until metadata loads
+        }
         void video.play();
         return;
       }
 
       video.pause();
     });
-  }, [hoveredIndex]);
+  }, [currentIndex]);
 
   // Sync active accent to CSS variable for Header/Footer
   useEffect(() => {
@@ -126,7 +135,11 @@ export function HomeHero({
         isolation: 'isolate',
       }}
     >
-      {/* Background media is preloaded, then faded in instantly on hover. */}
+      {/*
+        Background media. The featured item's video plays; when it ends the
+        cycle advances to the next item (onEnded), which highlights that item
+        and plays its video. Hover temporarily features a different item.
+      */}
       {HERO_LINKS.map((item, i) => (
         <video
           key={item.to}
@@ -135,14 +148,14 @@ export function HomeHero({
           }}
           className="absolute inset-0 z-0 h-full w-full object-cover rounded-none"
           muted
-          loop
           playsInline
           preload={shouldPreloadVideos ? 'auto' : 'metadata'}
           aria-hidden="true"
+          onEnded={() => setCycleIndex((i + 1) % HERO_LINKS.length)}
           style={{
             filter: 'grayscale(1)',
             mixBlendMode: 'luminosity',
-            opacity: hoveredIndex === i ? 0.5 : 0,
+            opacity: currentIndex === i ? 0.5 : 0,
             transition: 'opacity 0.18s ease',
           }}
         >
@@ -150,21 +163,13 @@ export function HomeHero({
         </video>
       ))}
 
-      {hoveredIndex === null && backgroundImage ? (
-        <img
-          src={backgroundImage}
-          alt=""
-          className="absolute inset-0 z-0 h-full w-full object-cover rounded-none"
-        />
-      ) : null}
-
       {/* Stacked hero text links — vertically & horizontally centered, auto-sized to fit */}
       <div className="relative z-10 flex flex-col items-center justify-center h-[90%] my-auto gap-[0.4vh]">
         {HERO_LINKS.map((item, i) => {
-          const isHovered = hoveredIndex === i;
-          const hasHover = hoveredIndex !== null;
-          const scale = hasHover ? (isHovered ? 1.12 : 0.92) : 1;
-          const weight = hasHover ? (isHovered ? 700 : 500) : 500;
+          // The featured item (hovered, or the current cycle item) is bold;
+          // every other item is medium. Hover changes weight only — not size.
+          const isFeatured = currentIndex === i;
+          const weight = isFeatured ? 700 : 500;
 
           return (
             <NavLink
@@ -176,14 +181,13 @@ export function HomeHero({
               onMouseLeave={() => setHoveredIndex(null)}
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(40px, 15.5vw, 128px)',
-                lineHeight: 1,
+                fontSize: 'clamp(44px, 15.5vw, 140px)',
+                lineHeight: 0.85,
                 fontWeight: weight,
                 color: 'var(--color-black)',
                 textDecoration: 'none',
                 fontFeatureSettings: "'dlig' 1",
-                transform: `scale(${scale})`,
-                transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                transition: 'font-weight 0.3s ease',
               }}
             >
               {item.label}

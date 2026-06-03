@@ -12,7 +12,7 @@ export default function BigBless() {
   return (
     <div className="bg-[#EDEDED] min-h-screen">
       {/* Hero */}
-      <SectionHero title="Big Bless" accentColor={ACCENT_BLESS} />
+      <SectionHero title="Big Bless" accentColor={ACCENT_BLESS} videoSrc="/videos/big-bless/page-bg.mp4" />
 
       {/* About Mr.StarCity — Two-column Text Module Header */}
       <div className="flex gap-[20px] px-[60px] max-md:px-[20px] py-[60px] max-md:flex-col">

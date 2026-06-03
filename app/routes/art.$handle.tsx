@@ -2,11 +2,9 @@ import {useLoaderData} from 'react-router';
 import {useEffect} from 'react';
 import type {CSSProperties} from 'react';
 import type {Route} from './+types/art.$handle';
-import {
-  getFieldValue,
-  getFieldImage,
-  getFieldImages,
-} from '~/lib/metaobjects';
+import {MetaobjectBannerImage} from '~/components/MetaobjectBannerImage';
+import {getFieldValue, getFieldImage, getFieldImages} from '~/lib/metaobjects';
+import {MetaobjectText} from '~/components/MetaobjectText';
 import {METAOBJECT_FIELDS_FRAGMENT} from '~/lib/fragments';
 
 const ACCENT_ART = '#FF9E70';
@@ -19,6 +17,7 @@ const quoteStyle: CSSProperties = {
   color: 'var(--color-black)',
   fontFeatureSettings: "'salt' 1",
   whiteSpace: 'pre-line',
+  overflowWrap: 'break-word',
 };
 
 export const meta: Route.MetaFunction = ({data}) => {
@@ -32,13 +31,10 @@ export async function loader({context, params}: Route.LoaderArgs) {
   const {handle} = params;
   if (!handle) throw new Response('Not found', {status: 404});
 
-  const {metaobject} = await context.storefront.query(
-    ART_EXHIBITION_QUERY,
-    {
-      variables: {handle: {handle, type: 'art_exhibition'}},
-      cache: context.storefront.CacheShort(),
-    },
-  );
+  const {metaobject} = await context.storefront.query(ART_EXHIBITION_QUERY, {
+    variables: {handle: {handle, type: 'art_exhibition'}},
+    cache: context.storefront.CacheShort(),
+  });
 
   if (!metaobject) throw new Response('Not found', {status: 404});
   return {exhibition: metaobject};
@@ -101,17 +97,11 @@ export default function ArtDetail() {
   return (
     <div className="bg-[#EDEDED] min-h-screen">
       {/* Hero — full-bleed featured image, 1120px per Figma */}
-      <section className="relative w-full overflow-hidden" style={{height: '1120px'}}>
-        {featuredImage ? (
-          <img
-            src={featuredImage.url}
-            alt={featuredImage.altText}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-[#D2D2D2]" />
-        )}
-      </section>
+      <MetaobjectBannerImage
+        image={featuredImage}
+        loading="eager"
+        className="md:aspect-auto md:h-[1120px]"
+      />
 
       {/* Text Module Header — two-column */}
       <div className="flex gap-[20px] max-md:flex-col px-[60px] max-md:px-[20px] py-[60px]">
@@ -133,7 +123,7 @@ export default function ArtDetail() {
           {seriesTag && (
             <div className="flex gap-[10px] items-start flex-wrap">
               <span
-                className="bg-white rounded-[20px] p-[10px] uppercase whitespace-nowrap"
+                className="bg-white rounded-[20px] px-[10px] py-[5px] uppercase whitespace-nowrap"
                 style={{
                   fontFamily: 'var(--font-body)',
                   fontSize: '18px',
@@ -152,7 +142,7 @@ export default function ArtDetail() {
         {/* Right — description + credits */}
         <div className="flex-1 flex flex-col gap-[60px]">
           {description && (
-            <p
+            <MetaobjectText
               style={{
                 fontFamily: 'var(--font-quote)',
                 fontSize: '26px',
@@ -163,7 +153,7 @@ export default function ArtDetail() {
               }}
             >
               {description}
-            </p>
+            </MetaobjectText>
           )}
 
           {/* Credits */}
@@ -208,13 +198,25 @@ export default function ArtDetail() {
           {hasEditorialLayout ? (
             <>
               {/* Row A: Full-width */}
-              <img src={images[0].url} alt={images[0].altText} className={IMG} />
+              <img
+                src={images[0].url}
+                alt={images[0].altText}
+                className={IMG}
+              />
 
               {/* Row B: 2-col */}
               {images.length > 2 && (
                 <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[20px]">
-                  <img src={images[1].url} alt={images[1].altText} className={IMG} />
-                  <img src={images[2].url} alt={images[2].altText} className={IMG} />
+                  <img
+                    src={images[1].url}
+                    alt={images[1].altText}
+                    className={IMG}
+                  />
+                  <img
+                    src={images[2].url}
+                    alt={images[2].altText}
+                    className={IMG}
+                  />
                 </div>
               )}
 
@@ -222,11 +224,21 @@ export default function ArtDetail() {
               {images.length > 4 && (
                 <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[20px]">
                   <div className="grid grid-cols-2 gap-[20px]">
-                    <img src={images[3].url} alt={images[3].altText} className={IMG_SQ} />
-                    <img src={images[4].url} alt={images[4].altText} className={IMG_SQ} />
+                    <img
+                      src={images[3].url}
+                      alt={images[3].altText}
+                      className={IMG_SQ}
+                    />
+                    <img
+                      src={images[4].url}
+                      alt={images[4].altText}
+                      className={IMG_SQ}
+                    />
                   </div>
                   <div className="flex items-start">
-                    <p style={quoteStyle}>{bodyPart1}</p>
+                    <MetaobjectText style={quoteStyle}>
+                      {bodyPart1}
+                    </MetaobjectText>
                   </div>
                 </div>
               )}
@@ -235,9 +247,15 @@ export default function ArtDetail() {
               {bodyPart2 && images.length > 5 && (
                 <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[20px]">
                   <div className="flex items-start">
-                    <p style={quoteStyle}>{bodyPart2}</p>
+                    <MetaobjectText style={quoteStyle}>
+                      {bodyPart2}
+                    </MetaobjectText>
                   </div>
-                  <img src={images[5].url} alt={images[5].altText} className={IMG_SQ} />
+                  <img
+                    src={images[5].url}
+                    alt={images[5].altText}
+                    className={IMG_SQ}
+                  />
                 </div>
               )}
 
@@ -245,8 +263,16 @@ export default function ArtDetail() {
               {images.length > 7 && (
                 <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[20px]">
                   <div className="grid grid-cols-2 gap-[20px]">
-                    <img src={images[6].url} alt={images[6].altText} className={IMG_SQ} />
-                    <img src={images[7].url} alt={images[7].altText} className={IMG_SQ} />
+                    <img
+                      src={images[6].url}
+                      alt={images[6].altText}
+                      className={IMG_SQ}
+                    />
+                    <img
+                      src={images[7].url}
+                      alt={images[7].altText}
+                      className={IMG_SQ}
+                    />
                   </div>
                   <div />
                 </div>
@@ -254,22 +280,35 @@ export default function ArtDetail() {
 
               {/* Row F: Full-width last image */}
               {images.length > 8 && (
-                <img src={images[images.length - 1].url} alt={images[images.length - 1].altText} className={IMG} />
+                <img
+                  src={images[images.length - 1].url}
+                  alt={images[images.length - 1].altText}
+                  className={IMG}
+                />
               )}
             </>
           ) : (
             <>
               {/* Simple gallery: full-width first, then 2-col grid */}
-              <img src={images[0].url} alt={images[0].altText} className={IMG} />
+              <img
+                src={images[0].url}
+                alt={images[0].altText}
+                className={IMG}
+              />
               {images.length > 1 && (
                 <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[20px]">
                   {images.slice(1).map((img, i) => (
-                    <img key={i} src={img.url} alt={img.altText} className={IMG} />
+                    <img
+                      key={i}
+                      src={img.url}
+                      alt={img.altText}
+                      className={IMG}
+                    />
                   ))}
                 </div>
               )}
               {body && (
-                <p style={quoteStyle}>{body}</p>
+                <MetaobjectText style={quoteStyle}>{body}</MetaobjectText>
               )}
             </>
           )}

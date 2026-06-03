@@ -180,14 +180,13 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
               key={item.to}
               to={item.to}
               prefetch="intent"
-              className="cursor-pointer text-center w-fit whitespace-nowrap"
+              className="home-hero-link cursor-pointer text-center w-fit whitespace-nowrap"
               onMouseEnter={() => setHoveredIndex(i)}
               onMouseLeave={() => setHoveredIndex(null)}
               style={{
                 position: 'relative',
                 display: 'inline-block',
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(44px, 15.5vw, 140px)',
                 lineHeight: 0.85,
                 color: 'var(--color-black)',
                 textDecoration: 'none',

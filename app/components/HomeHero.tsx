@@ -168,8 +168,12 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
         {HERO_LINKS.map((item, i) => {
           // The featured item (hovered, or the current cycle item) is bold;
           // every other item is medium. Hover changes weight only — not size.
+          // StarCity ships as two static faces (Medium 500 / Bold 700), so
+          // font-weight can't tween. Instead we stack a medium and a bold copy
+          // and cross-fade them, matching the logo's springy ease.
           const isFeatured = currentIndex === i;
-          const weight = isFeatured ? 700 : 500;
+          // Same curve/duration as the header logo's flex-grow transition.
+          const fade = 'opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
 
           return (
             <NavLink
@@ -180,17 +184,45 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
               onMouseEnter={() => setHoveredIndex(i)}
               onMouseLeave={() => setHoveredIndex(null)}
               style={{
+                position: 'relative',
+                display: 'inline-block',
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(44px, 15.5vw, 140px)',
                 lineHeight: 0.85,
-                fontWeight: weight,
                 color: 'var(--color-black)',
                 textDecoration: 'none',
                 fontFeatureSettings: "'dlig' 1",
-                transition: 'font-weight 0.3s ease',
               }}
             >
-              {item.label}
+              {/* Width reservation — bold is widest, keeps layout from shifting */}
+              <span aria-hidden="true" style={{visibility: 'hidden', fontWeight: 700}}>
+                {item.label}
+              </span>
+              {/* Medium layer — fades out as the item becomes featured */}
+              <span
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  fontWeight: 500,
+                  opacity: isFeatured ? 0 : 1,
+                  transition: fade,
+                }}
+              >
+                {item.label}
+              </span>
+              {/* Bold layer — fades in when featured */}
+              <span
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  fontWeight: 700,
+                  opacity: isFeatured ? 1 : 0,
+                  transition: fade,
+                }}
+              >
+                {item.label}
+              </span>
             </NavLink>
           );
         })}

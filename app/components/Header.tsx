@@ -81,11 +81,21 @@ export function Header() {
   const [hoveredLetter, setHoveredLetter] = useState<string | null>(null);
   const isHomePage = location.pathname === '/';
   const hidePageNav = isHomePage;
-  // Individual art pages (e.g. /art/when-we-bloom) overlay the artwork so the
-  // image is visible behind the transparent nav, like the home page.
-  const isArtDetail =
-    location.pathname.startsWith('/art/') && location.pathname !== '/art';
-  const overlayNav = isHomePage || isArtDetail;
+  // Hero pages (home, every section landing, and individual art pages) overlay
+  // their hero so the transparent nav shows the hero/artwork behind it instead
+  // of a solid strip of page background.
+  const HERO_ROUTES = [
+    '/',
+    '/art',
+    '/music',
+    '/projects',
+    '/shop',
+    '/editorial',
+    '/big-bless',
+  ];
+  const overlayNav =
+    HERO_ROUTES.includes(location.pathname) ||
+    location.pathname.startsWith('/art/');
 
   return (
     <header className={`${overlayNav ? 'absolute' : 'sticky'} top-0 z-50 w-full`}>

@@ -154,7 +154,7 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
           onEnded={() => setCycleIndex((i + 1) % HERO_LINKS.length)}
           style={{
             filter: 'grayscale(1)',
-            mixBlendMode: 'luminosity',
+            mixBlendMode: 'hard-light',
             opacity: currentIndex === i ? 0.5 : 0,
             transition: 'opacity 0.18s ease',
           }}

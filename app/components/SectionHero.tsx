@@ -40,7 +40,7 @@ export function SectionHero({title, accentColor, imageUrl, videoSrc}: SectionHer
           style={{
             filter: 'grayscale(1)',
             mixBlendMode: 'hard-light',
-            opacity: 0.5,
+            opacity: 1,
           }}
         >
           <source src={videoSrc} type="video/mp4" />

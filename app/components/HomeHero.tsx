@@ -183,7 +183,12 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
           // font-weight can't tween. Instead we stack a medium and a bold copy
           // and cross-fade them, matching the logo's springy ease.
           const isFeatured = currentIndex === i;
-          // Same curve/duration as the header logo's flex-grow transition.
+          const isHovered = hoveredIndex === i;
+          const someHover = hoveredIndex !== null;
+          // Springy "stretch" on hover: the hovered item scales up and the
+          // others ease back. The overshoot curve pushes past the target then
+          // settles, for an organic elastic feel. Idle auto-cycle stays at 1.
+          const scale = isHovered ? 1.08 : someHover ? 0.94 : 1;
           const fade = 'opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
 
           return (
@@ -202,6 +207,10 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
                 color: 'var(--color-black)',
                 textDecoration: 'none',
                 fontFeatureSettings: "'dlig' 1",
+                transform: `scale(${scale})`,
+                transformOrigin: 'center',
+                transition: 'transform 0.6s cubic-bezier(0.34, 1.7, 0.45, 1)',
+                willChange: 'transform',
               }}
             >
               {/* Width reservation — bold is widest, keeps layout from shifting */}

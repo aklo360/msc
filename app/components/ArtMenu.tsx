@@ -18,7 +18,7 @@ export function ArtMenu({accentColor = '#FF9E70', viewMode, onViewModeChange, fi
       {/* Filter pill */}
       <div className="flex items-center gap-[10px]">
         <button
-          className="flex items-center gap-[8px] rounded-[20px] p-[10px] px-[16px] font-[family-name:var(--font-body,_sans-serif)] text-[18px] max-md:text-[14px] font-medium leading-[1.2] uppercase border-0 cursor-pointer"
+          className="flex items-center gap-[8px] rounded-[20px] py-[5px] px-[16px] font-[family-name:var(--font-body,_sans-serif)] text-[18px] max-md:text-[14px] font-medium leading-[1.2] uppercase border-0 cursor-pointer"
           style={{
             backgroundColor: accentColor,
             color: '#000000',
@@ -42,13 +42,12 @@ export function ArtMenu({accentColor = '#FF9E70', viewMode, onViewModeChange, fi
 
       {/* View toggle + sort icons */}
       <div className="flex items-center gap-[10px]">
-        {/* Grid view */}
+        {/* Grid view — no box; active state shown via icon color */}
         <button
           onClick={() => onViewModeChange('grid')}
-          className="w-[35px] h-[35px] flex items-center justify-center rounded-[6px] border-0 cursor-pointer transition-colors duration-200"
+          className="w-[35px] h-[35px] flex items-center justify-center border-0 bg-transparent cursor-pointer transition-colors duration-200"
           style={{
-            backgroundColor: viewMode === 'grid' ? '#000000' : '#FFFFFF',
-            color: viewMode === 'grid' ? '#FFFFFF' : '#000000',
+            color: viewMode === 'grid' ? '#000000' : '#7F7F7F',
           }}
           aria-label="Gallery view"
         >
@@ -60,13 +59,12 @@ export function ArtMenu({accentColor = '#FF9E70', viewMode, onViewModeChange, fi
           </svg>
         </button>
 
-        {/* List view */}
+        {/* List view — no box; active state shown via icon color */}
         <button
           onClick={() => onViewModeChange('list')}
-          className="w-[35px] h-[35px] flex items-center justify-center rounded-[6px] border-0 cursor-pointer transition-colors duration-200"
+          className="w-[35px] h-[35px] flex items-center justify-center border-0 bg-transparent cursor-pointer transition-colors duration-200"
           style={{
-            backgroundColor: viewMode === 'list' ? '#000000' : '#FFFFFF',
-            color: viewMode === 'list' ? '#FFFFFF' : '#000000',
+            color: viewMode === 'list' ? '#000000' : '#7F7F7F',
           }}
           aria-label="List view"
         >

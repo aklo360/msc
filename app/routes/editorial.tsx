@@ -68,7 +68,7 @@ export default function Editorial() {
   return (
     <div className="bg-[#EDEDED] min-h-screen">
       {/* Hero */}
-      <SectionHero title="Editorial" accentColor={ACCENT_EDITORIAL} />
+      <SectionHero title="Editorial" accentColor={ACCENT_EDITORIAL} videoSrc="/videos/editorial/page-bg.mp4" />
 
       {/* Filter Bar */}
       <ArtMenu
@@ -136,7 +136,7 @@ export default function Editorial() {
                     <span className="group-hover:font-bold transition-all duration-200 truncate min-w-0 max-w-full">{category}</span>
                     <span className="group-hover:font-bold transition-all duration-200 truncate min-w-0 max-w-full">{date}</span>
                     <span
-                      className="bg-white rounded-[20px] p-[10px] whitespace-nowrap uppercase justify-self-end"
+                      className="bg-white rounded-[20px] px-[10px] py-[5px] whitespace-nowrap uppercase justify-self-end"
                       style={{fontSize: 'var(--text-nav-sm)', fontWeight: 500}}
                     >
                       {tag}

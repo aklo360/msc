@@ -4,9 +4,11 @@ interface SectionHeroProps {
   title: string;
   accentColor: string;
   imageUrl?: string;
+  /** Looping background video, styled like the home hero (grayscale + luminosity). */
+  videoSrc?: string;
 }
 
-export function SectionHero({title, accentColor, imageUrl}: SectionHeroProps) {
+export function SectionHero({title, accentColor, imageUrl, videoSrc}: SectionHeroProps) {
   // Set CSS variable so Header and Footer pick up the section accent color
   useEffect(() => {
     document.documentElement.style.setProperty('--active-accent', accentColor);
@@ -22,8 +24,30 @@ export function SectionHero({title, accentColor, imageUrl}: SectionHeroProps) {
         height: '90vh',
         paddingBottom: '10vh',
         backgroundColor: accentColor,
+        isolation: 'isolate',
       }}
     >
+      {/* Background video layer — loops, desaturated via luminosity blend
+          over the accent color, matching the home hero treatment. */}
+      {videoSrc && (
+        <video
+          className="absolute inset-0 z-0 h-full w-full object-cover rounded-none"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          style={{
+            filter: 'grayscale(1)',
+            mixBlendMode: 'luminosity',
+            opacity: 0.5,
+          }}
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
+      )}
+
       {/* Background image layer (desaturated via luminosity blend) */}
       {imageUrl && (
         <div className="absolute inset-0" style={{mixBlendMode: 'luminosity'}}>

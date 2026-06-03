@@ -28,7 +28,7 @@ export default function ArtIndex() {
   return (
     <div className="bg-[#EDEDED] min-h-screen">
       {/* Hero */}
-      <SectionHero title="Art" accentColor={ACCENT_ART} />
+      <SectionHero title="Art" accentColor={ACCENT_ART} videoSrc="/videos/art/page-bg.mp4" />
 
       {/* Art Menu / Filter Bar */}
       <ArtMenu
@@ -93,7 +93,7 @@ export default function ArtIndex() {
                     <span className="group-hover:font-bold transition-all duration-200 truncate min-w-0 max-w-full">{location}</span>
                     <span className="group-hover:font-bold transition-all duration-200 truncate min-w-0 max-w-full">{dateRange}</span>
                     <span
-                      className="bg-white rounded-[20px] p-[10px] whitespace-nowrap uppercase justify-self-end"
+                      className="bg-white rounded-[20px] px-[10px] py-[5px] whitespace-nowrap uppercase justify-self-end"
                       style={{fontSize: 'var(--text-nav-sm)', fontWeight: 500}}
                     >
                       {seriesTag}

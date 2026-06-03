@@ -81,13 +81,18 @@ export function Header() {
   const [hoveredLetter, setHoveredLetter] = useState<string | null>(null);
   const isHomePage = location.pathname === '/';
   const hidePageNav = isHomePage;
+  // Individual art pages (e.g. /art/when-we-bloom) overlay the artwork so the
+  // image is visible behind the transparent nav, like the home page.
+  const isArtDetail =
+    location.pathname.startsWith('/art/') && location.pathname !== '/art';
+  const overlayNav = isHomePage || isArtDetail;
 
   return (
-    <header className={`${isHomePage ? 'absolute' : 'sticky'} top-0 z-50 w-full`}>
+    <header className={`${overlayNav ? 'absolute' : 'sticky'} top-0 z-50 w-full`}>
       <div
         className="h-[10vh]"
         style={{
-          backgroundColor: isHomePage ? 'transparent' : 'var(--active-accent, var(--color-accent-art))',
+          backgroundColor: 'transparent',
           transition: 'background-color 0.4s ease',
         }}
       >
@@ -263,7 +268,11 @@ export function Header() {
         <div
           className="absolute left-0 right-0 lg:hidden px-[var(--padding-x-mobile)] pb-8"
           style={{
-            backgroundColor: isHomePage ? 'transparent' : 'var(--active-accent, var(--color-accent-art))',
+            // Nav bar itself is transparent, but the mobile dropdown keeps a
+            // solid backdrop so its items stay legible over page content.
+            backgroundColor: isHomePage
+              ? 'transparent'
+              : 'var(--active-accent, var(--color-accent-art))',
           }}
         >
           <div className="flex justify-between">

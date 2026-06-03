@@ -2,6 +2,8 @@ import {useLoaderData} from 'react-router';
 import {useEffect} from 'react';
 import type {CSSProperties} from 'react';
 import type {Route} from './+types/projects._index';
+import {MetaobjectBannerImage} from '~/components/MetaobjectBannerImage';
+import {MetaobjectText} from '~/components/MetaobjectText';
 import {SectionHero} from '~/components/SectionHero';
 import {
   getFieldValue,
@@ -26,6 +28,7 @@ const quoteStyle: CSSProperties = {
   color: 'var(--color-black)',
   fontFeatureSettings: "'salt' 1",
   whiteSpace: 'pre-line',
+  overflowWrap: 'break-word',
 };
 
 const IMG = 'w-full object-cover rounded-[10px]';
@@ -84,7 +87,7 @@ export default function ProjectsIndex() {
 
   return (
     <div className="bg-[#EDEDED] min-h-screen">
-      <SectionHero title="Projects" accentColor={ACCENT_PROJECTS} />
+      <SectionHero title="Projects" accentColor={ACCENT_PROJECTS} videoSrc="/videos/projects/page-bg.mp4" />
 
       {projects.map((proj: any) => {
         const title = getFieldValue(proj.fields, 'title');
@@ -97,10 +100,8 @@ export default function ProjectsIndex() {
         const body = getFieldValue(proj.fields, 'body');
         const inquiryEmail = getFieldValue(proj.fields, 'inquiry_email');
         const links =
-          getFieldJson<{label: string; url: string}[]>(
-            proj.fields,
-            'links',
-          ) || [];
+          getFieldJson<{label: string; url: string}[]>(proj.fields, 'links') ||
+          [];
         const featuredImage = getFieldImage(proj.fields, 'featured_image');
         const allImages = getFieldImages(proj.fields, 'images');
         const images = featuredImage
@@ -133,7 +134,7 @@ export default function ProjectsIndex() {
                   {inquiryEmail && (
                     <a
                       href={`mailto:${inquiryEmail}?subject=Inquiry: ${title}`}
-                      className="bg-white rounded-[20px] p-[10px] uppercase whitespace-nowrap"
+                      className="bg-white rounded-[20px] px-[10px] py-[5px] uppercase whitespace-nowrap"
                       style={{
                         fontFamily: 'var(--font-body)',
                         fontSize: '18px',
@@ -148,7 +149,7 @@ export default function ProjectsIndex() {
                   )}
                   {seriesTag && (
                     <span
-                      className="bg-white rounded-[20px] p-[10px] uppercase whitespace-nowrap"
+                      className="bg-white rounded-[20px] px-[10px] py-[5px] uppercase whitespace-nowrap"
                       style={{
                         fontFamily: 'var(--font-body)',
                         fontSize: '18px',
@@ -167,7 +168,7 @@ export default function ProjectsIndex() {
               {/* Right — description + credits */}
               <div className="flex-1 flex flex-col gap-[60px]">
                 {description && (
-                  <p
+                  <MetaobjectText
                     style={{
                       fontFamily: 'var(--font-quote)',
                       fontSize: '26px',
@@ -178,7 +179,7 @@ export default function ProjectsIndex() {
                     }}
                   >
                     {description}
-                  </p>
+                  </MetaobjectText>
                 )}
 
                 {/* Credits */}
@@ -226,10 +227,10 @@ export default function ProjectsIndex() {
                   <>
                     {/* Row A: Full-width featured */}
                     {featuredImage && (
-                      <img
-                        src={featuredImage.url}
-                        alt={featuredImage.altText}
-                        className={IMG}
+                      <MetaobjectBannerImage
+                        image={featuredImage}
+                        className="rounded-[10px]"
+                        imgClassName="rounded-[10px]"
                       />
                     )}
 
@@ -251,7 +252,9 @@ export default function ProjectsIndex() {
                               />
                             </div>
                             <div className="flex items-start">
-                              <p style={quoteStyle}>{bodyPart1}</p>
+                              <MetaobjectText style={quoteStyle}>
+                                {bodyPart1}
+                              </MetaobjectText>
                             </div>
                           </div>
                         )}
@@ -259,7 +262,9 @@ export default function ProjectsIndex() {
                         {images.length > 2 && (
                           <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[20px] items-end">
                             <div className="flex flex-col gap-[20px]">
-                              <p style={quoteStyle}>{bodyPart2}</p>
+                              <MetaobjectText style={quoteStyle}>
+                                {bodyPart2}
+                              </MetaobjectText>
                               {images.length > 3 && (
                                 <img
                                   src={images[3].url}
@@ -295,7 +300,9 @@ export default function ProjectsIndex() {
                         {images.length > 4 && (
                           <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[20px] items-end">
                             <div className="flex flex-col gap-[20px]">
-                              <p style={quoteStyle}>{bodyPart1}</p>
+                              <MetaobjectText style={quoteStyle}>
+                                {bodyPart1}
+                              </MetaobjectText>
                               {images[4] && (
                                 <img
                                   src={images[4].url}
@@ -320,10 +327,10 @@ export default function ProjectsIndex() {
                   <>
                     {/* Simple gallery */}
                     {featuredImage && (
-                      <img
-                        src={featuredImage.url}
-                        alt={featuredImage.altText}
-                        className={IMG}
+                      <MetaobjectBannerImage
+                        image={featuredImage}
+                        className="rounded-[10px]"
+                        imgClassName="rounded-[10px]"
                       />
                     )}
                     {/* First row: small square + larger image */}

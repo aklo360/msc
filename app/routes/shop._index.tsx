@@ -40,7 +40,7 @@ export default function ShopIndex() {
   return (
     <div className="bg-[#EDEDED] min-h-screen">
       {/* Hero */}
-      <SectionHero title="MSC Shop" accentColor={ACCENT_SHOP} />
+      <SectionHero title="MSC Shop" accentColor={ACCENT_SHOP} videoSrc="/videos/shop/page-bg.mp4" />
 
       {/* Shop Menu */}
       <ShopMenu />

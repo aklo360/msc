@@ -10,13 +10,13 @@ export const meta: Route.MetaFunction = () => {
 const ACCENT_SHOP = '#73B9D0';
 
 export async function loader({context}: Route.LoaderArgs) {
-  // Top-level "All Products" — the full storefront catalog. Shows every
-  // product published to the online store sales channel, so new products
-  // Ruoyi adds appear automatically.
-  const {products} = await context.storefront.query(SHOP_ALL_PRODUCTS_QUERY, {
+  // Driven by the "Home page" collection (handle: frontpage). A product only
+  // appears in the shop once it's added to this collection — products with no
+  // collection are intentionally hidden here.
+  const {collection} = await context.storefront.query(SHOP_COLLECTION_QUERY, {
     cache: context.storefront.CacheShort(),
   });
-  return {products: products.nodes};
+  return {products: collection?.products?.nodes ?? []};
 }
 
 /** Format a Shopify MoneyV2 into "$200" / "$199.99". */
@@ -82,22 +82,24 @@ export default function ShopIndex() {
   );
 }
 
-const SHOP_ALL_PRODUCTS_QUERY = `#graphql
-  query ShopAllProducts {
-    products(first: 100) {
-      nodes {
-        id
-        title
-        handle
-        tags
-        featuredImage {
-          url
-          altText
-        }
-        priceRange {
-          minVariantPrice {
-            amount
-            currencyCode
+const SHOP_COLLECTION_QUERY = `#graphql
+  query ShopHomePageCollection {
+    collection(handle: "frontpage") {
+      products(first: 100) {
+        nodes {
+          id
+          title
+          handle
+          tags
+          featuredImage {
+            url
+            altText
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
           }
         }
       }

@@ -26,25 +26,32 @@ export function SectionHero({title, accentColor, imageUrl, videoSrc}: SectionHer
         isolation: 'isolate',
       }}
     >
-      {/* Background video layer — loops, desaturated via luminosity blend
-          over the accent color, matching the home hero treatment. */}
+      {/* Background video (grayscale) with the accent color washed over the
+          top via hard-light — the color is the blend source, so it tints the
+          footage into a vivid duotone instead of greying it out. */}
       {videoSrc && (
-        <video
-          className="absolute inset-0 z-0 h-full w-full object-cover rounded-none"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-hidden="true"
-          style={{
-            filter: 'grayscale(1)',
-            mixBlendMode: 'hard-light',
-            opacity: 1,
-          }}
-        >
-          <source src={videoSrc} type="video/mp4" />
-        </video>
+        <>
+          <video
+            className="absolute inset-0 z-0 h-full w-full object-cover rounded-none"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            style={{filter: 'grayscale(1)'}}
+          >
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+          <div
+            className="absolute inset-0 z-0"
+            aria-hidden="true"
+            style={{
+              backgroundColor: accentColor,
+              mixBlendMode: 'hard-light',
+            }}
+          />
+        </>
       )}
 
       {/* Background image layer (desaturated via luminosity blend) */}

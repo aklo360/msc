@@ -154,7 +154,6 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
           onEnded={() => setCycleIndex((i + 1) % HERO_LINKS.length)}
           style={{
             filter: 'grayscale(1)',
-            mixBlendMode: 'hard-light',
             opacity: currentIndex === i ? 1 : 0,
             transition: 'opacity 0.18s ease',
           }}
@@ -162,6 +161,18 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
           <source src={item.videoSrc} type="video/mp4" />
         </video>
       ))}
+
+      {/* Accent color washed over the active video via hard-light — the color
+          is the blend source, giving a vivid duotone rather than a grey wash. */}
+      <div
+        className="absolute inset-0 z-0"
+        aria-hidden="true"
+        style={{
+          backgroundColor: activeColor,
+          mixBlendMode: 'hard-light',
+          transition: 'background-color 0.4s ease',
+        }}
+      />
 
       {/* Stacked hero text links — vertically & horizontally centered, auto-sized to fit */}
       <div className="relative z-10 flex flex-col items-center justify-center h-[90%] my-auto gap-[0.4vh]">

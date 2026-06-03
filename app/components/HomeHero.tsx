@@ -178,10 +178,9 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
       <div className="relative z-10 flex flex-col items-center justify-center h-[90%] my-auto gap-[0.4vh]">
         {HERO_LINKS.map((item, i) => {
           // The featured item (hovered, or the current cycle item) is bold;
-          // every other item is medium. Hover changes weight only — not size.
-          // StarCity ships as two static faces (Medium 500 / Bold 700), so
-          // font-weight can't tween. Instead we stack a medium and a bold copy
-          // and cross-fade them, matching the logo's springy ease.
+          // every other item is medium. StarCity ships as two static faces
+          // (Medium 500 / Bold 700) so the weight just snaps — no opacity
+          // dissolve. The motion is carried entirely by the springy scale.
           const isFeatured = currentIndex === i;
           const isHovered = hoveredIndex === i;
           const someHover = hoveredIndex !== null;
@@ -189,7 +188,6 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
           // others ease back. The overshoot curve pushes past the target then
           // settles, for an organic elastic feel. Idle auto-cycle stays at 1.
           const scale = isHovered ? 1.08 : someHover ? 0.94 : 1;
-          const fade = 'opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
 
           return (
             <NavLink
@@ -213,31 +211,17 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
                 willChange: 'transform',
               }}
             >
-              {/* Width reservation — bold is widest, keeps layout from shifting */}
+              {/* Hidden bold copy reserves the wider bold width so the visible
+                  weight swap below never shifts the layout. */}
               <span aria-hidden="true" style={{visibility: 'hidden', fontWeight: 700}}>
                 {item.label}
               </span>
-              {/* Medium layer — fades out as the item becomes featured */}
-              <span
-                aria-hidden="true"
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  fontWeight: 500,
-                  opacity: isFeatured ? 0 : 1,
-                  transition: fade,
-                }}
-              >
-                {item.label}
-              </span>
-              {/* Bold layer — fades in when featured */}
+              {/* Visible label — weight snaps medium↔bold instantly, no fade. */}
               <span
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  fontWeight: 700,
-                  opacity: isFeatured ? 1 : 0,
-                  transition: fade,
+                  fontWeight: isFeatured ? 700 : 500,
                 }}
               >
                 {item.label}

@@ -102,8 +102,12 @@ export function Header() {
       <div
         className="h-[10vh]"
         style={{
-          backgroundColor: 'transparent',
-          transition: 'background-color 0.4s ease',
+          // Transparent over the hero. On mobile the bar turns opaque (hero
+          // accent) the instant the hamburger menu opens — no fade — so the
+          // expanded menu reads as a solid block; closed stays see-through.
+          backgroundColor: mobileMenuOpen
+            ? 'var(--active-accent, var(--color-accent-art))'
+            : 'transparent',
         }}
       >
         {/* Desktop nav */}
@@ -278,11 +282,8 @@ export function Header() {
         <div
           className="absolute left-0 right-0 lg:hidden px-[var(--padding-x-mobile)] pb-8"
           style={{
-            // Nav bar itself is transparent, but the mobile dropdown keeps a
-            // solid backdrop so its items stay legible over page content.
-            backgroundColor: isHomePage
-              ? 'transparent'
-              : 'var(--active-accent, var(--color-accent-art))',
+            // Expanded mobile menu is a solid block in the hero accent color.
+            backgroundColor: 'var(--active-accent, var(--color-accent-art))',
           }}
         >
           <div className="flex justify-between">

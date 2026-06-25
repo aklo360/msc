@@ -44,7 +44,7 @@ export async function action({request, context}: Route.ActionArgs) {
     const errors = customerCreate?.customerUserErrors;
     if (errors?.length) {
       // Already subscribed — treat as success
-      if (errors.some((e: {code: string}) => e.code === 'TAKEN')) {
+      if (errors.some((e) => e.code === 'TAKEN')) {
         return Response.json({success: true});
       }
       return Response.json({error: errors[0].message}, {status: 400});

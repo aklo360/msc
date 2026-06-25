@@ -1,4 +1,5 @@
-import {redirect, useLoaderData} from 'react-router';
+import {useEffect} from 'react';
+import {redirect, useLoaderData, Link} from 'react-router';
 import type {Route} from './+types/products.$handle';
 import {
   getSelectedProductOptions,
@@ -9,13 +10,16 @@ import {
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
 import {ProductPrice} from '~/components/ProductPrice';
-import {ProductImage} from '~/components/ProductImage';
+import {ProductGallery} from '~/components/ProductGallery';
 import {ProductForm} from '~/components/ProductForm';
+import {RelatedProducts} from '~/components/RelatedProducts';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+
+const ACCENT_SHOP = '#73B9D0';
 
 export const meta: Route.MetaFunction = ({data}) => {
   return [
-    {title: `Hydrogen | ${data?.product.title ?? ''}`},
+    {title: `${data?.product.title ?? 'Shop'} | Mr.StarCity`},
     {
       rel: 'canonical',
       href: `/products/${data?.product.handle}`,
@@ -24,13 +28,13 @@ export const meta: Route.MetaFunction = ({data}) => {
 };
 
 export async function loader(args: Route.LoaderArgs) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
-
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return {...deferredData, ...criticalData};
+  // Start fetching non-critical data without blocking time to first byte
+  const deferredData = loadDeferredData(args, criticalData.product.id);
+
+  return {...criticalData, ...deferredData};
 }
 
 /**
@@ -69,15 +73,33 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
  * fetched after the initial page load. If it's unavailable, the page should still 200.
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
-function loadDeferredData({context, params}: Route.LoaderArgs) {
-  // Put any API calls that is not critical to be available on first page render
-  // For example: product reviews, product recommendations, social feeds.
+function loadDeferredData(
+  {context}: Route.LoaderArgs,
+  productId: string,
+) {
+  const recommendedProducts = context.storefront
+    .query(RECOMMENDED_PRODUCTS_QUERY, {
+      variables: {productId},
+    })
+    .catch((error) => {
+      // Recommendations are non-critical — never let them break the page.
+      console.error(error);
+      return null;
+    });
 
-  return {};
+  return {recommendedProducts};
 }
 
 export default function Product() {
-  const {product} = useLoaderData<typeof loader>();
+  const {product, recommendedProducts} = useLoaderData<typeof loader>();
+
+  // Theme the header/footer accent to the Shop blue while on a product page.
+  useEffect(() => {
+    document.documentElement.style.setProperty('--active-accent', ACCENT_SHOP);
+    return () => {
+      document.documentElement.style.removeProperty('--active-accent');
+    };
+  }, []);
 
   // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -95,31 +117,114 @@ export default function Product() {
     selectedOrFirstAvailableVariant: selectedVariant,
   });
 
-  const {title, descriptionHtml} = product;
+  const {title, descriptionHtml, vendor} = product;
+  const tag = product.tags?.[0];
+  const images = product.images?.nodes ?? [];
 
   return (
-    <div className="product">
-      <ProductImage image={selectedVariant?.image} />
-      <div className="product-main">
-        <h1>{title}</h1>
-        <ProductPrice
-          price={selectedVariant?.price}
-          compareAtPrice={selectedVariant?.compareAtPrice}
-        />
-        <br />
-        <ProductForm
-          productOptions={productOptions}
-          selectedVariant={selectedVariant}
-        />
-        <br />
-        <br />
-        <p>
-          <strong>Description</strong>
-        </p>
-        <br />
-        <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-        <br />
+    <div className="bg-[var(--color-neutral-03)] min-h-screen">
+      <div className="mx-auto max-w-[var(--max-width)] px-[60px] max-md:px-[20px] pt-[40px] pb-[120px] max-md:pb-[80px]">
+        {/* Breadcrumb */}
+        <Link
+          to="/shop"
+          prefetch="intent"
+          className="inline-block mb-[30px] uppercase"
+          style={{
+            fontFamily: 'var(--font-body)',
+            fontSize: 'var(--text-nav-sm)',
+            fontWeight: 500,
+            letterSpacing: '0.02em',
+            color: 'var(--color-neutral-01)',
+            fontFeatureSettings: "'salt' 1",
+          }}
+        >
+          &#8592;&nbsp;&nbsp;MSC Shop
+        </Link>
+
+        {/* Detail grid */}
+        <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-[60px] max-lg:gap-[40px] items-start">
+          <ProductGallery
+            images={images}
+            selectedImageId={selectedVariant?.image?.id}
+            title={title}
+          />
+
+          <div className="flex flex-col gap-[24px] lg:sticky lg:top-[120px]">
+            {(tag || vendor) && (
+              <div className="flex items-center gap-[10px]">
+                {tag && (
+                  <span
+                    className="bg-white rounded-[20px] px-[12px] py-[6px] uppercase whitespace-nowrap"
+                    style={{
+                      fontFamily: 'var(--font-body)',
+                      fontSize: 'var(--text-nav-sm)',
+                      fontWeight: 500,
+                      lineHeight: 1.2,
+                      color: 'var(--color-black)',
+                      fontFeatureSettings: "'salt' 1",
+                    }}
+                  >
+                    {tag}
+                  </span>
+                )}
+              </div>
+            )}
+
+            <h1
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 'clamp(32px, 4vw, 48px)',
+                fontWeight: 500,
+                lineHeight: 1.05,
+                letterSpacing: '-1.5px',
+                color: 'var(--color-black)',
+                fontFeatureSettings: "'salt' 1",
+                margin: 0,
+              }}
+            >
+              {title}
+            </h1>
+
+            <ProductPrice
+              price={selectedVariant?.price}
+              compareAtPrice={selectedVariant?.compareAtPrice}
+              size="lg"
+            />
+
+            <div className="mt-[6px]">
+              <ProductForm
+                productOptions={productOptions}
+                selectedVariant={selectedVariant}
+              />
+            </div>
+
+            {descriptionHtml && (
+              <div className="mt-[10px] pt-[30px] border-t border-[var(--color-neutral-02)]">
+                <span
+                  className="block mb-[16px] uppercase"
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: 'var(--text-nav-sm)',
+                    fontWeight: 700,
+                    letterSpacing: '0.02em',
+                    color: 'var(--color-black)',
+                    fontFeatureSettings: "'salt' 1",
+                  }}
+                >
+                  Details
+                </span>
+                <div
+                  className="prose-msc"
+                  dangerouslySetInnerHTML={{__html: descriptionHtml}}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        <RelatedProducts products={recommendedProducts} />
       </div>
+
       <Analytics.ProductView
         data={{
           products: [
@@ -184,8 +289,25 @@ const PRODUCT_FRAGMENT = `#graphql
     handle
     descriptionHtml
     description
+    tags
     encodedVariantExistence
     encodedVariantAvailability
+    featuredImage {
+      id
+      url
+      altText
+      width
+      height
+    }
+    images(first: 12) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
+    }
     options {
       name
       optionValues {
@@ -229,4 +351,32 @@ const PRODUCT_QUERY = `#graphql
     }
   }
   ${PRODUCT_FRAGMENT}
+` as const;
+
+const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+  query RecommendedProducts(
+    $country: CountryCode
+    $language: LanguageCode
+    $productId: ID!
+  ) @inContext(country: $country, language: $language) {
+    productRecommendations(productId: $productId) {
+      id
+      title
+      handle
+      tags
+      featuredImage {
+        id
+        url
+        altText
+        width
+        height
+      }
+      priceRange {
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+      }
+    }
+  }
 ` as const;

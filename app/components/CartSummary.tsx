@@ -10,25 +10,66 @@ type CartSummaryProps = {
   layout: CartLayout;
 };
 
-export function CartSummary({cart, layout}: CartSummaryProps) {
-  const className =
-    layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
+const LABEL_STYLE: React.CSSProperties = {
+  fontFamily: 'var(--font-body)',
+  fontSize: 'var(--text-copy-sm)',
+  fontWeight: 400,
+  lineHeight: 1.2,
+  color: 'var(--color-black)',
+  fontFeatureSettings: "'salt' 1",
+};
 
+const SMALL_STYLE: React.CSSProperties = {
+  fontFamily: 'var(--font-body)',
+  fontSize: 'var(--text-nav-sm)',
+  fontWeight: 400,
+  lineHeight: 1.3,
+  color: 'var(--color-neutral-01)',
+  fontFeatureSettings: "'salt' 1",
+};
+
+const INPUT_CLASS =
+  'flex-1 min-w-0 h-[48px] px-[18px] rounded-[100px] bg-[var(--color-neutral-03)] border-0 outline-none';
+const INPUT_STYLE: React.CSSProperties = {
+  fontFamily: 'var(--font-body)',
+  fontSize: 'var(--text-nav-sm)',
+  fontWeight: 400,
+  color: 'var(--color-black)',
+  fontFeatureSettings: "'salt' 1",
+};
+
+const APPLY_BTN_CLASS =
+  'shrink-0 h-[48px] px-[22px] rounded-[100px] cursor-pointer uppercase transition-opacity hover:opacity-80 disabled:opacity-50';
+const APPLY_BTN_STYLE: React.CSSProperties = {
+  fontFamily: 'var(--font-body)',
+  fontSize: 'var(--text-nav-sm)',
+  fontWeight: 700,
+  letterSpacing: '0.02em',
+  backgroundColor: 'var(--color-black)',
+  color: 'var(--color-white)',
+  fontFeatureSettings: "'salt' 1",
+};
+
+export function CartSummary({cart, layout}: CartSummaryProps) {
   return (
-    <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
+    <div aria-labelledby="cart-summary" className="flex flex-col gap-[20px]">
+      {/* Subtotal */}
+      <div className="flex items-center justify-between">
+        <span style={LABEL_STYLE}>Subtotal</span>
+        <span style={{...LABEL_STYLE, fontWeight: 500}}>
           {cart?.cost?.subtotalAmount?.amount ? (
             <Money data={cart?.cost?.subtotalAmount} />
           ) : (
             '-'
           )}
-        </dd>
-      </dl>
+        </span>
+      </div>
+
       <CartDiscounts discountCodes={cart?.discountCodes} />
       <CartGiftCard giftCardCodes={cart?.appliedGiftCards} />
+
+      <p style={SMALL_STYLE}>Taxes and shipping calculated at checkout.</p>
+
       <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
     </div>
   );
@@ -38,12 +79,22 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   if (!checkoutUrl) return null;
 
   return (
-    <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
-      </a>
-      <br />
-    </div>
+    <a
+      href={checkoutUrl}
+      target="_self"
+      className="flex items-center justify-center h-[60px] rounded-[100px] uppercase transition-colors duration-200"
+      style={{
+        fontFamily: 'var(--font-body)',
+        fontSize: 'var(--text-nav)',
+        fontWeight: 700,
+        letterSpacing: '0.02em',
+        backgroundColor: 'var(--color-black)',
+        color: 'var(--color-white)',
+        fontFeatureSettings: "'salt' 1",
+      }}
+    >
+      Checkout
+    </a>
   );
 }
 
@@ -58,27 +109,38 @@ function CartDiscounts({
       ?.map(({code}) => code) || [];
 
   return (
-    <div>
-      {/* Have existing discount, display it with a remove option */}
-      <dl hidden={!codes.length}>
-        <div>
-          <dt>Discount(s)</dt>
-          <UpdateDiscountForm>
-            <div className="cart-discount">
-              <code>{codes?.join(', ')}</code>
-              &nbsp;
-              <button>Remove</button>
-            </div>
-          </UpdateDiscountForm>
-        </div>
-      </dl>
+    <div className="flex flex-col gap-[10px]">
+      {/* Existing discount with remove */}
+      {codes.length > 0 && (
+        <UpdateDiscountForm>
+          <div className="flex items-center justify-between gap-[12px]">
+            <span style={{...SMALL_STYLE, color: 'var(--color-black)'}}>
+              Discount: <strong>{codes.join(', ')}</strong>
+            </span>
+            <button
+              type="submit"
+              className="bg-transparent border-0 cursor-pointer underline"
+              style={SMALL_STYLE}
+            >
+              Remove
+            </button>
+          </div>
+        </UpdateDiscountForm>
+      )}
 
-      {/* Show an input to apply a discount */}
+      {/* Apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div>
-          <input type="text" name="discountCode" placeholder="Discount code" />
-          &nbsp;
-          <button type="submit">Apply</button>
+        <div className="flex items-center gap-[10px]">
+          <input
+            type="text"
+            name="discountCode"
+            placeholder="Discount code"
+            className={INPUT_CLASS}
+            style={INPUT_STYLE}
+          />
+          <button type="submit" className={APPLY_BTN_CLASS} style={APPLY_BTN_STYLE}>
+            Apply
+          </button>
         </div>
       </UpdateDiscountForm>
     </div>
@@ -114,55 +176,62 @@ function CartGiftCard({
   const giftCardCodeInput = useRef<HTMLInputElement>(null);
   const giftCardAddFetcher = useFetcher({key: 'gift-card-add'});
 
-  // Clear the gift card code input after the gift card is added
   useEffect(() => {
-    if (giftCardAddFetcher.data) {
-      giftCardCodeInput.current!.value = '';
+    if (giftCardAddFetcher.data && giftCardCodeInput.current) {
+      giftCardCodeInput.current.value = '';
     }
   }, [giftCardAddFetcher.data]);
 
   function saveAppliedCode(code: string) {
-    const formattedCode = code.replace(/\s/g, ''); // Remove spaces
+    const formattedCode = code.replace(/\s/g, '');
     if (!appliedGiftCardCodes.current.includes(formattedCode)) {
       appliedGiftCardCodes.current.push(formattedCode);
     }
   }
 
   return (
-    <div>
-      {/* Display applied gift cards with individual remove buttons */}
+    <div className="flex flex-col gap-[10px]">
       {giftCardCodes && giftCardCodes.length > 0 && (
-        <dl>
-          <dt>Applied Gift Card(s)</dt>
+        <div className="flex flex-col gap-[6px]">
           {giftCardCodes.map((giftCard) => (
             <RemoveGiftCardForm key={giftCard.id} giftCardId={giftCard.id}>
-              <div className="cart-discount">
-                <code>***{giftCard.lastCharacters}</code>
-                &nbsp;
-                <Money data={giftCard.amountUsed} />
-                &nbsp;
-                <button type="submit">Remove</button>
+              <div className="flex items-center justify-between gap-[12px]">
+                <span style={{...SMALL_STYLE, color: 'var(--color-black)'}}>
+                  Gift card ***{giftCard.lastCharacters} (
+                  <Money data={giftCard.amountUsed} />)
+                </span>
+                <button
+                  type="submit"
+                  className="bg-transparent border-0 cursor-pointer underline"
+                  style={SMALL_STYLE}
+                >
+                  Remove
+                </button>
               </div>
             </RemoveGiftCardForm>
           ))}
-        </dl>
+        </div>
       )}
 
-      {/* Show an input to apply a gift card */}
       <UpdateGiftCardForm
         giftCardCodes={appliedGiftCardCodes.current}
         saveAppliedCode={saveAppliedCode}
-        fetcherKey="gift-card-add"
       >
-        <div>
+        <div className="flex items-center gap-[10px]">
           <input
             type="text"
             name="giftCardCode"
             placeholder="Gift card code"
             ref={giftCardCodeInput}
+            className={INPUT_CLASS}
+            style={INPUT_STYLE}
           />
-          &nbsp;
-          <button type="submit" disabled={giftCardAddFetcher.state !== 'idle'}>
+          <button
+            type="submit"
+            disabled={giftCardAddFetcher.state !== 'idle'}
+            className={APPLY_BTN_CLASS}
+            style={APPLY_BTN_STYLE}
+          >
             Apply
           </button>
         </div>
@@ -174,17 +243,15 @@ function CartGiftCard({
 function UpdateGiftCardForm({
   giftCardCodes,
   saveAppliedCode,
-  fetcherKey,
   children,
 }: {
   giftCardCodes?: string[];
   saveAppliedCode?: (code: string) => void;
-  fetcherKey?: string;
   children: React.ReactNode;
 }) {
   return (
     <CartForm
-      fetcherKey={fetcherKey}
+      fetcherKey="gift-card-add"
       route="/cart"
       action={CartForm.ACTIONS.GiftCardCodesUpdate}
       inputs={{

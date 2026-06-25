@@ -4,6 +4,19 @@ All notable changes to the MSC website are documented here.
 
 ---
 
+## 2026-06-09 — Pedro Font Swap To DM Sans / Crimson Pro
+
+- Checked Pedro's latest `Website Design R1` email from June 9, 2026: he recommends replacing the previous sans/serif choices with open-source `DM Sans` and `Crimson Pro`, and notes the updated Figma should be used for sizing/spacing reference.
+- Added the downloaded variable font files to `public/fonts/` as `DMSans-Variable.ttf` and `CrimsonPro-Variable.ttf`.
+- Updated the design-system font faces and tokens so body/nav text uses DM Sans and editorial/quote text uses Crimson Pro.
+- Removed legacy negative heading tracking that was tuned for the old ABC sans metrics.
+- Fixed three existing TypeScript blockers surfaced during verification: the home hero idle fallback narrowing, a stale generated `RecommendedProductFragment` import, and an overly strict subscribe error callback type.
+- Verified `npm run build` passes with no missing ABC font warnings.
+- Verified `npm run typecheck` passes.
+- Verified locally in-browser at desktop and 393px mobile widths: DM Sans loads for body/nav, Crimson Pro loads for editorial copy, StarCity still renders hero labels, and checked mobile pages have no horizontal overflow.
+
+---
+
 ## 2026-05-24 — Responsive Metaobject Banners
 
 - Added a shared `MetaobjectBannerImage` renderer for Shopify metaobject featured/banner images.

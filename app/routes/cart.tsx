@@ -1,11 +1,14 @@
+import {useEffect} from 'react';
 import {useLoaderData, data, type HeadersFunction} from 'react-router';
 import type {Route} from './+types/cart';
 import type {CartQueryDataReturn} from '@shopify/hydrogen';
 import {CartForm} from '@shopify/hydrogen';
 import {CartMain} from '~/components/CartMain';
 
+const ACCENT_SHOP = '#73B9D0';
+
 export const meta: Route.MetaFunction = () => {
-  return [{title: `Hydrogen | Cart`}];
+  return [{title: `Cart | Mr.StarCity`}];
 };
 
 export const headers: HeadersFunction = ({actionHeaders}) => actionHeaders;
@@ -107,11 +110,35 @@ export async function loader({context}: Route.LoaderArgs) {
 
 export default function Cart() {
   const cart = useLoaderData<typeof loader>();
+  const count = cart?.totalQuantity ?? 0;
+
+  // Theme header/footer accent to the Shop blue on the cart page.
+  useEffect(() => {
+    document.documentElement.style.setProperty('--active-accent', ACCENT_SHOP);
+    return () => {
+      document.documentElement.style.removeProperty('--active-accent');
+    };
+  }, []);
 
   return (
-    <div className="cart">
-      <h1>Cart</h1>
-      <CartMain layout="page" cart={cart} />
+    <div className="bg-[var(--color-neutral-03)] min-h-screen">
+      <div className="mx-auto max-w-[var(--max-width)] px-[60px] max-md:px-[20px] pt-[40px] pb-[120px] max-md:pb-[80px]">
+        <h1
+          className="mb-[40px]"
+          style={{
+            fontFamily: 'var(--font-body)',
+            fontSize: 'clamp(32px, 4vw, 48px)',
+            fontWeight: 500,
+            lineHeight: 1.05,
+            letterSpacing: '-1.5px',
+            color: 'var(--color-black)',
+            fontFeatureSettings: "'salt' 1",
+          }}
+        >
+          Cart{count > 0 ? ` (${count})` : ''}
+        </h1>
+        <CartMain layout="page" cart={cart} />
+      </div>
     </div>
   );
 }

@@ -123,7 +123,7 @@ export default function ProjectsIndex() {
                     fontSize: '60px',
                     fontWeight: 400,
                     lineHeight: 1.1,
-                    letterSpacing: '-2px',
+                    letterSpacing: '0',
                     color: 'var(--color-black)',
                     fontFeatureSettings: "'salt' 1",
                   }}

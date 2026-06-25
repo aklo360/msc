@@ -42,7 +42,7 @@ export default function Music() {
                     fontSize: '32px',
                     fontWeight: 400,
                     lineHeight: 1.1,
-                    letterSpacing: '-2px',
+                    letterSpacing: '0',
                     color: 'var(--color-black)',
                     fontFeatureSettings: "'salt' 1",
                     marginBottom: '20px',
@@ -94,7 +94,7 @@ export default function Music() {
         /* Empty state */
         <div className="px-[60px] max-md:px-[20px] py-[80px]">
           <div className="max-w-[794px] mx-auto text-center">
-            <h2 className="font-[family-name:var(--font-body,_sans-serif)] text-[60px] max-md:text-[36px] font-normal leading-[1.1] tracking-[-2px] text-black mb-[30px]">
+            <h2 className="font-[family-name:var(--font-body,_sans-serif)] text-[60px] max-md:text-[36px] font-normal leading-[1.1] text-black mb-[30px]">
               Music
             </h2>
             <p className="font-[family-name:var(--font-body,_sans-serif)] text-[22px] font-normal leading-[1.2] text-[#7F7F7F] mb-[60px]">

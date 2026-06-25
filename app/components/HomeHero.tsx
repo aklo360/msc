@@ -62,17 +62,17 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
   useEffect(() => {
     const warmVideos = () => setShouldPreloadVideos(true);
     const idleCallback =
-      'requestIdleCallback' in window
+      typeof window.requestIdleCallback === 'function'
         ? window.requestIdleCallback(warmVideos, {timeout: 1500})
-        : window.setTimeout(warmVideos, 900);
+        : globalThis.setTimeout(warmVideos, 900);
 
     return () => {
-      if ('cancelIdleCallback' in window) {
+      if (typeof window.cancelIdleCallback === 'function') {
         window.cancelIdleCallback(idleCallback as number);
         return;
       }
 
-      window.clearTimeout(idleCallback as number);
+      globalThis.clearTimeout(idleCallback as number);
     };
   }, []);
 

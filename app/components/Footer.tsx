@@ -61,7 +61,7 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
               fontWeight: 400,
               fontSize: 'clamp(32px, 5vw, 60px)',
               lineHeight: 1.1,
-              letterSpacing: '-1.2px',
+              letterSpacing: '0',
               color: colorValue,
               transition: 'color 0.4s ease',
               fontFeatureSettings: "'salt' 1",

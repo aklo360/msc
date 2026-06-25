@@ -7,12 +7,16 @@ export function AddToCartButton({
   disabled,
   lines,
   onClick,
+  className,
+  style,
 }: {
   analytics?: unknown;
   children: React.ReactNode;
   disabled?: boolean;
   lines: Array<OptimisticCartLineInput>;
   onClick?: () => void;
+  className?: string;
+  style?: React.CSSProperties;
 }) {
   return (
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
@@ -27,6 +31,8 @@ export function AddToCartButton({
             type="submit"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}
+            className={className}
+            style={style}
           >
             {children}
           </button>

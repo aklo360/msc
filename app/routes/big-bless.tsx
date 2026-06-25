@@ -24,7 +24,7 @@ export default function BigBless() {
               fontSize: '60px',
               fontWeight: 400,
               lineHeight: 1.1,
-              letterSpacing: '-1.2px',
+              letterSpacing: '0',
               color: 'var(--color-black)',
               fontFeatureSettings: "'salt' 1",
             }}
@@ -33,7 +33,7 @@ export default function BigBless() {
           </h2>
         </div>
 
-        {/* Right: Description (ABC Otto 26px Light) */}
+        {/* Right: Description (Crimson Pro 26px Light) */}
         <div className="flex-1">
           <p
             style={{

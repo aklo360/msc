@@ -11,10 +11,13 @@ export function ProductPrice({
   price,
   compareAtPrice,
   size = 'md',
+  serif = false,
 }: {
   price?: MoneyV2;
   compareAtPrice?: MoneyV2 | null;
   size?: 'lg' | 'md' | 'sm';
+  /** Render in the Crimson Pro serif "voice" (used on the product detail page). */
+  serif?: boolean;
 }) {
   const fontSize =
     size === 'lg'
@@ -24,9 +27,9 @@ export function ProductPrice({
         : 'var(--text-copy-sm)';
 
   const base: React.CSSProperties = {
-    fontFamily: 'var(--font-body)',
+    fontFamily: serif ? 'var(--font-quote)' : 'var(--font-body)',
     fontSize,
-    fontWeight: 500,
+    fontWeight: serif ? 300 : 500,
     lineHeight: 1.2,
     color: 'var(--color-black)',
     fontFeatureSettings: "'salt' 1",

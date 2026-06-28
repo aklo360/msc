@@ -194,7 +194,9 @@ aside main {
   top: 0;
   transition: opacity 400ms ease-in-out;
   visibility: hidden;
-  z-index: 10;
+  /* Must sit above the sticky/fixed Header (z-50) so the cart/search drawer
+     and its backdrop cover the navbar instead of the nav text bleeding through. */
+  z-index: 100;
 }
 
 .overlay .close-outside {
@@ -336,6 +338,40 @@ button.reset:hover:not(:has(> *)) {
   border-radius: var(--border-radius);
   max-width: 100%;
   height: auto;
+}
+
+/* Artisanal / editorial prose — Crimson Pro serif, light. Carries the
+   descriptive "voice" on the product page so it reads like the art pages,
+   not a Shopify product blurb. */
+.prose-artisan {
+  font-family: var(--font-quote);
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--color-black);
+  font-feature-settings: 'salt' 1;
+}
+
+.prose-artisan > * + * {
+  margin-top: 0.8em;
+}
+
+.prose-artisan strong {
+  font-weight: 600;
+}
+
+.prose-artisan a {
+  text-decoration: underline;
+}
+
+.prose-artisan ul,
+.prose-artisan ol {
+  padding-left: 1.1em;
+  list-style: revert;
+}
+
+.prose-artisan li + li {
+  margin-top: 0.3em;
 }
 
 /* ================================================================

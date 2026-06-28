@@ -28,25 +28,36 @@ const SMALL_STYLE: React.CSSProperties = {
   fontFeatureSettings: "'salt' 1",
 };
 
+// Serif "voice" note (taxes/shipping line) — matches the art-page descriptive tone.
+const NOTE_STYLE: React.CSSProperties = {
+  fontFamily: 'var(--font-quote)',
+  fontSize: '18px',
+  fontWeight: 300,
+  lineHeight: 1.3,
+  color: 'var(--color-neutral-01)',
+  fontFeatureSettings: "'salt' 1",
+};
+
+// Soft filled input matching the site's subscribe form (rounded-5, #DCDCDC).
 const INPUT_CLASS =
-  'flex-1 min-w-0 h-[48px] px-[18px] rounded-[100px] bg-[var(--color-neutral-03)] border-0 outline-none';
+  'flex-1 min-w-0 h-[48px] px-[16px] rounded-[5px] bg-[#DCDCDC] border-0 outline-none';
 const INPUT_STYLE: React.CSSProperties = {
   fontFamily: 'var(--font-body)',
   fontSize: 'var(--text-nav-sm)',
   fontWeight: 400,
-  color: 'var(--color-black)',
+  color: '#191919',
   fontFeatureSettings: "'salt' 1",
 };
 
+// Understated underlined text link (the site's link language) — not a hard pill.
 const APPLY_BTN_CLASS =
-  'shrink-0 h-[48px] px-[22px] rounded-[100px] cursor-pointer uppercase transition-opacity hover:opacity-80 disabled:opacity-50';
+  'shrink-0 bg-transparent border-0 cursor-pointer uppercase underline transition-opacity hover:opacity-60 disabled:opacity-50';
 const APPLY_BTN_STYLE: React.CSSProperties = {
   fontFamily: 'var(--font-body)',
   fontSize: 'var(--text-nav-sm)',
-  fontWeight: 700,
+  fontWeight: 800,
   letterSpacing: '0.02em',
-  backgroundColor: 'var(--color-black)',
-  color: 'var(--color-white)',
+  color: 'var(--color-black)',
   fontFeatureSettings: "'salt' 1",
 };
 
@@ -68,7 +79,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
       <CartDiscounts discountCodes={cart?.discountCodes} />
       <CartGiftCard giftCardCodes={cart?.appliedGiftCards} />
 
-      <p style={SMALL_STYLE}>Taxes and shipping calculated at checkout.</p>
+      <p style={NOTE_STYLE}>Taxes and shipping calculated at checkout.</p>
 
       <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
     </div>

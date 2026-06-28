@@ -30,10 +30,10 @@ export function RelatedProducts({
                 className="mb-[40px]"
                 style={{
                   fontFamily: 'var(--font-body)',
-                  fontSize: 'var(--text-h3)',
-                  fontWeight: 500,
+                  fontSize: 'clamp(28px, 3vw, 40px)',
+                  fontWeight: 400,
                   lineHeight: 1.1,
-                  letterSpacing: '-1px',
+                  letterSpacing: '0',
                   color: 'var(--color-black)',
                   fontFeatureSettings: "'salt' 1",
                 }}

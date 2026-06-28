@@ -117,9 +117,17 @@ export default function Product() {
     selectedOrFirstAvailableVariant: selectedVariant,
   });
 
-  const {title, descriptionHtml, vendor} = product;
+  const {title, descriptionHtml, vendor, productType} = product;
   const tag = product.tags?.[0];
   const images = product.images?.nodes ?? [];
+
+  // Credits row (echoes the art-detail "credits" rule): only real values.
+  const credits = [
+    productType || tag,
+    vendor,
+    selectedVariant?.sku,
+    selectedVariant?.availableForSale ? 'In stock' : 'Made to order',
+  ].filter(Boolean) as string[];
 
   return (
     <div className="bg-[var(--color-neutral-03)] min-h-screen">
@@ -149,34 +157,30 @@ export default function Product() {
             title={title}
           />
 
-          <div className="flex flex-col gap-[24px] lg:sticky lg:top-[120px]">
-            {(tag || vendor) && (
-              <div className="flex items-center gap-[10px]">
-                {tag && (
-                  <span
-                    className="bg-white rounded-[20px] px-[12px] py-[6px] uppercase whitespace-nowrap"
-                    style={{
-                      fontFamily: 'var(--font-body)',
-                      fontSize: 'var(--text-nav-sm)',
-                      fontWeight: 500,
-                      lineHeight: 1.2,
-                      color: 'var(--color-black)',
-                      fontFeatureSettings: "'salt' 1",
-                    }}
-                  >
-                    {tag}
-                  </span>
-                )}
-              </div>
+          <div className="flex flex-col gap-[28px] lg:sticky lg:top-[120px]">
+            {tag && (
+              <span
+                className="self-start bg-white rounded-[20px] px-[12px] py-[6px] uppercase whitespace-nowrap"
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: 'var(--text-nav-sm)',
+                  fontWeight: 500,
+                  lineHeight: 1.2,
+                  color: 'var(--color-black)',
+                  fontFeatureSettings: "'salt' 1",
+                }}
+              >
+                {tag}
+              </span>
             )}
 
             <h1
               style={{
                 fontFamily: 'var(--font-body)',
-                fontSize: 'clamp(32px, 4vw, 48px)',
-                fontWeight: 500,
-                lineHeight: 1.05,
-                letterSpacing: '-1.5px',
+                fontSize: 'clamp(40px, 4.5vw, 60px)',
+                fontWeight: 400,
+                lineHeight: 1.1,
+                letterSpacing: '0',
                 color: 'var(--color-black)',
                 fontFeatureSettings: "'salt' 1",
                 margin: 0,
@@ -185,38 +189,55 @@ export default function Product() {
               {title}
             </h1>
 
-            <ProductPrice
-              price={selectedVariant?.price}
-              compareAtPrice={selectedVariant?.compareAtPrice}
-              size="lg"
-            />
+            {/* Price — quiet, set in the serif voice */}
+            <div
+              style={{
+                fontFamily: 'var(--font-quote)',
+                fontSize: 'var(--text-copy-lg)',
+                fontWeight: 300,
+                lineHeight: 1.2,
+                color: 'var(--color-black)',
+                fontFeatureSettings: "'salt' 1",
+              }}
+            >
+              <ProductPrice
+                price={selectedVariant?.price}
+                compareAtPrice={selectedVariant?.compareAtPrice}
+                size="lg"
+                serif
+              />
+            </div>
 
-            <div className="mt-[6px]">
+            {descriptionHtml && (
+              <div
+                className="prose-artisan"
+                dangerouslySetInnerHTML={{__html: descriptionHtml}}
+              />
+            )}
+
+            <div className="mt-[4px]">
               <ProductForm
                 productOptions={productOptions}
                 selectedVariant={selectedVariant}
               />
             </div>
 
-            {descriptionHtml && (
-              <div className="mt-[10px] pt-[30px] border-t border-[var(--color-neutral-02)]">
-                <span
-                  className="block mb-[16px] uppercase"
-                  style={{
-                    fontFamily: 'var(--font-body)',
-                    fontSize: 'var(--text-nav-sm)',
-                    fontWeight: 700,
-                    letterSpacing: '0.02em',
-                    color: 'var(--color-black)',
-                    fontFeatureSettings: "'salt' 1",
-                  }}
-                >
-                  Details
-                </span>
-                <div
-                  className="prose-msc"
-                  dangerouslySetInnerHTML={{__html: descriptionHtml}}
-                />
+            {/* Credits rule — mirrors the art-detail credits row */}
+            {credits.length > 0 && (
+              <div
+                className="flex items-center justify-between flex-wrap gap-x-[20px] gap-y-[8px] py-[20px] border-t border-b border-black mt-[4px]"
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: 'var(--text-copy-sm)',
+                  fontWeight: 400,
+                  lineHeight: 1.2,
+                  color: 'var(--color-black)',
+                  fontFeatureSettings: "'salt' 1",
+                }}
+              >
+                {credits.map((c) => (
+                  <span key={c}>{c}</span>
+                ))}
               </div>
             )}
           </div>
@@ -286,6 +307,7 @@ const PRODUCT_FRAGMENT = `#graphql
     id
     title
     vendor
+    productType
     handle
     descriptionHtml
     description

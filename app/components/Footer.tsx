@@ -5,13 +5,13 @@ interface FooterProps {
 }
 
 /** Bottom halves of MSC letterforms (Layer_1 from msc.svg) */
-function MscBottom({interactive = false}: {interactive?: boolean}) {
+function MscBottom() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 35 418.6 54.6"
       fill="currentColor"
-      className={`w-full h-auto block${interactive ? ' footer-logo-hit' : ''}`}
+      className="w-full h-auto block"
       aria-hidden="true"
     >
       <path d="M70.3,35.1h75c.5,0,1,.2,1.3.6.4.4.6.8.6,1.3v50.7c0,.5-.2,1-.6,1.3s-.8.6-1.3.6h-45.6c-.5,0-1-.2-1.3-.6s-.6-.8-.6-1.3v-20.6c0-.6-.3-1-.9-1.2-.6-.2-1.1,0-1.4.4l-14.3,22c-.2.3-.5.6-1,.9-.5.3-.9.4-1.3.4h-10.4c-.4,0-.9-.1-1.3-.4-.5-.3-.8-.6-1-.9l-14.1-22c-.3-.5-.8-.7-1.4-.4-.6.2-.9.6-.9,1.2v20.6c0,.5-.2,1-.6,1.3-.4.4-.8.6-1.3.6H1.9c-.5,0-1-.2-1.3-.6s-.6-.8-.6-1.3v-50.7c0-.5.2-1,.6-1.3.4-.4.8-.6,1.3-.6h68.4Z" />
@@ -22,13 +22,13 @@ function MscBottom({interactive = false}: {interactive?: boolean}) {
 }
 
 /** Top halves of MSC letterforms (Layer_2 from msc.svg) */
-function MscTop({interactive = false}: {interactive?: boolean}) {
+function MscTop() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 418.6 27.5"
       fill="currentColor"
-      className={`w-full h-auto block${interactive ? ' footer-logo-hit' : ''}`}
+      className="w-full h-auto block"
       aria-hidden="true"
     >
       <path d="M53.2,1.9l14.5,23.2c.3.5.4,1,.1,1.5-.3.5-.6.8-1.2.8H1.9c-.5,0-1-.2-1.3-.6-.4-.4-.6-.8-.6-1.3V1.9c0-.5.2-1,.6-1.3.4-.4.8-.6,1.3-.6h48.1c1.5,0,2.5.6,3.2,1.9Z" />
@@ -81,39 +81,6 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
     creditsShift: 150,
   });
 
-  // Hover intent driven by hit-testing the actual painted letterform paths.
-  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const enter = () => {
-    if (leaveTimer.current) {
-      clearTimeout(leaveTimer.current);
-      leaveTimer.current = null;
-    }
-    setHovered(true);
-  };
-  const leave = () => {
-    if (leaveTimer.current) return; // already pending — don't keep resetting
-    leaveTimer.current = setTimeout(() => {
-      leaveTimer.current = null;
-      setHovered(false);
-    }, 80);
-  };
-  const forceLeave = () => {
-    if (leaveTimer.current) {
-      clearTimeout(leaveTimer.current);
-      leaveTimer.current = null;
-    }
-    setHovered(false);
-  };
-  // On every move, hit-test the point against the painted MSC paths. Because
-  // elementFromPoint respects SVG fill, the hotspot maps EXACTLY to the shapes
-  // (gaps don't count), and because we only re-evaluate on movement, the pieces
-  // can animate under a stationary cursor without flickering the state.
-  const onMove = (e: React.MouseEvent) => {
-    const el = document.elementFromPoint(e.clientX, e.clientY) as Element | null;
-    if (el && el.closest && el.closest('.footer-logo-hit')) enter();
-    else leave();
-  };
-
   useEffect(() => {
     const measure = () => {
       const stage = stageRef.current;
@@ -162,8 +129,8 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
     <footer
       className="relative w-full overflow-hidden"
       style={{backgroundColor: 'var(--color-black)'}}
-      onMouseMove={onMove}
-      onMouseLeave={forceLeave}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <div
         ref={stageRef}
@@ -181,7 +148,7 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
             willChange: 'transform',
           }}
         >
-          <MscBottom interactive />
+          <MscBottom />
         </div>
 
         {/* Top halves — WRAP copy: hidden above at rest, drops in from the top */}
@@ -195,7 +162,7 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
             willChange: 'transform',
           }}
         >
-          <MscTop interactive />
+          <MscTop />
         </div>
 
         {/* Top halves — REST copy: visible at bottom, drops below out of view on hover */}
@@ -209,7 +176,7 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
             willChange: 'transform',
           }}
         >
-          <MscTop interactive />
+          <MscTop />
         </div>
 
         {/* Credits — not part of the logo hit area (so they don't trigger the

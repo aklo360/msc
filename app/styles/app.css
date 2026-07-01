@@ -594,16 +594,6 @@ button.reset:hover:not(:has(> *)) {
   flex-wrap: wrap;
 }
 
-/* Footer wordmark hover hit-testing: only the painted letterform paths are
-   hover targets (not the SVG's bounding box), so the hotspot maps exactly to
-   the MSC shapes and moves with them as they animate. */
-.footer-logo-hit {
-  pointer-events: none;
-}
-.footer-logo-hit path {
-  pointer-events: auto;
-}
-
 /* Home hero links — desktop default; mobile shrinks so the widest BOLD label
    sits at ~97vw and never spills off screen (reverse-engineered from the
    "Projects" label measuring 128vw at 15.5vw). */

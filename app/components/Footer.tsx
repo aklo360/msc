@@ -59,6 +59,9 @@ type Offsets = {
   /** credits block: stays visible, sits below the wordmark in both states */
   creditsTop: number;
   creditsShift: number;
+  /** stable hover-zone heights: top cluster (covers assembled lockup) + bottom cluster */
+  zoneAH: number;
+  zoneBH: number;
 };
 
 export function Footer({accentColor = '#FF9E70'}: FooterProps) {
@@ -79,6 +82,8 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
     outRest: 700,
     creditsTop: 240,
     creditsShift: 150,
+    zoneAH: 460,
+    zoneBH: 130,
   });
 
   useEffect(() => {
@@ -113,6 +118,11 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
         outRest: restH + PAD + 80,
         creditsTop: creditsRest,
         creditsShift: creditsHover - creditsRest,
+        // Top zone: covers the resting bottom-halves, the assembled lockup, and
+        // the credits (which overflow below as a subtree, keeping hover).
+        zoneAH: creditsHover + 70 - PAD,
+        // Bottom zone: covers the resting top-halves strip at the footer bottom.
+        zoneBH: restH + 34,
       });
     };
 
@@ -129,8 +139,6 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
     <footer
       className="relative w-full overflow-hidden"
       style={{backgroundColor: 'var(--color-black)'}}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
     >
       <div
         ref={stageRef}
@@ -179,11 +187,25 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
           <MscTop />
         </div>
 
+        {/* Hover zones — ONLY the wordmark triggers the lockup, not the whole
+            footer. The split logo has two clusters (bottom-halves up top,
+            top-halves at the bottom); each gets a stable, transparent hit zone
+            on top of the (pointer-events-none) letterforms, so the pieces can
+            animate without the pointer ever "leaving". Moving off them — into
+            the empty band or the margins — reverses. Zone A holds the credits
+            so the @mrstarcity link stays clickable and hovering it never
+            reverses. */}
+        <div
+          className="absolute z-10 left-[20px] right-[20px] md:left-[60px] md:right-[60px]"
+          style={{top: PAD, height: o.zoneAH}}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
         {/* Credits — stay visible; slide down to sit under the assembled lockup */}
         <div
-          className="absolute inset-x-0 px-[var(--padding-x-mobile)] md:px-[var(--padding-x)] flex items-start justify-between"
+          className="absolute inset-x-0 flex items-start justify-between"
           style={{
-            top: o.creditsTop,
+            top: o.creditsTop - PAD,
             transform: `translateY(${hovered ? o.creditsShift : 0}px)`,
             transition: `transform ${DUR} ${EASE}`,
           }}
@@ -240,6 +262,15 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
             </p>
           </div>
         </div>
+        </div>
+
+        {/* Zone B — the resting top-halves strip at the very bottom */}
+        <div
+          className="absolute z-10 left-[20px] right-[20px] md:left-[60px] md:right-[60px]"
+          style={{bottom: PAD, height: o.zoneBH}}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        />
       </div>
     </footer>
   );

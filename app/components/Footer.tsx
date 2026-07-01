@@ -5,13 +5,13 @@ interface FooterProps {
 }
 
 /** Bottom halves of MSC letterforms (Layer_1 from msc.svg) */
-function MscBottom() {
+function MscBottom({interactive = false}: {interactive?: boolean}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 35 418.6 54.6"
       fill="currentColor"
-      className="w-full h-auto block"
+      className={`w-full h-auto block${interactive ? ' footer-logo-hit' : ''}`}
       aria-hidden="true"
     >
       <path d="M70.3,35.1h75c.5,0,1,.2,1.3.6.4.4.6.8.6,1.3v50.7c0,.5-.2,1-.6,1.3s-.8.6-1.3.6h-45.6c-.5,0-1-.2-1.3-.6s-.6-.8-.6-1.3v-20.6c0-.6-.3-1-.9-1.2-.6-.2-1.1,0-1.4.4l-14.3,22c-.2.3-.5.6-1,.9-.5.3-.9.4-1.3.4h-10.4c-.4,0-.9-.1-1.3-.4-.5-.3-.8-.6-1-.9l-14.1-22c-.3-.5-.8-.7-1.4-.4-.6.2-.9.6-.9,1.2v20.6c0,.5-.2,1-.6,1.3-.4.4-.8.6-1.3.6H1.9c-.5,0-1-.2-1.3-.6s-.6-.8-.6-1.3v-50.7c0-.5.2-1,.6-1.3.4-.4.8-.6,1.3-.6h68.4Z" />
@@ -22,13 +22,13 @@ function MscBottom() {
 }
 
 /** Top halves of MSC letterforms (Layer_2 from msc.svg) */
-function MscTop() {
+function MscTop({interactive = false}: {interactive?: boolean}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 418.6 27.5"
       fill="currentColor"
-      className="w-full h-auto block"
+      className={`w-full h-auto block${interactive ? ' footer-logo-hit' : ''}`}
       aria-hidden="true"
     >
       <path d="M53.2,1.9l14.5,23.2c.3.5.4,1,.1,1.5-.3.5-.6.8-1.2.8H1.9c-.5,0-1-.2-1.3-.6-.4-.4-.6-.8-.6-1.3V1.9c0-.5.2-1,.6-1.3.4-.4.8-.6,1.3-.6h48.1c1.5,0,2.5.6,3.2,1.9Z" />
@@ -59,9 +59,6 @@ type Offsets = {
   /** credits block: stays visible, sits below the wordmark in both states */
   creditsTop: number;
   creditsShift: number;
-  /** stable hover-zone heights: top cluster (covers assembled lockup) + bottom cluster */
-  zoneAH: number;
-  zoneBH: number;
 };
 
 export function Footer({accentColor = '#FF9E70'}: FooterProps) {
@@ -82,9 +79,40 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
     outRest: 700,
     creditsTop: 240,
     creditsShift: 150,
-    zoneAH: 460,
-    zoneBH: 130,
   });
+
+  // Hover intent driven by hit-testing the actual painted letterform paths.
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const enter = () => {
+    if (leaveTimer.current) {
+      clearTimeout(leaveTimer.current);
+      leaveTimer.current = null;
+    }
+    setHovered(true);
+  };
+  const leave = () => {
+    if (leaveTimer.current) return; // already pending — don't keep resetting
+    leaveTimer.current = setTimeout(() => {
+      leaveTimer.current = null;
+      setHovered(false);
+    }, 80);
+  };
+  const forceLeave = () => {
+    if (leaveTimer.current) {
+      clearTimeout(leaveTimer.current);
+      leaveTimer.current = null;
+    }
+    setHovered(false);
+  };
+  // On every move, hit-test the point against the painted MSC paths. Because
+  // elementFromPoint respects SVG fill, the hotspot maps EXACTLY to the shapes
+  // (gaps don't count), and because we only re-evaluate on movement, the pieces
+  // can animate under a stationary cursor without flickering the state.
+  const onMove = (e: React.MouseEvent) => {
+    const el = document.elementFromPoint(e.clientX, e.clientY) as Element | null;
+    if (el && el.closest && el.closest('.footer-logo-hit')) enter();
+    else leave();
+  };
 
   useEffect(() => {
     const measure = () => {
@@ -118,11 +146,6 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
         outRest: restH + PAD + 80,
         creditsTop: creditsRest,
         creditsShift: creditsHover - creditsRest,
-        // Top zone: covers the resting bottom-halves, the assembled lockup, and
-        // the credits (which overflow below as a subtree, keeping hover).
-        zoneAH: creditsHover + 70 - PAD,
-        // Bottom zone: covers the resting top-halves strip at the footer bottom.
-        zoneBH: restH + 34,
       });
     };
 
@@ -139,6 +162,8 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
     <footer
       className="relative w-full overflow-hidden"
       style={{backgroundColor: 'var(--color-black)'}}
+      onMouseMove={onMove}
+      onMouseLeave={forceLeave}
     >
       <div
         ref={stageRef}
@@ -156,7 +181,7 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
             willChange: 'transform',
           }}
         >
-          <MscBottom />
+          <MscBottom interactive />
         </div>
 
         {/* Top halves — WRAP copy: hidden above at rest, drops in from the top */}
@@ -170,7 +195,7 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
             willChange: 'transform',
           }}
         >
-          <MscTop />
+          <MscTop interactive />
         </div>
 
         {/* Top halves — REST copy: visible at bottom, drops below out of view on hover */}
@@ -184,28 +209,15 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
             willChange: 'transform',
           }}
         >
-          <MscTop />
+          <MscTop interactive />
         </div>
 
-        {/* Hover zones — ONLY the wordmark triggers the lockup, not the whole
-            footer. The split logo has two clusters (bottom-halves up top,
-            top-halves at the bottom); each gets a stable, transparent hit zone
-            on top of the (pointer-events-none) letterforms, so the pieces can
-            animate without the pointer ever "leaving". Moving off them — into
-            the empty band or the margins — reverses. Zone A holds the credits
-            so the @mrstarcity link stays clickable and hovering it never
-            reverses. */}
+        {/* Credits — not part of the logo hit area (so they don't trigger the
+            lockup); stay visible and slide down under the assembled wordmark. */}
         <div
-          className="absolute z-10 left-[20px] right-[20px] md:left-[60px] md:right-[60px]"
-          style={{top: PAD, height: o.zoneAH}}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-        {/* Credits — stay visible; slide down to sit under the assembled lockup */}
-        <div
-          className="absolute inset-x-0 flex items-start justify-between"
+          className="absolute inset-x-0 px-[var(--padding-x-mobile)] md:px-[var(--padding-x)] flex items-start justify-between pointer-events-none"
           style={{
-            top: o.creditsTop - PAD,
+            top: o.creditsTop,
             transform: `translateY(${hovered ? o.creditsShift : 0}px)`,
             transition: `transform ${DUR} ${EASE}`,
           }}
@@ -262,15 +274,6 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
             </p>
           </div>
         </div>
-        </div>
-
-        {/* Zone B — the resting top-halves strip at the very bottom */}
-        <div
-          className="absolute z-10 left-[20px] right-[20px] md:left-[60px] md:right-[60px]"
-          style={{bottom: PAD, height: o.zoneBH}}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        />
       </div>
     </footer>
   );

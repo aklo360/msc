@@ -10,7 +10,10 @@ const NAV_ITEMS = [
   {label: 'BIG BLESS', to: '/big-bless', color: '#D073A5'},
 ];
 
-function SearchIcon() {
+// Contact — the eye icon opens a mailto for now (placeholder address).
+const CONTACT_HREF = 'mailto:mrstarcity@gmail.com';
+
+function ContactIcon() {
   return (
     <svg width="35" height="35" viewBox="0 0 45.5015 37" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M22.7528 25.8481C26.9406 25.8481 30.3355 22.453 30.3355 18.2651C30.3355 14.0771 26.9406 10.6821 22.7528 10.6821C18.5649 10.6821 15.17 14.0771 15.17 18.2651C15.17 22.453 18.5649 25.8481 22.7528 25.8481Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -246,7 +249,7 @@ export function Header() {
           {/* Icon buttons */}
           <div className={`flex items-center gap-[10px] ${hidePageNav ? 'ml-auto' : ''}`}>
             {[
-              {href: '/search', icon: <SearchIcon />, label: 'SEARCH'},
+              {href: CONTACT_HREF, icon: <ContactIcon />, label: 'CONTACT'},
               {href: '/account', icon: <ProfileIcon />, label: 'PROFILE'},
               {href: '/cart', icon: <CartIcon />, label: 'CART'},
             ].map((item, i) => {
@@ -350,9 +353,9 @@ export function Header() {
 
             {/* Icons stacked vertically */}
             <div className="flex flex-col gap-[10px] items-center">
-              <NavLink to="/search" prefetch="intent" className="cursor-pointer text-[var(--color-black)]" onClick={() => setMobileMenuOpen(false)}>
-                <SearchIcon />
-              </NavLink>
+              <a href={CONTACT_HREF} className="cursor-pointer text-[var(--color-black)]" onClick={() => setMobileMenuOpen(false)}>
+                <ContactIcon />
+              </a>
               <NavLink to="/account" prefetch="intent" className="cursor-pointer text-[var(--color-black)]" onClick={() => setMobileMenuOpen(false)}>
                 <ProfileIcon />
               </NavLink>

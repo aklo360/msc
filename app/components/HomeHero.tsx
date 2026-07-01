@@ -177,11 +177,11 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
       {/* Stacked hero text links — vertically & horizontally centered, auto-sized to fit */}
       <div className="relative z-10 flex flex-col items-center justify-center h-[90%] my-auto gap-[0.4vh]">
         {HERO_LINKS.map((item, i) => {
-          // The featured item (hovered, or the current cycle item) is bold;
-          // every other item is medium. StarCity ships as two static faces
-          // (Medium 500 / Bold 700) so the weight just snaps — no opacity
-          // dissolve. The motion is carried entirely by the springy scale.
-          const isFeatured = currentIndex === i;
+          // Only the hovered item is bold; at rest every label is medium so
+          // the default hero reads as a uniform stack (no item singled out
+          // larger). The active auto-cycle item is still signalled by its
+          // background video + accent wash, not by weight. StarCity ships as
+          // two static faces (Medium 500 / Bold 700) so the weight just snaps.
           const isHovered = hoveredIndex === i;
           const someHover = hoveredIndex !== null;
           // Springy "stretch" on hover: the hovered item scales up and the
@@ -221,7 +221,7 @@ export function HomeHero({accentColor = '#FF9E70'}: HomeHeroProps) {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  fontWeight: isFeatured ? 700 : 500,
+                  fontWeight: isHovered ? 700 : 500,
                 }}
               >
                 {item.label}

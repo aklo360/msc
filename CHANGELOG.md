@@ -4,6 +4,56 @@ All notable changes to the MSC website are documented here.
 
 ---
 
+## 2026-07-01 — Dark Room Seed Recovered From Vault
+
+- Recovered the Dark Room treatment seed from the local Obsidian vault note `projects/Mr Star City - Dark Room Treatment.md`.
+- Folded the core concept, Mal opening sequence, first luxury-to-trap-house transformation beat, lyric/performance anchor, visual language, and open questions into `treatments/dark-room/TREATMENT.md`.
+- Preserved the Telegram-provided source audio as `treatments/dark-room/assets/Darkroom_master v1_1644_MBDW042325.m4a` and added a dated source-capture section to the treatment.
+- Generated a rough local `whisper-cli` transcript at `treatments/dark-room/transcripts/darkroom_master_base_en.txt`; added paraphrased lyric/audio beat notes to the treatment and marked the transcript as needing human lyric verification.
+- Incorporated AKLO's Telegram voice-note transcript into a paraphrased transcript-driven visual beat map in `treatments/dark-room/TREATMENT.md`, keeping exact lyric quoting out of the working treatment until wording is verified.
+- Added Star's later club-scene entrance direction to `treatments/dark-room/TREATMENT.md` and created `treatments/dark-room/transcripts/LYRIC-BEAT-SHEET.md` as a non-verbatim lyric cue sheet for production planning.
+- Researched treatment, shot-list, timecode, and music-video synchronization formats; created `treatments/dark-room/DARK_ROOM_TIMECODE_TREATMENT_TEMPLATE.md` and a private Google Doc template for shot-by-shot workshop drafting: https://docs.google.com/document/d/1f90OPxQJ7nsLu9K1qeHjL6n1Z1-vJNJ6CggbOvKxiSo/edit?usp=drivesdk
+- Updated `treatments/dark-room/PROJECT.md` so current priority and next actions point to the timecoded Google Doc workshop flow.
+- Revised the timecoded treatment template and Google Doc from a table format to natural-language timecode entries with per-entry camera, transition, and production notes.
+- Tightened the timecoded treatment template and Google Doc into a mobile-first format: no tables, short headings, compact `Cue` / `Camera` / `Notes` labels, and shorter phone-friendly shot descriptions.
+- Checked the Mini iCloud Drive mount at `~/Library/CloudStorage`; no iCloud-backed note files were mounted there in this session, but the synced vault copy contained the needed note.
+- Added AKLO's overhead Hype Williams-style fisheye performance idea: Mal isolated in pure darkness under one hanging bulb, rapping up into camera, with freeze frames becoming Polaroid/photo-development memory artifacts.
+- Added Star's possible film printer/photo-lab thread: Star gets physical film photographs printed, studies the developed photos, and the images become a gateway into the same haunted dark-room memory logic.
+- Refined the overhead fisheye setup into a locked static-tripod shot designed for repeatable cut effects, time-lapse transitions, extras entering frame, object swaps, and Requiem for a Dream-inspired hip-hop montage inserts.
+- Clarified that the montage borrows Requiem for a Dream's accelerated editing grammar but should be translated into crack/coke trap-house imagery, not heroin imagery.
+- Added Star's burning-lip-skin sensory lyric/image as a close-up montage trigger: heat, smoke, mouth-level discomfort, harsh light, and the physical cost of the room without making the imagery instructional.
+- Added Star's city B-story as the third core look: Star riding the J train at sunset over the Williamsburg Bridge on the way to get film developed, bridging present-day New York movement with the photo-lab memory thread.
+- Added the money/cake practical reveal for the lyric beat: Mal places a fat wad of blue hundreds on the marble kitchen island, the camera punches in, and he cuts it open with a knife to reveal cake inside.
+- Generated timestamped rough transcript sidecars with `whisper-cli` CPU-only and rewrote the Dark Room treatment into AKLO's requested three-section structure: simple metadata, short synopsis, and a beginning-to-end timecode treatment paced around lyric/story cues and the three core looks.
+- Revised the timecode treatment from broad strokes into more granular blocking: exact 00:00-00:25 terrace/bedroom/stair/door beats, MSC silk robe, cigar, self-directed performance, wide foyer angle, over-shoulder transformation trigger, and more detailed pacing through the remaining dark-room, J train, film-lab, and final-hook sections.
+- Added Mal putting on his shoes to the 00:13-00:19 bedroom ritual, making the sequence watch, shoes, gun, waistband before he descends the stairs.
+- Merged the 00:25 and 00:33 hook beats into one continuous couch/table portal: Mal looks back, sees himself on the couch, the condo overlays into the trap-house room, the condo melts into the black overhead fisheye void, then the cut returns to narrative past action on the fiends/table-work cue. Added pacing guidance to use quick luxury-condo flashes early and save the bridge/train imagery for Star's later B-story unless the structure changes.
+- Reworked the 00:38 transition out of the first dingy trap-house passage: Mal raps toward the trap-house bedroom window, fingers through the blinds, daylight cuts in, but his dark aura swallows the sunlight into black; on the "hit the lights" cue, the Scene B bulb flicks on in close-up, he hits a switch, cockroaches scatter, and the edit returns to the fisheye wide with Mal rapping to camera.
+- Filled out the remaining timecode treatment with granular blocking and pacing through the end: serving/law checks, water/rain survival transition, escalating static-fisheye hook montage, Star's J train/bridge B-story, childhood/status intercuts, physical crack-table montage, film-printer reveal, Polaroid evidence loop, and two final-image options.
+- Split camera/edit direction out of the main treatment into a separate `CAMERA_NOTES.md` companion and Google Doc: https://docs.google.com/document/d/1lT8j0EMMKo3ZjaGBgSEQfuX8BPdiZJXN3Nfs7UZbzV4/edit?usp=drivesdk
+- Stripped the main treatment timecodes back to scene-description-only entries while preserving the granular pacing and narrative arc, then synced the simplified version to the main Google Doc.
+- Split the formerly combined 00:25-00:39 hook entry into separate 00:25-00:33 and 00:33-00:39 line items in both the main treatment and camera notes, matching AKLO's requested timestamp granularity.
+- Removed internal sub-timecodes from the main treatment body copy so each visual beat uses exactly one timestamp line item.
+- Restored AKLO's direct Google Doc edits after the stale local copy overwrite: 00:19 stair close-up/slow-motion detail and the combined 00:25-00:39 couch portal/dark-room beat are back in the live doc and local working copy.
+- Captured AKLO's manual Google Doc restore as the locked 2026-07-01 18:29 ET save point, created a native Google Doc copy for rollback, exported a local markdown snapshot, and synced `TREATMENT.md` to that restored baseline before any further edits.
+- Promoted AKLO's current Google Doc update to the 2026-07-01 18:32 ET latest master: exported the full live doc through 02:45, created a native Google Doc master copy, saved a local markdown snapshot, and synced `TREATMENT.md` to that master baseline.
+- Created a separate line-by-line v02 treatment mapped to AKLO's exact 37 timestamp breakdown, preserving the locked master and generating a new Google Doc version for further shot-by-shot refinement.
+- Marked the line-by-line v02 Google Doc as the active workshop surface in `treatments/dark-room/PROJECT.md`; AKLO reports it contains all 37 timestamp blocks mapped shot-for-shot, while the locked master remains preserved as rollback baseline.
+- Captured the latest main/general chat rule in `treatments/dark-room/PROJECT.md`: AKLO-authored prose is the master text and must be preserved verbatim; future edits should adjust timestamp mapping or structure around AKLO's wording rather than rewriting it.
+- Created line-by-line v03 as the corrected active workshop copy: it restores AKLO's exact master title, metadata, synopsis, and treatment verbiage, then redistributes that existing text under the 37 timestamp headings without rewriting the prose.
+- Exported the v03 Google Doc to `treatments/dark-room/snapshots/dark-room-v03-20260701.md` and synced `treatments/dark-room/TREATMENT.md` to that exact v03 baseline for this session's working copy.
+- Exported the current live v03 Google Doc before rounding, rounded all 37 timestamp headings to nearest whole seconds without changing treatment prose, saved a rounded local snapshot, and wrote the rounded heading version back to the active v03 Google Doc.
+- Saved AKLO's latest direct v03 treatment update as the 2026-07-01 19:12 EDT rollback point: exported the live Google Doc to `treatments/dark-room/snapshots/dark-room-v03-savepoint-20260701-191205-EDT.md`, synced `treatments/dark-room/TREATMENT.md` to that export, and created native Google Doc copy https://docs.google.com/document/d/1kQxp14dZboo0wj8_8MB9VFjeCuxB-Q7xDjdArEPW6nw/edit?usp=drivesdk.
+
+---
+
+## 2026-07-01 — Dark Room Treatment Scaffold
+
+- Added `treatments/dark-room/` as a writing and treatment workspace for the Mr Star City "Dark Room" music video while staying inside the existing MSC project room.
+- Created the treatment outline, subproject brief, handoff note, asset inbox, reference inbox, and export folder notes so AKLO can continue the same work from the Mini `proj-msc` tmux session and `mini-msc` Telegram route.
+
+---
+
 ## 2026-03-31 — Initial Build (Figma R1 → Code)
 
 ### Scaffold

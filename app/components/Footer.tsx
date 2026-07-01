@@ -1,3 +1,5 @@
+import {useEffect, useRef, useState} from 'react';
+
 interface FooterProps {
   accentColor?: string;
 }
@@ -37,24 +39,141 @@ function MscTop() {
   );
 }
 
+const PAD = 24; // top/bottom inset of each half at rest (matches prior pt/pb-24)
+const EASE = 'cubic-bezier(0.76, 0, 0.24, 1)';
+const DUR = '0.8s';
+
+/** Transform offsets (px) that assemble the split wordmark into the full lockup. */
+type Offsets = {
+  /** bottom-half: rest at top → slides DOWN to the lockup bottom slot */
+  dBottom: number;
+  /** top-half wrap copy: hidden above at rest → drops DOWN into the lockup top slot */
+  wrapHide: number;
+  dWrap: number;
+  /** top-half rest copy: visible at bottom → drops DOWN and out of view */
+  outRest: number;
+};
+
 export function Footer({accentColor = '#FF9E70'}: FooterProps) {
   const colorValue = `var(--active-accent, ${accentColor})`;
+
+  const stageRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const topWrapRef = useRef<HTMLDivElement>(null);
+  const topRestRef = useRef<HTMLDivElement>(null);
+
+  const [hovered, setHovered] = useState(false);
+  // Sensible pre-measure defaults so SSR renders the resting split correctly
+  // (hover offsets are corrected the moment the layout effect runs).
+  const [o, setO] = useState<Offsets>({
+    dBottom: 200,
+    wrapHide: -600,
+    dWrap: 0,
+    outRest: 700,
+  });
+
+  useEffect(() => {
+    const measure = () => {
+      const stage = stageRef.current;
+      const bottom = bottomRef.current;
+      const wrap = topWrapRef.current;
+      const rest = topRestRef.current;
+      if (!stage || !bottom || !wrap || !rest) return;
+
+      const H = stage.offsetHeight;
+      const topH = wrap.offsetHeight; // rendered height of the top-half strip
+      const bottomH = bottom.offsetHeight;
+      const restH = rest.offsetHeight;
+      // The top strip is 27.5u and the seam gap is 7.5u of the same scale.
+      const gap = topH * (7.5 / 27.5);
+      const fullH = topH + gap + bottomH; // full MSC lockup height
+      const lockTopY = (H - fullH) / 2; // top of the top-half in the lockup
+      const lockBottomY = lockTopY + topH + gap; // top of the bottom-half in the lockup
+
+      setO({
+        // bottom-half anchored at top:PAD → move down to its lockup slot
+        dBottom: lockBottomY - PAD,
+        // wrap copy anchored at top:PAD → hide fully above at rest, drop to lockup on hover
+        wrapHide: -(PAD + topH + 100),
+        dWrap: lockTopY - PAD,
+        // rest copy anchored at bottom:PAD → drop down clear of the footer
+        outRest: restH + PAD + 80,
+      });
+    };
+
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  const halfPad =
+    'absolute inset-x-0 px-[var(--padding-x-mobile)] md:px-[var(--padding-x)] pointer-events-none select-none';
+  const halfTransition = `transform ${DUR} ${EASE}`;
 
   return (
     <footer
       className="relative w-full overflow-hidden"
-      style={{
-        backgroundColor: 'var(--color-black)',
-      }}
+      style={{backgroundColor: 'var(--color-black)'}}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <div className="relative h-[390px] md:h-[800px] flex flex-col justify-between">
-        {/* Top: bottom halves of MSC (aligned to top) */}
-        <div className="px-[var(--padding-x-mobile)] md:px-[var(--padding-x)] pt-[24px] pointer-events-none select-none" style={{color: colorValue, transition: 'color 0.4s ease'}}>
+      <div
+        ref={stageRef}
+        className="relative h-[390px] md:h-[800px]"
+        style={{color: colorValue, transition: 'color 0.4s ease'}}
+      >
+        {/* Bottom halves — rest at top, slide DOWN into the lockup on hover */}
+        <div
+          ref={bottomRef}
+          className={halfPad}
+          style={{
+            top: PAD,
+            transform: `translateY(${hovered ? o.dBottom : 0}px)`,
+            transition: halfTransition,
+            willChange: 'transform',
+          }}
+        >
           <MscBottom />
         </div>
 
-        {/* Middle: text content */}
-        <div className="absolute inset-x-0 px-[var(--padding-x-mobile)] md:px-[var(--padding-x)] flex items-start justify-between" style={{top: '38%'}}>
+        {/* Top halves — WRAP copy: hidden above at rest, drops in from the top */}
+        <div
+          ref={topWrapRef}
+          className={halfPad}
+          style={{
+            top: PAD,
+            transform: `translateY(${hovered ? o.dWrap : o.wrapHide}px)`,
+            transition: halfTransition,
+            willChange: 'transform',
+          }}
+        >
+          <MscTop />
+        </div>
+
+        {/* Top halves — REST copy: visible at bottom, drops below out of view on hover */}
+        <div
+          ref={topRestRef}
+          className={halfPad}
+          style={{
+            bottom: PAD,
+            transform: `translateY(${hovered ? o.outRest : 0}px)`,
+            transition: halfTransition,
+            willChange: 'transform',
+          }}
+        >
+          <MscTop />
+        </div>
+
+        {/* Middle: text content — eases away on hover so the lockup reads clean */}
+        <div
+          className="absolute inset-x-0 px-[var(--padding-x-mobile)] md:px-[var(--padding-x)] flex items-start justify-between"
+          style={{
+            top: '38%',
+            opacity: hovered ? 0 : 1,
+            transform: `translateY(${hovered ? 24 : 0}px)`,
+            transition: `opacity 0.35s ease, transform ${DUR} ${EASE}`,
+          }}
+        >
           <p
             style={{
               fontFamily: 'var(--font-body)',
@@ -96,14 +215,16 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
                 marginLeft: '-0.1em',
               }}
             >
-              <a href="https://www.instagram.com/mrstarcity" target="_blank" rel="noopener noreferrer">@mrstarcity</a>
+              <a
+                href="https://www.instagram.com/mrstarcity"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pointer-events-auto"
+              >
+                @mrstarcity
+              </a>
             </p>
           </div>
-        </div>
-
-        {/* Bottom: top halves of MSC (aligned to bottom) */}
-        <div className="px-[var(--padding-x-mobile)] md:px-[var(--padding-x)] pb-[24px] pointer-events-none select-none" style={{color: colorValue, transition: 'color 0.4s ease'}}>
-          <MscTop />
         </div>
       </div>
     </footer>

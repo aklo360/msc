@@ -40,8 +40,12 @@ function MscTop() {
 }
 
 const PAD = 24; // top/bottom inset of each half at rest (matches prior pt/pb-24)
-const EASE = 'cubic-bezier(0.76, 0, 0.24, 1)';
-const DUR = '0.8s';
+// Snappy: fast expo-out settle.
+const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
+const DUR = '0.5s';
+// Where the assembled lockup sits (fraction of footer height from the top).
+// Pedro forms the full MSC in the upper portion, not vertically centered.
+const LOCK_TOP_FRAC = 0.12;
 
 /** Transform offsets (px) that assemble the split wordmark into the full lockup. */
 type Offsets = {
@@ -52,6 +56,9 @@ type Offsets = {
   dWrap: number;
   /** top-half rest copy: visible at bottom → drops DOWN and out of view */
   outRest: number;
+  /** credits block: stays visible, sits below the wordmark in both states */
+  creditsTop: number;
+  creditsShift: number;
 };
 
 export function Footer({accentColor = '#FF9E70'}: FooterProps) {
@@ -70,6 +77,8 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
     wrapHide: -600,
     dWrap: 0,
     outRest: 700,
+    creditsTop: 240,
+    creditsShift: 150,
   });
 
   useEffect(() => {
@@ -87,8 +96,12 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
       // The top strip is 27.5u and the seam gap is 7.5u of the same scale.
       const gap = topH * (7.5 / 27.5);
       const fullH = topH + gap + bottomH; // full MSC lockup height
-      const lockTopY = (H - fullH) / 2; // top of the top-half in the lockup
+      const lockTopY = Math.round(H * LOCK_TOP_FRAC); // top of the lockup (upper portion)
       const lockBottomY = lockTopY + topH + gap; // top of the bottom-half in the lockup
+
+      // Credits stay visible and sit just below the wordmark in both states.
+      const creditsRest = PAD + bottomH + 28; // under the resting bottom-halves
+      const creditsHover = lockTopY + fullH + 28; // under the assembled lockup
 
       setO({
         // bottom-half anchored at top:PAD → move down to its lockup slot
@@ -98,6 +111,8 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
         dWrap: lockTopY - PAD,
         // rest copy anchored at bottom:PAD → drop down clear of the footer
         outRest: restH + PAD + 80,
+        creditsTop: creditsRest,
+        creditsShift: creditsHover - creditsRest,
       });
     };
 
@@ -164,14 +179,13 @@ export function Footer({accentColor = '#FF9E70'}: FooterProps) {
           <MscTop />
         </div>
 
-        {/* Middle: text content — eases away on hover so the lockup reads clean */}
+        {/* Credits — stay visible; slide down to sit under the assembled lockup */}
         <div
           className="absolute inset-x-0 px-[var(--padding-x-mobile)] md:px-[var(--padding-x)] flex items-start justify-between"
           style={{
-            top: '38%',
-            opacity: hovered ? 0 : 1,
-            transform: `translateY(${hovered ? 24 : 0}px)`,
-            transition: `opacity 0.35s ease, transform ${DUR} ${EASE}`,
+            top: o.creditsTop,
+            transform: `translateY(${hovered ? o.creditsShift : 0}px)`,
+            transition: `transform ${DUR} ${EASE}`,
           }}
         >
           <p

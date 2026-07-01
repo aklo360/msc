@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import {
   data as remixData,
   Form,
+  Link,
   NavLink,
   Outlet,
   useLoaderData,
@@ -152,5 +153,82 @@ function Logout() {
         Sign out
       </button>
     </Form>
+  );
+}
+
+/**
+ * Branded fallback so the account section never renders as a raw 500 (which,
+ * on the black body background, looked like a blank/black screen). This fires
+ * when the Customer Account API isn't configured yet; once it is, sign-in
+ * redirects normally and this won't be hit.
+ */
+export function ErrorBoundary() {
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--active-accent',
+      ACCENT_ACCOUNT,
+    );
+    return () => {
+      document.documentElement.style.removeProperty('--active-accent');
+    };
+  }, []);
+
+  return (
+    <div className="bg-[var(--color-neutral-03)] min-h-screen">
+      <div className="mx-auto max-w-[var(--max-width)] px-[60px] max-md:px-[20px] pt-[80px] max-md:pt-[48px] pb-[120px]">
+        <h1
+          className="mb-[20px]"
+          style={{
+            fontFamily: 'var(--font-body)',
+            fontSize: 'clamp(40px, 4.5vw, 60px)',
+            fontWeight: 400,
+            lineHeight: 1.1,
+            letterSpacing: '0',
+            color: 'var(--color-black)',
+            fontFeatureSettings: "'salt' 1",
+          }}
+        >
+          Accounts
+        </h1>
+        <p className="prose-artisan max-w-[560px] mb-[36px]">
+          Sign-in isn&rsquo;t available just yet. You can keep browsing the shop
+          or reach out directly — everything ships as a guest checkout in the
+          meantime.
+        </p>
+        <div className="flex items-center gap-[12px] flex-wrap">
+          <Link
+            to="/shop"
+            prefetch="intent"
+            className="inline-flex items-center justify-center h-[56px] px-[32px] rounded-[100px] uppercase transition-colors duration-200"
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: 'var(--text-nav)',
+              fontWeight: 700,
+              letterSpacing: '0.02em',
+              backgroundColor: 'var(--color-black)',
+              color: 'var(--color-white)',
+              fontFeatureSettings: "'salt' 1",
+            }}
+          >
+            Shop now
+          </Link>
+          <a
+            href="mailto:mrstarcity@gmail.com"
+            className="inline-flex items-center justify-center h-[56px] px-[32px] rounded-[100px] uppercase transition-colors duration-200"
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: 'var(--text-nav)',
+              fontWeight: 500,
+              letterSpacing: '0.02em',
+              border: '1px solid var(--color-black)',
+              color: 'var(--color-black)',
+              fontFeatureSettings: "'salt' 1",
+            }}
+          >
+            Contact
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }

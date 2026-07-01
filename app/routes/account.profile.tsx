@@ -85,49 +85,99 @@ export default function AccountProfile() {
   const action = useActionData<ActionResponse>();
   const customer = action?.customer ?? account?.customer;
 
+  const labelStyle: React.CSSProperties = {
+    fontFamily: 'var(--font-body)',
+    fontSize: 'var(--text-nav-sm)',
+    fontWeight: 700,
+    textTransform: 'uppercase',
+    letterSpacing: '0.02em',
+    color: 'var(--color-black)',
+    fontFeatureSettings: "'salt' 1",
+  };
+  const inputClass =
+    'w-full h-[60px] px-[20px] rounded-[5px] bg-[#DCDCDC] border-0 outline-none';
+  const inputStyle: React.CSSProperties = {
+    fontFamily: 'var(--font-body)',
+    fontSize: 'var(--text-copy-sm)',
+    fontWeight: 400,
+    color: '#191919',
+    fontFeatureSettings: "'salt' 1",
+  };
+
   return (
-    <div className="account-profile">
-      <h2>My profile</h2>
-      <br />
-      <Form method="PUT">
-        <legend>Personal information</legend>
-        <fieldset>
-          <label htmlFor="firstName">First name</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            autoComplete="given-name"
-            placeholder="First name"
-            aria-label="First name"
-            defaultValue={customer.firstName ?? ''}
-            minLength={2}
-          />
-          <label htmlFor="lastName">Last name</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            autoComplete="family-name"
-            placeholder="Last name"
-            aria-label="Last name"
-            defaultValue={customer.lastName ?? ''}
-            minLength={2}
-          />
-        </fieldset>
-        {action?.error ? (
-          <p>
-            <mark>
-              <small>{action.error}</small>
-            </mark>
-          </p>
-        ) : (
-          <br />
-        )}
-        <button type="submit" disabled={state !== 'idle'}>
-          {state !== 'idle' ? 'Updating' : 'Update'}
-        </button>
-      </Form>
+    <div className="max-w-[560px]">
+      <div className="bg-white rounded-[20px] p-[30px] max-md:p-[24px] flex flex-col gap-[30px]">
+        <span style={labelStyle}>Personal information</span>
+
+        <Form method="PUT" className="flex flex-col gap-[24px]">
+          <div className="flex flex-col gap-[10px]">
+            <label htmlFor="firstName" style={{...labelStyle, fontWeight: 500}}>
+              First name
+            </label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              autoComplete="given-name"
+              placeholder="First name"
+              aria-label="First name"
+              defaultValue={customer.firstName ?? ''}
+              minLength={2}
+              className={inputClass}
+              style={inputStyle}
+            />
+          </div>
+
+          <div className="flex flex-col gap-[10px]">
+            <label htmlFor="lastName" style={{...labelStyle, fontWeight: 500}}>
+              Last name
+            </label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              autoComplete="family-name"
+              placeholder="Last name"
+              aria-label="Last name"
+              defaultValue={customer.lastName ?? ''}
+              minLength={2}
+              className={inputClass}
+              style={inputStyle}
+            />
+          </div>
+
+          {action?.error && (
+            <p
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: 'var(--text-nav-sm)',
+                fontWeight: 400,
+                color: '#F46060',
+                fontFeatureSettings: "'salt' 1",
+              }}
+            >
+              {action.error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={state !== 'idle'}
+            className="w-full h-[60px] rounded-[100px] cursor-pointer uppercase transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: 'var(--text-nav)',
+              fontWeight: 700,
+              letterSpacing: '0.02em',
+              backgroundColor: 'var(--color-black)',
+              color: 'var(--color-white)',
+              fontFeatureSettings: "'salt' 1",
+            }}
+          >
+            {state !== 'idle' ? 'Updating…' : 'Update'}
+          </button>
+        </Form>
+      </div>
     </div>
   );
 }

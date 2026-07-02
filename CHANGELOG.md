@@ -49,6 +49,7 @@ All notable changes to the MSC website are documented here.
 - Locked the full true v1.0 treatment after AKLO approval: exported the current live Google Doc to `treatments/dark-room/snapshots/dark-room-v1.0-locked-20260701-200327-EDT.md`, synced `treatments/dark-room/TREATMENT.md`, saved `treatments/dark-room/versions/dark-room-line-by-line-v1.0-locked-20260701.md`, preserved `treatments/dark-room/exports/savepoints/2026-07-01-v1.0-locked/TREATMENT.md`, and created native Google Doc master copy https://docs.google.com/document/d/1ogTjG-CkCdjrUlgSHyHPNYp-DEHhzVLiwrlzvp1KmSg/edit?usp=drivesdk.
 - Audited the active v1.0 treatment for leftover J train / Williamsburg Bridge / film-development story shots after AKLO removed that storyline. Removed the literal B-story/location shots while preserving Polaroid freeze frames, evidence-wall/dark-room VFX, and lyric-driven photo references; saved pre/post local snapshots and created story-audit-clean Google Doc copy https://docs.google.com/document/d/1G2UZsqHkrRhiehz_MhQRapcYjVjaoTV5JNz3L5Tbui4/edit?usp=drivesdk.
 - Fixed the active v1.0 synopsis so it reflects the current two-world structure: luxury condo/past trap-house overlap plus the abstract dark-room performance and Polaroid/evidence VFX language, with no J train or film-development story setup.
+- Revised the active v1.0 synopsis back to three core scenes after AKLO clarified that the Williamsburg Bridge sunset performance scene remains, while the old J train / film-development storyline stays removed.
 
 ---
 

@@ -51,6 +51,7 @@ All notable changes to the MSC website are documented here.
 - Temporarily fixed the active v1.0 synopsis during an intermediate pass to remove the J train / film-development story setup; superseded by the later three-scene clarification below.
 - Revised the active v1.0 synopsis back to `3 core scenes` after AKLO clarified that the Williamsburg Bridge sunset performance scene remains, while the old J train / film-development storyline stays removed.
 - Corrected the active `Dark Room v1.0` Google Doc and v1.0 copies so the synopsis explicitly says `3 core scenes`; refreshed local `TREATMENT.md` from the live Doc and removed the stale J train / photo-lab synopsis paragraph from the older locked copy.
+- Locked AKLO's latest direct `Dark Room v1.0` updates as the 2026-07-01 20:18 EDT savepoint: exported the active Google Doc, created native Google Doc copy https://docs.google.com/document/d/10_MIGW4j9whKNsov2Pq1CYf41QyTzPfDX0X_wQ5n34Y/edit?usp=drivesdk, synced `treatments/dark-room/TREATMENT.md`, saved `treatments/dark-room/snapshots/dark-room-v1.0-locked-savepoint-20260701-201855-EDT.md`, saved `treatments/dark-room/versions/dark-room-v1.0-locked-savepoint-20260701-201855-EDT.md`, and preserved `treatments/dark-room/exports/savepoints/2026-07-01-v1.0-locked-201855-EDT/TREATMENT.md`.
 
 ---
 

@@ -4,9 +4,9 @@ Artist: Manhattan Mal & Mr Star City  | Runtime: 2:45  | Version: v01 07/01/26
 
 ## Synopsis
 
-Dark Room is a music video about success being haunted by survival. Mal begins in a clean, expensive Manhattan condo, but the luxury space keeps getting interrupted by flashes of the dirty trap-house room he came from. The present and past overlap until the condo, couch, table, and dark-room performance space feel like different surfaces of the same memory.
+Dark Room is a music video about success being haunted by survival. Mal begins in a clean, expensive present-day world in a luxury condo in Manhattan. As the song turns, the space is transformed by flashes of the past: a dirty trap-house room, overlays and juxtaposes the pristine condo interior as memories refuse to stay buried.
 
-The video moves between two core worlds: Mal's glossy present-day luxury life colliding with the trap-house past, and an abstract black dark-room void where he performs under one hanging bulb as props, extras, and montage details transform around him. Polaroid-style freeze frames, evidence-wall VFX, and Requiem-inspired montage language turn moments into images that feel captured, watched, and impossible to bury.
+The video moves between two core scenes and a recurring VFX language. First is the two part master scene, Mal's glossy present-day luxury world with the flashbacks of the trap house past interwoven. Second is a literal dark-room void performance scene: a black room with one single hanging lightbulb where Mal performs while props, extras & montage details shift & transform around him. This scene will contain lots of visual references to the film Requiem for a Dream. Polaroid style freeze frames will stylize the video throughout as moments are frozen in time as photographs.
 
 ## Treatment
 

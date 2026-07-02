@@ -6,7 +6,7 @@ Artist: Manhattan Mal & Mr Star City  | Runtime: 2:45  | Version: v01 07/01/26
 
 Dark Room is a music video about success being haunted by survival. Mal begins in a clean, expensive present-day world in a luxury condo in Manhattan. As the song turns, the space is transformed by flashes of the past: a dirty trap-house room, overlays and juxtaposes the pristine condo interior as memories refuse to stay buried.
 
-The video moves between two core scenes and a recurring VFX language. First is the two part master scene, Mal's glossy present-day luxury world with the flashbacks of the trap house past interwoven. Second is a literal dark-room void performance scene: a black room with one single hanging lightbulb where Mal performs while props, extras & montage details shift & transform around him. This scene will contain lots of visual references to the film Requiem for a Dream. Polaroid style freeze frames will stylize the video throughout as moments are frozen in time as photographs.
+The video moves between three core scenes. First is the two part master scene, Mal's glossy present-day luxury world with the flashbacks of the trap house past interwoven. Second is a literal dark-room void performance scene: a black room with one single hanging lightbulb where Mal performs while props, extras & montage details shift & transform around him. This scene will contain lots of visual references to the film Requiem for a Dream. The third scene is Star & Mal’s B-story: riding the J train at sunset over the Williamsburg Bridge on the way to get film developed. When Star & Mal reach the photo lab and look through the prints, the photographs transform into the other scenes in the video, tying everything full circle. Polaroid style freeze frames will stylize the video throughout as moments are frozen in time as photographs.
 
 ## Treatment
 
@@ -66,7 +66,7 @@ On the serving/law cue, he opens the door and serves the fiend. Every action has
 
 ### 00:53-00:56 They threw me in the water, I turned to jaws
 
-The room breaks into a water/survival VFX transition. Mal raps into camera as the dark-room space ripples and distorts around him, turning the line into a visual shift without leaving the core world.
+Cut to the C scene, Mal & Star on the williamsburg bridge overlooking the water & sunrise. Mal raps this line to camera and flexes into the lens.
 
 ### 00:56-01:00 It's the middle of the winter, fiends walkin round in draws
 
@@ -114,7 +114,7 @@ Cut to close ups of both of them wearing all gold rollies \+ Johnny Nelson Rap M
 
 ### 01:36-01:40 Don't you know we kidnapped kids and throw em off the bridge
 
-Cut back to the dark-room performance. The space turns graphic and unstable around Star's line: rail-like shadows, a falling-camera feeling, and a symbolic drop effect without using a literal exterior location.
+Cut back to the williamsburg bridge sunset shot with both of them, this time Star raps to the camera while Mal supports.
 
 ### 01:40-01:43 Fiends crying over the coke, like it's onions
 
@@ -142,11 +142,11 @@ The video becomes intimate and uncomfortable: heat, smoke, a flinch, cracked lip
 
 ### 01:59-02:03 Now we here with harpoons, folks with propellers
 
-Cut back to the dark-room VFX setup.
+Cut back to the williamsburg bridge shot.
 
 ### 02:03-02:15 Praying the feds don't got a dark room with photos developed
 
-A Polaroid freeze frame snapshot happens here inside the dark-room world, then we zoom out to it clipped to a wire with a bunch of other Polaroids next to it. The camera moves along viewing other Polaroids from the video like evidence, keeping this as VFX language rather than a separate story thread.
+A polaroid freeze frame snapshot happens here on the williamsburg bridge and then we zoom out to it closepinned to a wire in a dark room developing with a bunch of other polaroids next to it. The camera moves along viewing other polaroids from the video.
 
 ### 02:15-02:20 In my dark room, just left the club, it's back to my dark room
 
@@ -162,8 +162,8 @@ Zoom back out into the dark room panning past polaroids.
 
 ### 02:26-02:30 Topprrra, uh, you know
 
-Zoom back into a Polaroid, this time returning to an abstract dark-room image that bends between the luxury condo and the trap-house memory.
+Zoom back into a polaroid, this time an aerial view of Brooklyn at sunrise overlooking the bridge where Mal & Star were performing.
 
 ### 02:30-02:40 Yeah, dark room, yeah
 
-The last Polaroid fades back into the dark-room void as the song fades out  
+The sun fully sets over the williamsburg bridge as the song fades out  

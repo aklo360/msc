@@ -1,4 +1,4 @@
-import {Await, Link} from 'react-router';
+import {Await, Link, useLocation} from 'react-router';
 import {Suspense, useId} from 'react';
 import type {
   CartApiQueryFragment,
@@ -32,6 +32,12 @@ export function PageLayout({
   isLoggedIn,
   publicStoreDomain,
 }: PageLayoutProps) {
+  const location = useLocation();
+
+  if (location.pathname.startsWith('/dark-room-deck')) {
+    return <div className="min-h-screen bg-[var(--color-black)]">{children}</div>;
+  }
+
   return (
     <Aside.Provider>
       <CartAside cart={cart} />

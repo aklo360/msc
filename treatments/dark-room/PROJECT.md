@@ -11,7 +11,7 @@ Subproject under the main MSC / Mr Star City workspace for the "Dark Room" music
 - Persistent tmux session: `proj-msc`
 - Mini daemon thread: `mini-msc`
 - Telegram route/topic: MSC
-- Status: active timecoded treatment draft
+- Status: v1.0 treatment locked; active Google Doc remains the workshop surface for future revisions
 
 ## Goal
 
@@ -22,6 +22,7 @@ Create a reviewable music-video treatment package for "Dark Room" that AKLO can 
 - Treatment draft in `TREATMENT.md`
 - Timecoded Google Doc treatment template: https://docs.google.com/document/d/1f90OPxQJ7nsLu9K1qeHjL6n1Z1-vJNJ6CggbOvKxiSo/edit?usp=drivesdk
 - Line-by-line v03 Google Doc, preserving AKLO's master verbiage while remapping to the exact timestamp grid: https://docs.google.com/document/d/1p3lR0OVziC90-8qw_JLBUbvkOvnC0VaV1do8_JCGkKc/edit?usp=drivesdk
+- Locked v1.0 Google Doc master, captured after AKLO approved the full true v1.0 on 2026-07-01: https://docs.google.com/document/d/1ogTjG-CkCdjrUlgSHyHPNYp-DEHhzVLiwrlzvp1KmSg/edit?usp=drivesdk
 - Latest v03 savepoint copy, captured after AKLO's 2026-07-01 19:12 EDT update: https://docs.google.com/document/d/1kQxp14dZboo0wj8_8MB9VFjeCuxB-Q7xDjdArEPW6nw/edit?usp=drivesdk
 - Line-by-line v02 Google Doc, mapped to AKLO's exact timestamp grid: https://docs.google.com/document/d/1KapmsiyiRJrfVOeLHl87gYYKmR4xMuxVuVoBgLMUKIE/edit?usp=drivesdk
 - Latest master Google Doc copy, captured from the current live doc after AKLO's 2026-07-01 18:32 ET update: https://docs.google.com/document/d/19HD5K8Wlj2LJipW-zcwfb-eT-j3Jnt08TYuUaCyje30/edit?usp=drivesdk
@@ -33,7 +34,7 @@ Create a reviewable music-video treatment package for "Dark Room" that AKLO can 
 
 ## Current Priority
 
-Workshop the line-by-line v03 Google Doc so the video is described shot by shot, moment by moment, against the 2:45 source audio while preserving AKLO's exact master wording. Preserve the locked master as the rollback baseline unless AKLO explicitly promotes a newer version.
+Preserve the locked v1.0 master as the approved baseline. Future workshop edits should start from the active v03 Google Doc and become a new revision only when AKLO explicitly promotes them.
 
 ## Next Actions
 
@@ -58,6 +59,7 @@ Workshop the line-by-line v03 Google Doc so the video is described shot by shot,
 - The Google Doc is an active live editing surface. Before any future write/replace sync, export or read the live doc first and reconcile AKLO's direct edits; never blindly replace it from the local markdown copy.
 - The current locked master is the 2026-07-01 18:32 ET Google Doc update and its latest-master copy. Treat that version as the baseline before making further adjustments; the 18:29 ET savepoint remains a fallback.
 - The latest v03 savepoint is the 2026-07-01 19:12 EDT Google Doc copy, captured after AKLO's newest direct treatment edits. Use it as the immediate rollback point for the current workshop pass.
+- The locked v1.0 master is the 2026-07-01 Google Doc copy titled `Dark Room — Line-by-Line Treatment v1.0 — Locked Master — 2026-07-01`; treat it as the approved reference unless AKLO explicitly promotes a newer version.
 - The line-by-line v03 draft supersedes v02 as the active workshop copy because it preserves AKLO's exact master verbiage while keeping the 37 timestamp blocks.
 - AKLO-authored prose is the master text. Preserve exact wording from AKLO's rewrites 100%, especially the title/metadata/synopsis and any hand-edited scene descriptions. Do not rewrite, polish, paraphrase, summarize, or "improve" AKLO-written prose unless he explicitly asks; adjust timestamp mapping or structure around that language instead.
 - Do not send, share, publish, or submit any treatment externally without explicit AKLO approval.

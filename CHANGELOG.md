@@ -4,6 +4,18 @@ All notable changes to the MSC website are documented here.
 
 ---
 
+## 2026-07-02 — Dark Room Visual Deck Scaffold
+
+- Created `treatments/dark-room/plans/visual-deck-react.md` as the execution plan for turning the locked Dark Room v1.0 treatment into a React/Tailwind visual deck.
+- Added a hidden internal MSC route at `/dark-room-deck` with a 9-page visual treatment outline: cover, thesis, scene system, penthouse present, trap-house past, dark-room void, Star/club/Williamsburg performance, Polaroid/VFX language, and end card.
+- Built the first deck pass with placeholder image modules only, preserving the locked treatment structure while avoiding a full line-by-line breakdown.
+- Added a route-specific `PageLayout` exception so `/dark-room-deck` runs full-bleed without the storefront header, footer, cart aside, or search aside.
+- Added slide hash behavior so direct links like `/dark-room-deck#cover` and `/dark-room-deck#vfx` render a single presentation slide, while the base route remains scrollable.
+- Verified the deck locally with targeted lint, production build, local HTTP `200`, desktop screenshots, VFX slide screenshot, and explicit 390px mobile Chrome DevTools Protocol overflow metrics.
+- Saved verification screenshots under `treatments/dark-room/outputs/visual-deck-20260701/`.
+
+---
+
 ## 2026-07-01 — Dark Room Seed Recovered From Vault
 
 - Recovered the Dark Room treatment seed from the local Obsidian vault note `projects/Mr Star City - Dark Room Treatment.md`.

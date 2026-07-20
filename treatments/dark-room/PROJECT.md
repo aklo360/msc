@@ -23,11 +23,11 @@ Create a reviewable music-video treatment package for "Dark Room" that AKLO can 
 - Timecoded Google Doc treatment template: https://docs.google.com/document/d/1f90OPxQJ7nsLu9K1qeHjL6n1Z1-vJNJ6CggbOvKxiSo/edit?usp=drivesdk
 - Line-by-line v03 Google Doc, preserving AKLO's master verbiage while remapping to the exact timestamp grid: https://docs.google.com/document/d/1p3lR0OVziC90-8qw_JLBUbvkOvnC0VaV1do8_JCGkKc/edit?usp=drivesdk
 - Locked v1.0 savepoint copy, captured after AKLO's 2026-07-01 20:18 EDT updates: https://docs.google.com/document/d/10_MIGW4j9whKNsov2Pq1CYf41QyTzPfDX0X_wQ5n34Y/edit?usp=drivesdk
-- Visual deck route, first React/Tailwind placeholder pass: `/dark-room-deck`
+- Visual deck route, rebuilt as a true 16:9 slide deck (Elegant-style architecture, MSC/Pedro brand system, 10 slides, arrow/swipe/rail navigation, `?slide=N` deep links): `/dark-room-deck`
 - Visual deck execution plan: `plans/visual-deck-react.md`
-- Visual deck verification screenshots: `outputs/visual-deck-20260701/`
+- Visual deck v2 verification screenshots: `outputs/visual-deck-v2-20260701/` (v1 scroll-scaffold screenshots preserved in `outputs/visual-deck-20260701/`)
 - Locked v1.0 Google Doc master, captured after AKLO approved the full true v1.0 on 2026-07-01: https://docs.google.com/document/d/1ogTjG-CkCdjrUlgSHyHPNYp-DEHhzVLiwrlzvp1KmSg/edit?usp=drivesdk
-- v1.0 story-audit-clean Google Doc copy, with the J train / film-development story removed while preserving the Williamsburg Bridge sunset performance scene and Polaroid/VFX language: https://docs.google.com/document/d/1G2UZsqHkrRhiehz_MhQRapcYjVjaoTV5JNz3L5Tbui4/edit?usp=drivesdk
+- v1.0 story-audit-clean Google Doc copy, with the J train / film-development story removed while preserving the outdoor performance scene and Polaroid/VFX language: https://docs.google.com/document/d/1G2UZsqHkrRhiehz_MhQRapcYjVjaoTV5JNz3L5Tbui4/edit?usp=drivesdk
 - Latest v03 savepoint copy, captured after AKLO's 2026-07-01 19:12 EDT update: https://docs.google.com/document/d/1kQxp14dZboo0wj8_8MB9VFjeCuxB-Q7xDjdArEPW6nw/edit?usp=drivesdk
 - Line-by-line v02 Google Doc, mapped to AKLO's exact timestamp grid: https://docs.google.com/document/d/1KapmsiyiRJrfVOeLHl87gYYKmR4xMuxVuVoBgLMUKIE/edit?usp=drivesdk
 - Latest master Google Doc copy, captured from the current live doc after AKLO's 2026-07-01 18:32 ET update: https://docs.google.com/document/d/19HD5K8Wlj2LJipW-zcwfb-eT-j3Jnt08TYuUaCyje30/edit?usp=drivesdk
@@ -39,7 +39,7 @@ Create a reviewable music-video treatment package for "Dark Room" that AKLO can 
 
 ## Current Priority
 
-Preserve the 2026-07-01 20:18 EDT locked v1.0 savepoint as the latest approved baseline. The first React/Tailwind visual deck pass now exists at `/dark-room-deck` with placeholder image modules; future content edits should start from the active `Dark Room v1.0` Google Doc, and future deck image passes should replace placeholders without rewriting the locked treatment unless AKLO explicitly asks.
+The visual deck at `/dark-room-deck` is now **image-complete** (2026-07-08): a flowing 10-still iconic reel / trailer previz with real photoreal NB2 stills (exact Mal & Star likeness), the darkroom/Polaroid seam transition, and a synced "Play Trailer" mode. Awaiting AKLO review. Preserve the 2026-07-01 20:18 EDT locked v1.0 treatment as the approved text baseline; future content edits start from the active `Dark Room v1.0` Google Doc, and deck image passes stay additive (new versioned dirs) without rewriting the locked treatment unless AKLO explicitly asks.
 
 ## Next Actions
 
@@ -47,7 +47,9 @@ Preserve the 2026-07-01 20:18 EDT locked v1.0 savepoint as the latest approved b
 - [ ] Workshop the line-by-line v03 Google Doc block by block, starting with Mal's penthouse opening and first foyer transformation.
 - [ ] Define Star's club entrance timing and how the club thread becomes part of the dark-room memory logic.
 - [ ] Choose the final image for the last hook.
-- [ ] Replace the visual deck placeholders with selected real stills, AI reference frames, or production references for rooftop luxury, trap-house texture, club lighting, Polaroid/evidence VFX, and transformation VFX.
+- [x] Replace the visual deck placeholders with selected real stills — done 2026-07-08: 10 iconic NB2 stills wired into a flowing trailer reel (terrace, foyer, portal, void, trap-serve, club, robes-duo, bridge, pipe, darkroom).
+- [ ] AKLO review of the image-complete deck; note any likeness/scene changes for a v2 image pass.
+- [ ] Optional: upload the 10 selects to the Drive review folder (needs `gog` keyring password or a Drive re-auth).
 - [ ] Export only after AKLO approves the treatment direction.
 
 ## Open Questions
@@ -66,8 +68,8 @@ Preserve the 2026-07-01 20:18 EDT locked v1.0 savepoint as the latest approved b
 - The latest v03 savepoint is the 2026-07-01 19:12 EDT Google Doc copy, captured after AKLO's newest direct treatment edits. Use it as the immediate rollback point for the current workshop pass.
 - The locked v1.0 master is the 2026-07-01 Google Doc copy titled `Dark Room — Line-by-Line Treatment v1.0 — Locked Master — 2026-07-01`; treat it as the approved reference unless AKLO explicitly promotes a newer version.
 - The latest locked savepoint is the 2026-07-01 20:18 EDT Google Doc copy titled `Dark Room v1.0 — Locked Savepoint — 2026-07-01 20:18 EDT`; it captures AKLO's newest direct updates and supersedes earlier v1.0 savepoints as the current baseline.
-- The v1.0 story-audit-clean copy removes the J train and film-development storyline. Keep the Williamsburg Bridge sunset scene only as a clean outdoor performance/location scene, not as travel-to-photo-lab story. Keep Polaroid freezes, evidence-wall/dark-room VFX, and lyric-driven photo references; do not reintroduce a literal train, photo lab, or film-development plot unless AKLO explicitly asks.
-- The `/dark-room-deck` route is the first visual deck scaffold. It is intentionally a placeholder-image outline, not a final image-select deck. Keep future image work additive and do not overwrite prior rendered screenshots or exported deck artifacts.
+- The v1.0 story-audit-clean copy removes the J train and film-development storyline. As of AKLO's latest location note, replace the Williamsburg Bridge sunset image with LES + Chinatown at the base of the Manhattan Bridge as the clean outdoor performance/location scene, not a travel-to-photo-lab story. Keep Polaroid freezes, evidence-wall/dark-room VFX, and lyric-driven photo references; do not reintroduce a literal train, photo lab, or film-development plot unless AKLO explicitly asks.
+- The `/dark-room-deck` route is now a true 16:9 presentation deck (fixed slide frame, `cqw`-proportional type, one slide at a time) rather than a scrolling page. It remains a placeholder-image outline, not a final image-select deck. Keep future image work additive and do not overwrite prior rendered screenshots or exported deck artifacts.
 - The line-by-line v03 draft supersedes v02 as the active workshop copy because it preserves AKLO's exact master verbiage while keeping the 37 timestamp blocks.
 - AKLO-authored prose is the master text. Preserve exact wording from AKLO's rewrites 100%, especially the title/metadata/synopsis and any hand-edited scene descriptions. Do not rewrite, polish, paraphrase, summarize, or "improve" AKLO-written prose unless he explicitly asks; adjust timestamp mapping or structure around that language instead.
 - Do not send, share, publish, or submit any treatment externally without explicit AKLO approval.

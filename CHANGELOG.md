@@ -4,15 +4,48 @@ All notable changes to the MSC website are documented here.
 
 ---
 
+## 2026-07-08 — Dark Room Deck Finished As Image-Complete Trailer Previz
+
+- Rebuilt `/dark-room-deck` from a placeholder summary deck into a flowing **iconic reel / trailer previz**: `Cover → Synopsis → Scene System → 10 iconic full-bleed stills (treatment order) → Structure → End`. The four scene-summary slides + the VFX slide were absorbed into the reel; the darkroom/Polaroid motif is now the transition engine, not a slide about it.
+- **Generated real photoreal stills for every iconic beat** with the Nano Banana / Gemini pipeline (`scripts/darkroom-nb2.mjs`, `pro` model, 2K, 16:9), using reference-chaining off the Drive photos so Mal & Star keep exact likeness. New shots: dark-room fisheye void, trap-house serve, club (Star enters), matching MSC Kid-Art robes duo, LES/Manhattan Bridge duo, and the pipe-cherry macro. Reused the four strong prior gens (terrace, foyer, portal couch, red-darkroom cover). Grade: King of New York / 1990s golden-era hip-hop / 35mm, Hype Williams fisheye, Kubrick one-point symmetry, Requiem sensory macro. Sources under `treatments/dark-room/outputs/nb2-20260708/` + prompts under `treatments/dark-room/prompts/dr-*.txt`; nothing overwritten.
+- Added a **transition engine** (no hard cuts): incoming/outgoing layers cross-dissolve through a red darkroom-flash + Polaroid seam overlay, each held still runs a slow Ken Burns push/pan, and the couch portal is presented as a literal developing Polaroid. Added a **"▶ Play Trailer"** mode that plays the `Darkroom_master` audio and auto-advances the reel in sync with the song (0:00→2:45), plus a progress bar; `prefers-reduced-motion` disables the motion. Manual arrows / rail / keyboard / swipe / `?slide=N` deep-links preserved.
+- Wired the selects into web-served `public/darkroom/` (`<id>.jpg` + `darkroom.jpg` cover). Verified: `npm run build` clean; 11 desktop slide screenshots captured to `treatments/dark-room/outputs/visual-deck-v3-20260708/`. Everything additive; treatment prose untouched.
+- **Feedback revision 2:** removed the "Play Trailer" transport + its timer-driven playback machinery (deck is now a clean manual step-through — arrows/rail/swipe/keys). Replaced the fake CSS/SVG cover bulb with a real photographic Edison bulb (new `bulb.jpg`, screen-composited over the darkroom cover). Rebuilt slide 2 (Synopsis) as a dark red/black darkroom background with the full synopsis inside a white Polaroid frame + white text, and enlarged "SUCCESS," to match "HAUNTED BY" width. Rebuilt + redeployed to aklo.studio.
+- **Feedback revision:** stripped the six-color MSC accent chrome (the "AI-generated rainbow tag" look) down to raw monochrome — white/ink/grey UI, color only in the photographs and the diegetic red darkroom transition; removed the cover/end accent strips, per-world rail-dot and caption-dot colors, colored eyebrows/borders/timeline. Reduced the oversized display titles (Synopsis now a clean 3 lines). Regenerated the Manhattan Bridge shot to the **exact** Manhattan-side location — the Manhattan Bridge Arch & Colonnade (refs IMG_6892/6893) — replacing the generic-colonnade v1. Rebuilt + redeployed.
+- **Published to `https://aklo.studio/darkroomtreatment` (muted, `noindex`).** Made the deck muted + base-path aware (`window.__DR_BASE__`): PLAY is now a timer-driven virtual clock instead of audio-driven, so it runs the 2:45 reel with no track (the unreleased master is intentionally not shipped; removed it from `public/darkroom/`). esbuild-bundled the deck (`darkroom-static-entry.tsx` → `deck.js`) into the `aklo-studio` Cloudflare Pages site under `public/darkroomtreatment/` (index shell + StarCity fonts + 10 images), deployed via `wrangler pages deploy public --project-name aklo-studio`. Confirmed the existing aklo.studio site was unaffected (only the local index/live diff was Cloudflare's edge email-obfuscation) and the live deck renders with fonts + images.
+
+---
+
+## 2026-07-04 — Big Bless Feedback Pass
+
+- Updated the Big Bless page to preserve the current real bio copy and video hero while changing the desktop photo section to a single sequential flow matching the handheld rhythm.
+- Updated Projects presentation so extra project images beyond the first designed rows keep rendering instead of being dropped. Added an Avant Arte sculpture/process block for the `The People I've Never Met` project context, keyed from the project title/collaborator/link.
+- Updated the Shop page to load real Shopify products from the `frontpage` collection and query up to four images per product; product cards now show multiple product shots when available.
+
+---
+
+## 2026-07-02 — Dark Room Deck Rebuilt As True 16:9 Slide Deck
+
+- Redesigned `/dark-room-deck` from scratch, replacing the scrolling-page scaffold with a real presentation deck matching the Elegant deck architecture: a fixed 16:9 slide frame centered on a black stage, `container-type: inline-size` with all slide typography in `cqw` units so slides scale proportionally at any window size.
+- 10 slides: cover, synopsis, scene system, penthouse present, trap-house past, dark-room void, Star/club/bridge, Polaroid VFX language, structure/production, end card. Navigation via arrow keys, on-screen chevrons, touch swipe, a numbered bottom rail, and `?slide=N` / `#N` deep links.
+- Applied the MSC/Pedro brand system throughout: StarCity display type with `dlig`, pill tags, the six-accent palette (one accent per scene world), and a light-luxury vs dark-room slide duality mirroring the video's thesis. Placeholder frames use designer FPO crosses with accent-dotted label pills and frame IDs (A-01…D-03) so image needs are explicit.
+- Added a proportional 2:45 timeline band on the structure slide plus locations/wardrobe/camera production columns derived from the locked v1.0 treatment.
+- Fixed a narrow-viewport grid bug (hidden arrows collapsed the frame into a 6px gutter column) and sized the frame with a ResizeObserver for deterministic fit.
+- Verified: targeted eslint clean, production build clean, all 10 slides screenshotted at 1600×1000 plus a 500px-wide narrow check under `treatments/dark-room/outputs/visual-deck-v2-20260701/`. Note: headless Chrome clamps `--window-size` width to 500, so true 390px phone checks require CDP device metrics.
+
+---
+
 ## 2026-07-02 — Dark Room Visual Deck Scaffold
 
 - Created `treatments/dark-room/plans/visual-deck-react.md` as the execution plan for turning the locked Dark Room v1.0 treatment into a React/Tailwind visual deck.
-- Added a hidden internal MSC route at `/dark-room-deck` with a 9-page visual treatment outline: cover, thesis, scene system, penthouse present, trap-house past, dark-room void, Star/club/Williamsburg performance, Polaroid/VFX language, and end card.
+- Added a hidden internal MSC route at `/dark-room-deck` with a 9-page visual treatment outline: cover, thesis, scene system, penthouse present, trap-house past, dark-room void, Star/club/LES + Chinatown performance, Polaroid/VFX language, and end card.
 - Built the first deck pass with placeholder image modules only, preserving the locked treatment structure while avoiding a full line-by-line breakdown.
 - Added a route-specific `PageLayout` exception so `/dark-room-deck` runs full-bleed without the storefront header, footer, cart aside, or search aside.
 - Added slide hash behavior so direct links like `/dark-room-deck#cover` and `/dark-room-deck#vfx` render a single presentation slide, while the base route remains scrollable.
 - Verified the deck locally with targeted lint, production build, local HTTP `200`, desktop screenshots, VFX slide screenshot, and explicit 390px mobile Chrome DevTools Protocol overflow metrics.
 - Saved verification screenshots under `treatments/dark-room/outputs/visual-deck-20260701/`.
+- Updated the active Dark Room treatment and deck copy to replace the Williamsburg Bridge sunset image with LES + Chinatown at the base of the Manhattan Bridge as the clean outdoor performance/location scene.
+- Synced the same LES + Chinatown / Manhattan Bridge location update to the active `Dark Room v1.0` Google Doc, preserving the locked savepoint copies.
 
 ---
 

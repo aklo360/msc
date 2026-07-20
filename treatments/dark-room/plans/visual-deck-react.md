@@ -18,6 +18,9 @@ AKLO wants the locked `Dark Room v1.0` master treatment turned into a polished v
 - [x] (2026-07-02T00:54:00Z) Validated with targeted lint, production build, local HTTP `200`, desktop screenshots, VFX direct-slide screenshot, and explicit 390px mobile Chrome DevTools Protocol metrics.
 - [x] (2026-07-02T00:58:00Z) Updated `CHANGELOG.md`, `PROJECT.md`, and this plan with completed outcomes.
 - [x] (2026-07-02T01:01:00Z) Committed the verified deck scaffold.
+- [x] (2026-07-02T01:25:00Z) Updated the outdoor performance location from Williamsburg Bridge sunset to LES + Chinatown at the base of the Manhattan Bridge in the active treatment and React deck copy.
+- [x] (2026-07-02T02:20:00Z) AKLO rejected the scrolling-page scaffold; rebuilt `/dark-room-deck` from scratch as a true 16:9 slide deck using the Elegant deck architecture (fixed 16:9 frame, `container-type: inline-size`, all slide type in `cqw` units, one slide at a time, arrow/swipe/rail navigation, `?slide=N` deep links). Verified with lint, production build, full 10-slide desktop screenshot set, and a narrow-viewport check under `treatments/dark-room/outputs/visual-deck-v2-20260701/`.
+- [x] (2026-07-08) Finished the deck as an image-complete trailer previz. Generated the missing iconic stills with `scripts/darkroom-nb2.mjs` (`pro`, 2K, 16:9, reference-chained for exact Mal/Star likeness): `void`, `trap-serve` (v3 after a safety re-roll), `club`, `robes-duo`, `bridge`, `pipe` under `outputs/nb2-20260708/`; reused terrace v6 / foyer v3 / print-01-couch v1 / cover v1. Rebuilt `app/routes/dark-room-deck.tsx` into a flowing 10-shot reel with a darkroom/Polaroid seam transition engine, Ken Burns holds, a synced "Play Trailer" audio mode, and per-world accents. Wired selects into `public/darkroom/`. Verified `npm run build` clean + 11 desktop screenshots in `outputs/visual-deck-v3-20260708/`.
 
 ## Surprises & Discoveries
 
@@ -38,12 +41,28 @@ AKLO wants the locked `Dark Room v1.0` master treatment turned into a polished v
 
 ## Decision Log
 
+- Decision: Finish the deck as a tight ~10-shot iconic reel, not a 30+ shot beat-by-beat previz.
+  Rationale: AKLO capped it at "6-9 tops, 10-12 to be safe — the most iconic moments." So the final reel is 4 reused + 6 new stills = 10, each a hero moment (terrace, foyer, portal, void, trap-serve, club, robes-duo, bridge, pipe, darkroom). The darkroom/Polaroid motif became the transition engine + PLAY-mode audio sync so it reads as a flowing trailer with no hard cuts. Proven likeness technique: `pro` model + reference-chaining Mal's canonical photo plus a prior generated frame. `trap-serve` needed one safety re-roll (dropped explicit drug paraphernalia → dingy room mood) and a second re-roll (removed a nude doorway figure → empty chained door).
+  Date/Author: 2026-07-08 / Claude (Fable 5).
+
+- Decision: Rebuild the deck as a true 16:9 slide deck instead of a scrolling page.
+  Rationale: AKLO explicitly required the Elegant deck's 16:9 presentation format. The scrolling-page scaffold read as a website, not a treatment deck. The rebuild uses a fixed 16:9 frame with `cqw`-proportional typography so every slide scales like a real presentation, a light-luxury vs dark-room slide duality mirroring the video's thesis, and one MSC accent per scene world. Slide count went from 9 to 10 (added a structure/production slide with a proportional 2:45 timeline band).
+  Date/Author: 2026-07-02 / Claude.
+
+- Decision: Size the slide frame with a ResizeObserver and keep arrows in the grid via `visibility: hidden` on narrow screens.
+  Rationale: Pure-CSS `min()` sizing was hard to verify across engines, and `display: none` on the arrow buttons removed them from the grid flow, collapsing the frame into a 6px gutter column. Also discovered headless Chrome clamps `--window-size` width to 500px, so true phone-width screenshots require CDP device metrics — a repeat of the v1 finding.
+  Date/Author: 2026-07-02 / Claude.
+
 - Decision: Build the first Dark Room deck as a hidden route at `app/routes/dark-room-deck.tsx`, not as a separate nested app.
   Rationale: The user explicitly wants the MSC website and Pedro design system to be the brand bible. A route can use the real fonts, CSS custom properties, Tailwind setup, and build pipeline without installing a new bundler or duplicating design tokens.
   Date/Author: 2026-07-02 / Codex.
 
-- Decision: Make the deck 9 pages total: cover, thesis, scene system, penthouse present, trap-house past, dark-room void, Star/club/Williamsburg performance, Polaroid/VFX language, and end card.
+- Decision: Make the deck 9 pages total: cover, thesis, scene system, penthouse present, trap-house past, dark-room void, Star/club/LES + Chinatown performance, Polaroid/VFX language, and end card.
   Rationale: The user requested 7-10 pages including cover/end, no full line-by-line breakdown, and all scenes/details with placeholder visual examples. Nine pages gives each core scene enough space while keeping the deck reviewable.
+  Date/Author: 2026-07-02 / Codex.
+
+- Decision: Replace the Williamsburg Bridge sunset performance image with LES + Chinatown at the base of the Manhattan Bridge.
+  Rationale: AKLO preferred the Manhattan Bridge/LES/Chinatown location as the cleaner outdoor image. This keeps the third scene as a location/performance look while avoiding the removed train/photo-lab storyline.
   Date/Author: 2026-07-02 / Codex.
 
 - Decision: Use abstract placeholder visual modules instead of image search or generated images for the first pass.
@@ -56,7 +75,7 @@ AKLO wants the locked `Dark Room v1.0` master treatment turned into a polished v
 
 ## Outcomes & Retrospective
 
-Built an internal React/Tailwind visual deck route at `/dark-room-deck`, using the locked Dark Room v1.0 treatment as the story source and MSC/Pedro design tokens as the brand system. The deck contains 9 pages: cover, thesis, scene system, penthouse present, trap-house past, dark-room void, Star/club/Williamsburg performance, Polaroid/VFX language, and end card. It uses abstract placeholder image modules, MSC accent colors, StarCity display type, compact low-radius panels, and a bottom slide index.
+Built an internal React/Tailwind visual deck route at `/dark-room-deck`, using the locked Dark Room v1.0 treatment as the story source and MSC/Pedro design tokens as the brand system. The deck contains 9 pages: cover, thesis, scene system, penthouse present, trap-house past, dark-room void, Star/club/LES + Chinatown performance, Polaroid/VFX language, and end card. It uses abstract placeholder image modules, MSC accent colors, StarCity display type, compact low-radius panels, and a bottom slide index.
 
 The first pass intentionally does not choose final images. The next creative pass should replace the placeholders with real stills, AI reference frames, production references, or lookbook pulls.
 
@@ -79,7 +98,7 @@ Known repo-wide exceptions outside this deck:
 
 The MSC app lives at the repository root `/Users/llphant/projects/msc`. It is a Shopify Hydrogen / React Router app using React 18, Tailwind CSS 4, and Cloudflare Workers. File-based routes live in `app/routes/`. The root layout in `app/root.tsx` wraps normal pages in `PageLayout`, and `PageLayout` currently renders the MSC header, main content, and footer. The design system lives in `app/styles/app.css` and `app/styles/tailwind.css`.
 
-The locked treatment source is `treatments/dark-room/TREATMENT.md`. The current locked Google Doc copy is `https://docs.google.com/document/d/10_MIGW4j9whKNsov2Pq1CYf41QyTzPfDX0X_wQ5n34Y/edit?usp=drivesdk`. The key story structure is: Mal's luxury penthouse present is haunted by trap-house memories; the black dark-room void uses a fisheye Hype Williams-style high angle and one hanging bulb; Star enters through the club/opulence section and the Williamsburg Bridge sunset scene remains a clean outdoor performance image; Polaroid freeze frames zoom out into a VFX darkroom/evidence-wall language.
+The locked treatment source is `treatments/dark-room/TREATMENT.md`. The current locked Google Doc copy is `https://docs.google.com/document/d/10_MIGW4j9whKNsov2Pq1CYf41QyTzPfDX0X_wQ5n34Y/edit?usp=drivesdk`. The key story structure is: Mal's luxury penthouse present is haunted by trap-house memories; the black dark-room void uses a fisheye Hype Williams-style high angle and one hanging bulb; Star enters through the club/opulence section and LES + Chinatown at the base of the Manhattan Bridge remains a clean outdoor performance image; Polaroid freeze frames zoom out into a VFX darkroom/evidence-wall language.
 
 The phrase "placeholder visual" means a designed block that stands in for a future photograph, still frame, or generated image. It should show the intended image type, such as "penthouse terrace sunrise", without using final imagery.
 
@@ -97,7 +116,7 @@ The deck outline should be:
 - Page 04 Penthouse Present: terrace sunrise, robe, cigar, mimosa, omelette, watch, shoes, gun, foyer.
 - Page 05 Trap-House Past: couch/table portal, scales, baggies, fiends, peephole, liquor, street/rain survival.
 - Page 06 Dark-Room Void: fisheye high angle, one bulb, black room, cockroach light hit, montage grammar, performance to camera.
-- Page 07 Star / Club / Bridge: Star entrance, abstract club, champagne, rollies, pedicure/massage luxury, Williamsburg Bridge sunset as clean outdoor performance.
+- Page 07 Star / Club / LES + Chinatown: Star entrance, abstract club, champagne, rollies, pedicure/massage luxury, LES + Chinatown at the base of the Manhattan Bridge as clean outdoor performance.
 - Page 08 Polaroid / VFX Language: freeze frames, evidence-like Polaroids, clothesline darkroom, zoom in/out transitions, Requiem-inspired montage syntax.
 - Page 09 End Card: the emotional and production promise, outstanding image needs, and a clean "next pass: replace placeholders" close.
 

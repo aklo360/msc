@@ -1,0 +1,16 @@
+{
+  "model": "gemini-3-pro-image-preview",
+  "imageSize": "2K",
+  "aspectRatio": "16:9",
+  "refs": [
+    "/tmp/dr-thumbs/darkroom.jpg",
+    "/tmp/dr-thumbs/terrace.jpg",
+    "/tmp/dr-thumbs/foyer.jpg",
+    "/tmp/dr-thumbs/trap-serve.jpg",
+    "/tmp/dr-thumbs/void.jpg",
+    "/tmp/dr-thumbs/club.jpg",
+    "/tmp/dr-thumbs/robes-duo.jpg",
+    "/tmp/dr-thumbs/bridge.jpg",
+    "/tmp/dr-thumbs/pipe.jpg"
+  ]
+}

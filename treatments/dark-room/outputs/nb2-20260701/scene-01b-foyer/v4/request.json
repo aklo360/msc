@@ -1,0 +1,10 @@
+{
+  "model": "gemini-3-pro-image-preview",
+  "imageSize": "2K",
+  "aspectRatio": "16:9",
+  "refs": [
+    "treatments/dark-room/outputs/nb2-20260701/scene-01b-foyer/v3/output.jpg",
+    "treatments/dark-room/refs/drive-20260701/IMG_6900.PNG",
+    "treatments/dark-room/refs/drive-20260701/IMG_6901.PNG"
+  ]
+}

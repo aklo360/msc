@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3-pro-image-preview",
+  "imageSize": "2K",
+  "aspectRatio": "16:9",
+  "refs": [
+    "treatments/dark-room/refs/pipe-reference.png"
+  ]
+}

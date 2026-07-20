@@ -6,8 +6,6 @@
  * The helpers do safe null checks internally.
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export interface MetaImage {
   url: string;
   altText: string;

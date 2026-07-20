@@ -2,6 +2,8 @@ import {useLoaderData} from 'react-router';
 import {useEffect} from 'react';
 import type {CSSProperties} from 'react';
 import type {Route} from './+types/projects._index';
+import {MetaobjectBannerImage} from '~/components/MetaobjectBannerImage';
+import {MetaobjectText} from '~/components/MetaobjectText';
 import {SectionHero} from '~/components/SectionHero';
 import {
   getFieldValue,
@@ -26,6 +28,7 @@ const quoteStyle: CSSProperties = {
   color: 'var(--color-black)',
   fontFeatureSettings: "'salt' 1",
   whiteSpace: 'pre-line',
+  overflowWrap: 'break-word',
 };
 
 const IMG = 'w-full object-cover rounded-[10px]';
@@ -69,6 +72,134 @@ function splitBodyText(body: string): [string, string] {
   return [paragraphs[0], paragraphs.slice(1).join('\n\n')];
 }
 
+const AVANT_ARTE_URL =
+  'https://avantarte.com/products/the-people-i-ve-never-met';
+
+const AVANT_SCULPTURE_NOTES = [
+  {
+    title: 'Reconfigurable sculpture edition',
+    body: 'Handmade glass vase, colourful fabric hats, magnetised glass stems, and collector-directed arrangements.',
+  },
+  {
+    title: 'Material details',
+    body: 'Undulating glass, vibrant blue sand, small-scale components, and close-up views of the assembled work.',
+  },
+  {
+    title: 'Studio process',
+    body: 'Glassblowing, assembly, hands arranging hats and stems, and the finished sculpture staged against paintings.',
+  },
+];
+
+function isAvantArteProject({
+  title,
+  collaborator,
+  links,
+}: {
+  title: string;
+  collaborator: string;
+  links: {label: string; url: string}[];
+}) {
+  const haystack = [title, collaborator, ...links.map((link) => link.url)]
+    .join(' ')
+    .toLowerCase();
+  return (
+    haystack.includes('avant') ||
+    haystack.includes("people i've never met") ||
+    haystack.includes('people i’ve never met')
+  );
+}
+
+function AvantArteSculptureBlock() {
+  return (
+    <section className="px-[60px] max-md:px-[20px] pb-[20px]">
+      <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)] max-md:grid-cols-1 gap-[20px] border-y border-black py-[30px]">
+        <div className="flex flex-col gap-[20px]">
+          <p
+            className="uppercase"
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '18px',
+              fontWeight: 500,
+              lineHeight: 1.2,
+              color: 'var(--color-black)',
+              fontFeatureSettings: "'salt' 1",
+            }}
+          >
+            Sculpture focus
+          </p>
+          <a
+            href={AVANT_ARTE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '18px',
+              fontWeight: 800,
+              lineHeight: 1.2,
+              color: 'var(--color-black)',
+              fontFeatureSettings: "'salt' 1",
+            }}
+          >
+            Avant Arte asset source
+          </a>
+        </div>
+        <div className="grid grid-cols-3 max-lg:grid-cols-1 gap-[20px]">
+          {AVANT_SCULPTURE_NOTES.map((note) => (
+            <div
+              key={note.title}
+              className="flex min-h-[260px] flex-col justify-between rounded-[10px] bg-white p-[20px]"
+            >
+              <h3
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '28px',
+                  fontWeight: 500,
+                  lineHeight: 1.05,
+                  color: 'var(--color-black)',
+                  fontFeatureSettings: "'salt' 1",
+                }}
+              >
+                {note.title}
+              </h3>
+              <p
+                style={{
+                  fontFamily: 'var(--font-quote)',
+                  fontSize: '24px',
+                  fontWeight: 300,
+                  lineHeight: 1.15,
+                  color: 'var(--color-black)',
+                  fontFeatureSettings: "'salt' 1",
+                }}
+              >
+                {note.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function renderRemainingImages(images: any[], startIndex: number) {
+  const rest = images.slice(startIndex);
+  if (rest.length === 0) return null;
+
+  return (
+    <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-[20px]">
+      {rest.map((img, index) => (
+        <img
+          key={img.url}
+          src={img.url}
+          alt={img.altText}
+          className={index % 5 === 0 ? `${IMG} col-span-2 max-md:col-span-1` : IMG}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function ProjectsIndex() {
   const {projects} = useLoaderData<typeof loader>();
 
@@ -84,7 +215,11 @@ export default function ProjectsIndex() {
 
   return (
     <div className="bg-[#EDEDED] min-h-screen">
-      <SectionHero title="Projects" accentColor={ACCENT_PROJECTS} />
+      <SectionHero
+        title="Projects"
+        accentColor={ACCENT_PROJECTS}
+        videoSrc="/videos/projects/page-bg.mp4"
+      />
 
       {projects.map((proj: any) => {
         const title = getFieldValue(proj.fields, 'title');
@@ -109,6 +244,11 @@ export default function ProjectsIndex() {
 
         const [bodyPart1, bodyPart2] = body ? splitBodyText(body) : ['', ''];
         const hasEditorialLayout = !!body && images.length >= 4;
+        const showAvantSculptureBlock = isAvantArteProject({
+          title,
+          collaborator,
+          links,
+        });
 
         return (
           <div key={proj.handle}>
@@ -122,7 +262,7 @@ export default function ProjectsIndex() {
                     fontSize: '60px',
                     fontWeight: 400,
                     lineHeight: 1.1,
-                    letterSpacing: '-2px',
+                    letterSpacing: '0',
                     color: 'var(--color-black)',
                     fontFeatureSettings: "'salt' 1",
                   }}
@@ -133,7 +273,7 @@ export default function ProjectsIndex() {
                   {inquiryEmail && (
                     <a
                       href={`mailto:${inquiryEmail}?subject=Inquiry: ${title}`}
-                      className="bg-white rounded-[20px] p-[10px] uppercase whitespace-nowrap"
+                      className="bg-white rounded-[20px] px-[10px] py-[5px] uppercase whitespace-nowrap"
                       style={{
                         fontFamily: 'var(--font-body)',
                         fontSize: '18px',
@@ -148,7 +288,7 @@ export default function ProjectsIndex() {
                   )}
                   {seriesTag && (
                     <span
-                      className="bg-white rounded-[20px] p-[10px] uppercase whitespace-nowrap"
+                      className="bg-white rounded-[20px] px-[10px] py-[5px] uppercase whitespace-nowrap"
                       style={{
                         fontFamily: 'var(--font-body)',
                         fontSize: '18px',
@@ -167,7 +307,7 @@ export default function ProjectsIndex() {
               {/* Right — description + credits */}
               <div className="flex-1 flex flex-col gap-[60px]">
                 {description && (
-                  <p
+                  <MetaobjectText
                     style={{
                       fontFamily: 'var(--font-quote)',
                       fontSize: '26px',
@@ -178,7 +318,7 @@ export default function ProjectsIndex() {
                     }}
                   >
                     {description}
-                  </p>
+                  </MetaobjectText>
                 )}
 
                 {/* Credits */}
@@ -226,10 +366,10 @@ export default function ProjectsIndex() {
                   <>
                     {/* Row A: Full-width featured */}
                     {featuredImage && (
-                      <img
-                        src={featuredImage.url}
-                        alt={featuredImage.altText}
-                        className={IMG}
+                      <MetaobjectBannerImage
+                        image={featuredImage}
+                        className="rounded-[10px]"
+                        imgClassName="rounded-[10px]"
                       />
                     )}
 
@@ -251,7 +391,9 @@ export default function ProjectsIndex() {
                               />
                             </div>
                             <div className="flex items-start">
-                              <p style={quoteStyle}>{bodyPart1}</p>
+                              <MetaobjectText style={quoteStyle}>
+                                {bodyPart1}
+                              </MetaobjectText>
                             </div>
                           </div>
                         )}
@@ -259,7 +401,9 @@ export default function ProjectsIndex() {
                         {images.length > 2 && (
                           <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[20px] items-end">
                             <div className="flex flex-col gap-[20px]">
-                              <p style={quoteStyle}>{bodyPart2}</p>
+                              <MetaobjectText style={quoteStyle}>
+                                {bodyPart2}
+                              </MetaobjectText>
                               {images.length > 3 && (
                                 <img
                                   src={images[3].url}
@@ -275,6 +419,7 @@ export default function ProjectsIndex() {
                             />
                           </div>
                         )}
+                        {renderRemainingImages(images, 4)}
                       </>
                     ) : (
                       <>
@@ -295,7 +440,9 @@ export default function ProjectsIndex() {
                         {images.length > 4 && (
                           <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[20px] items-end">
                             <div className="flex flex-col gap-[20px]">
-                              <p style={quoteStyle}>{bodyPart1}</p>
+                              <MetaobjectText style={quoteStyle}>
+                                {bodyPart1}
+                              </MetaobjectText>
                               {images[4] && (
                                 <img
                                   src={images[4].url}
@@ -313,6 +460,7 @@ export default function ProjectsIndex() {
                             )}
                           </div>
                         )}
+                        {renderRemainingImages(images, 6)}
                       </>
                     )}
                   </>
@@ -320,10 +468,10 @@ export default function ProjectsIndex() {
                   <>
                     {/* Simple gallery */}
                     {featuredImage && (
-                      <img
-                        src={featuredImage.url}
-                        alt={featuredImage.altText}
-                        className={IMG}
+                      <MetaobjectBannerImage
+                        image={featuredImage}
+                        className="rounded-[10px]"
+                        imgClassName="rounded-[10px]"
                       />
                     )}
                     {/* First row: small square + larger image */}
@@ -405,6 +553,8 @@ export default function ProjectsIndex() {
                 <div className="w-full aspect-[1608/1068] bg-[#D2D2D2] rounded-[10px]" />
               </div>
             )}
+
+            {showAvantSculptureBlock && <AvantArteSculptureBlock />}
           </div>
         );
       })}

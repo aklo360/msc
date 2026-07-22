@@ -11,10 +11,11 @@ dist
 *.tsbuildinfo
 .wrangler
 .cursor
-.claude
+.claude/*
+!.claude/CLAUDE.md
 AGENTS.md
 learnings.md
-memories.md
+/memories.md
 test-results
 
 .shopify

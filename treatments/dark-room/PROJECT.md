@@ -11,7 +11,7 @@ Subproject under the main MSC / Mr Star City workspace for the "Dark Room" music
 - Persistent tmux session: `proj-msc`
 - Mini daemon thread: `mini-msc`
 - Telegram route/topic: MSC
-- Status: v1.0 treatment locked; active Google Doc remains the workshop surface for future revisions
+- Status: v1.0 treatment locked; v4 editorial deck rebuilt locally and awaiting AKLO review
 
 ## Goal
 
@@ -26,6 +26,8 @@ Create a reviewable music-video treatment package for "Dark Room" that AKLO can 
 - Visual deck route, rebuilt as a true 16:9 slide deck (Elegant-style architecture, MSC/Pedro brand system, 10 slides, arrow/swipe/rail navigation, `?slide=N` deep links): `/dark-room-deck`
 - Visual deck execution plan: `plans/visual-deck-react.md`
 - Visual deck v2 verification screenshots: `outputs/visual-deck-v2-20260701/` (v1 scroll-scaffold screenshots preserved in `outputs/visual-deck-20260701/`)
+- Visual deck v4 redesign plan: `plans/visual-deck-redesign-v4-20260720.md`
+- Visual deck v4 before/after browser audit: `outputs/visual-deck-v4-redesign-20260720/`
 - Locked v1.0 Google Doc master, captured after AKLO approved the full true v1.0 on 2026-07-01: https://docs.google.com/document/d/1ogTjG-CkCdjrUlgSHyHPNYp-DEHhzVLiwrlzvp1KmSg/edit?usp=drivesdk
 - v1.0 story-audit-clean Google Doc copy, with the J train / film-development story removed while preserving the outdoor performance scene and Polaroid/VFX language: https://docs.google.com/document/d/1G2UZsqHkrRhiehz_MhQRapcYjVjaoTV5JNz3L5Tbui4/edit?usp=drivesdk
 - Latest v03 savepoint copy, captured after AKLO's 2026-07-01 19:12 EDT update: https://docs.google.com/document/d/1kQxp14dZboo0wj8_8MB9VFjeCuxB-Q7xDjdArEPW6nw/edit?usp=drivesdk
@@ -39,7 +41,7 @@ Create a reviewable music-video treatment package for "Dark Room" that AKLO can 
 
 ## Current Priority
 
-The visual deck at `/dark-room-deck` is now **image-complete** (2026-07-08): a flowing 10-still iconic reel / trailer previz with real photoreal NB2 stills (exact Mal & Star likeness), the darkroom/Polaroid seam transition, and a synced "Play Trailer" mode. Awaiting AKLO review. Preserve the 2026-07-01 20:18 EDT locked v1.0 treatment as the approved text baseline; future content edits start from the active `Dark Room v1.0` Google Doc, and deck image passes stay additive (new versioned dirs) without rewriting the locked treatment unless AKLO explicitly asks.
+The visual deck at `/dark-room-deck` was redesigned from scratch on 2026-07-20 after the prior v3 app-like presentation was rejected. The current local v4 is a 10-spread editorial director's treatment: image-led 16:9 compositions, monochrome/paper/darkroom-red palette, restrained typography, a hairline progress system, and no cards, pills, rainbow tags, trailer controls, giant rail, or “Thank you” end card. The approved stills and locked treatment remain unchanged. The v4 route has not been deployed; the published Aklo Studio URL still represents the earlier version until AKLO explicitly approves a deploy target.
 
 ## Next Actions
 
@@ -48,7 +50,7 @@ The visual deck at `/dark-room-deck` is now **image-complete** (2026-07-08): a f
 - [ ] Define Star's club entrance timing and how the club thread becomes part of the dark-room memory logic.
 - [ ] Choose the final image for the last hook.
 - [x] Replace the visual deck placeholders with selected real stills — done 2026-07-08: 10 iconic NB2 stills wired into a flowing trailer reel (terrace, foyer, portal, void, trap-serve, club, robes-duo, bridge, pipe, darkroom).
-- [ ] AKLO review of the image-complete deck; note any likeness/scene changes for a v2 image pass.
+- [ ] AKLO review of the v4 editorial deck; note any composition, copy, likeness, or scene changes for the next additive pass.
 - [ ] Optional: upload the 10 selects to the Drive review folder (needs `gog` keyring password or a Drive re-auth).
 - [ ] Export only after AKLO approves the treatment direction.
 
@@ -74,6 +76,8 @@ The visual deck at `/dark-room-deck` is now **image-complete** (2026-07-08): a f
 - AKLO-authored prose is the master text. Preserve exact wording from AKLO's rewrites 100%, especially the title/metadata/synopsis and any hand-edited scene descriptions. Do not rewrite, polish, paraphrase, summarize, or "improve" AKLO-written prose unless he explicitly asks; adjust timestamp mapping or structure around that language instead.
 - Do not send, share, publish, or submit any treatment externally without explicit AKLO approval.
 - Preserve exports as versioned files in `exports/`; do not overwrite prior rendered/packaged outputs.
+- The 2026-07-08 v3 trailer-previz interface is historical/rejected presentation direction. Preserve its code history and output folders, but do not restore its rainbow taxonomy, pills, transport UI, Ken Burns motion, darkroom seam overlays, oversized titles, or bottom slide rail unless AKLO explicitly asks.
+- The 2026-07-20 v4 editorial deck is the active local direction. Its verification screenshots are additive under `outputs/visual-deck-v4-redesign-20260720/`; it is intentionally not deployed without a separate explicit deploy request.
 
 ## Links
 

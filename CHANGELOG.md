@@ -4,6 +4,16 @@ All notable changes to the MSC website are documented here.
 
 ---
 
+## 2026-07-20 — Dark Room Deck Rebuilt As Editorial Director's Treatment
+
+- Searched the local Codex and Claude histories to recover the original 16:9 Elegant-style brief and every later correction: raw cinematic presentation, smaller type, no rainbow taxonomy, no cover pills/subtitle, no trailer control, extreme circular fisheye, exact penthouse/trap/bridge logic, and current camera/lighting/grip constraints.
+- Rebuilt `/dark-room-deck` from scratch as a 10-spread editorial treatment: cover, premise, visual language, penthouse, memory portal, dark-room void, club/bridge contrast, sensory/darkroom montage, production approach, and final image. The approved stills and locked v1.0 treatment remain untouched.
+- Removed the rejected interface grammar completely: no rounded cards, colored tags, repeated metadata, giant display-title system, simulated transport, Ken Burns motion, darkroom seam animation, 14-button rail, MSC cover pill, or “Thank you” end card. Navigation is now a quiet hairline progress indicator and folio while keyboard, swipe, click-edge, and `?slide=N` deep links remain.
+- Corrected the production page to keep gimbal use limited to penthouse moves, use C-stands/sandbags/apple boxes instead of dolly track, and treat water/rain beats as AI/VFX rather than an on-set rain rig.
+- Preserved before/after browser artifacts in `treatments/dark-room/outputs/visual-deck-v4-redesign-20260720/`, including a complete 1600×1000 final pass plus mobile landscape and portrait checks. Targeted ESLint and the production build are clean. This redesign is local only and was not deployed.
+
+---
+
 ## 2026-07-08 — Dark Room Deck Finished As Image-Complete Trailer Previz
 
 - Rebuilt `/dark-room-deck` from a placeholder summary deck into a flowing **iconic reel / trailer previz**: `Cover → Synopsis → Scene System → 10 iconic full-bleed stills (treatment order) → Structure → End`. The four scene-summary slides + the VFX slide were absorbed into the reel; the darkroom/Polaroid motif is now the transition engine, not a slide about it.

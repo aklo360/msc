@@ -34,26 +34,36 @@ export default function BigBless() {
         </div>
 
         {/* Right: Description (Crimson Pro 26px Light) */}
-        <div className="flex-1">
-          <p
-            style={{
-              fontFamily: 'var(--font-quote)',
-              fontSize: '26px',
-              fontWeight: 300,
-              lineHeight: 1.2,
-              color: 'var(--color-black)',
-              fontFeatureSettings: "'salt' 1",
-            }}
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at enim
-            quis ante tristique fringilla vitae non turpis. Sed ac sagittis nisi.
-            Nunc imperdiet neque pretium risus porttitor, nec congue massa
-            rhoncus. Aliquam porttitor efficitur nunc at volutpat. Cras nisl
-            orci, condimentum nec nisi et, viverra venenatis purus. Suspendisse
-            massa est, convallis vel posuere sed, ullamcorper faucibus nibh.
-            Quisque ut sollicitudin tellus. Aliquam erat volutpat. Sed elementum
-            nisi non sapien malesuada, sed rhoncus dolor scelerisque. Etiam
-            laoreet velit vel nibh blandit ullamcorper.
+        <div
+          className="flex-1 flex flex-col gap-[20px]"
+          style={{
+            fontFamily: 'var(--font-quote)',
+            fontSize: '26px',
+            fontWeight: 300,
+            lineHeight: 1.2,
+            color: 'var(--color-black)',
+            fontFeatureSettings: "'salt' 1",
+          }}
+        >
+          <p>
+            Working between New York City and Los Angeles, David
+            &ldquo;Mr.&nbsp;StarCity&rdquo; White is a multidisciplinary artist
+            whose practice seamlessly merges painting, sculpture, poetry, and
+            performance. His work is defined by an experimental storytelling
+            approach, creating heavily textured, polychromatic portraits that
+            embody a synthesis of the beauty, passion, and conflict defining
+            the shared human experience.
+          </p>
+          <p>
+            Using an innovative mixture of raw, organic materials&mdash;including
+            soil, sand, pumice, and charcoal&mdash;White coaxes a statuary,
+            quasi-bas-relief dimensionality from his canvases. By unmasking
+            societal ills and addressing the complexities of mental health, his
+            practice functions as a space for emotional healing and resilience.
+            Ultimately, White&rsquo;s work breaks the boundaries between art and
+            reality, intentionally inviting viewers into immersive narrative
+            worlds to confront vulnerability, cultivate community connection,
+            and absorb the profound beauty of life.
           </p>
         </div>
       </div>
@@ -74,8 +84,7 @@ export default function BigBless() {
                 fontFeatureSettings: "'salt' 1",
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at
-              enim quis ante tristique fringilla vitae non turpis.
+              &ldquo;I don&rsquo;t just make art. I live it.&rdquo;
             </p>
             {/* Small photo — flower/bamboo */}
             <img
@@ -116,8 +125,7 @@ export default function BigBless() {
                 fontFeatureSettings: "'salt' 1",
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at
-              enim quis ante tristique fringilla vitae non turpis.
+              &ldquo;Art is my love letter to resilience.&rdquo;
             </p>
             {/* Small photo — Florence bridge */}
             <img

@@ -7,6 +7,13 @@ import {
 } from '@shopify/hydrogen';
 import type {EntryContext} from 'react-router';
 
+const EMBED_FRAME_SOURCES = [
+  "'self'",
+  'https://open.spotify.com',
+  'https://www.youtube.com',
+  'https://www.youtube-nocookie.com',
+];
+
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -19,6 +26,7 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    frameSrc: EMBED_FRAME_SOURCES,
   });
 
   const body = await renderToReadableStream(

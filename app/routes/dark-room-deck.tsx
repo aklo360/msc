@@ -35,7 +35,7 @@ const DECK_CSS = `
   grid-template-rows: minmax(0, 1fr) auto;
   background: #050505;
   color: #f4f1e9;
-  font-family: 'ABC Diatype', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-feature-settings: 'salt' 1;
   overflow: hidden;
   overscroll-behavior: none;
@@ -124,7 +124,7 @@ const DECK_CSS = `
 .drRule { width: 100%; height: 1px; background: currentColor; opacity: 0.26; }
 .drTitle {
   margin: 0;
-  font-family: 'StarCity', 'ABC Diatype', sans-serif;
+  font-family: 'StarCity', 'DM Sans', sans-serif;
   font-feature-settings: 'dlig' 1;
   font-size: 6.8cqw;
   font-weight: 700;

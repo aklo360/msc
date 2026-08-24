@@ -49,5 +49,5 @@
   </g>
 
   <!-- "Big Bless!" text with heart -->
-  <text x="600" y="370" text-anchor="middle" font-family="'ABC Diatype', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="500" fill="#000000" letter-spacing="1">Big Bless! &#9829;</text>
+  <text x="600" y="370" text-anchor="middle" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="500" fill="#000000" letter-spacing="1">Big Bless! &#9829;</text>
 </svg>

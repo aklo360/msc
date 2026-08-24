@@ -28,7 +28,7 @@ AKLO wants the locked `Dark Room v1.0` master treatment turned into a polished v
   Evidence: `find . -maxdepth 3 -type f` shows `app/`, `package.json`, `vite.config.ts`, and `server.ts` at the repo root; commands against `website/package.json` failed with "No such file or directory".
 
 - Observation: The previous Elegant Beauty deck used an isolated `deck-site/`, but MSC already has a React Router/Hydrogen app with the right fonts and tokens.
-  Evidence: `/Users/llphant/projects/elegant/plans/elegant-deck-site.md` records an isolated deck-site decision for a Next.js app; this MSC repo has no Next dependency but already has React, React Router, Tailwind v4, StarCity fonts, and MSC CSS variables in `app/styles/app.css`.
+  Evidence: the Elegant deck-site plan records an isolated deck-site decision for a Next.js app; this MSC repo has no Next dependency but already has React, React Router, Tailwind v4, StarCity fonts, and MSC CSS variables in `app/styles/app.css`.
 
 - Observation: Local Hydrogen development requires a `SESSION_SECRET` even for this hidden deck route.
   Evidence: The first local dev attempt returned a `SESSION_SECRET environment variable is not set` server error; an ignored local `.env` file with a dummy local dev value let MiniOxygen serve `/dark-room-deck`.
@@ -96,7 +96,7 @@ Known repo-wide exceptions outside this deck:
 
 ## Context and Orientation
 
-The MSC app lives at the repository root `/Users/llphant/projects/msc`. It is a Shopify Hydrogen / React Router app using React 18, Tailwind CSS 4, and Cloudflare Workers. File-based routes live in `app/routes/`. The root layout in `app/root.tsx` wraps normal pages in `PageLayout`, and `PageLayout` currently renders the MSC header, main content, and footer. The design system lives in `app/styles/app.css` and `app/styles/tailwind.css`.
+The MSC app lives at the repository root. It is a Shopify Hydrogen / React Router app using React 18, Tailwind CSS 4, and Cloudflare Workers. File-based routes live in `app/routes/`. The root layout in `app/root.tsx` wraps normal pages in `PageLayout`, and `PageLayout` currently renders the MSC header, main content, and footer. The design system lives in `app/styles/app.css` and `app/styles/tailwind.css`.
 
 The locked treatment source is `treatments/dark-room/TREATMENT.md`. The current locked Google Doc copy is `https://docs.google.com/document/d/10_MIGW4j9whKNsov2Pq1CYf41QyTzPfDX0X_wQ5n34Y/edit?usp=drivesdk`. The key story structure is: Mal's luxury penthouse present is haunted by trap-house memories; the black dark-room void uses a fisheye Hype Williams-style high angle and one hanging bulb; Star enters through the club/opulence section and LES + Chinatown at the base of the Manhattan Bridge remains a clean outdoor performance image; Polaroid freeze frames zoom out into a VFX darkroom/evidence-wall language.
 
@@ -124,7 +124,7 @@ Finally, update `CHANGELOG.md`, `treatments/dark-room/PROJECT.md` if needed, and
 
 ## Concrete Steps
 
-From `/Users/llphant/projects/msc`, inspect before editing:
+From the repository root, inspect before editing:
 
     rg --files -g 'AGENTS.md' -g 'CHANGELOG.md' -g 'CLAUDE.md' -g '.claude/CLAUDE.md' -g '.codex/**' -g 'PROJECT.md'
     sed -n '1,260p' CHANGELOG.md
@@ -139,7 +139,7 @@ Then edit:
     treatments/dark-room/PROJECT.md
     treatments/dark-room/plans/visual-deck-react.md
 
-Validation commands should be run from `/Users/llphant/projects/msc`:
+Validation commands should be run from the repository root:
 
     npm run typecheck
     npm run build
@@ -169,7 +169,7 @@ Important working references:
 - MSC tokens: `app/styles/app.css`
 - Tailwind theme: `app/styles/tailwind.css`
 - Layout wrapper: `app/components/PageLayout.tsx`
-- Prior deck plan reference: `/Users/llphant/projects/elegant/plans/elegant-deck-site.md`
+- Prior deck plan reference: the Elegant deck-site plan
 
 Planned browser screenshots should be saved under `treatments/dark-room/outputs/visual-deck-20260701/`.
 

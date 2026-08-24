@@ -8,15 +8,6 @@ export const meta: Route.MetaFunction = () => {
 
 const ACCENT_BLESS = '#D073A5';
 
-const quoteStyle = {
-  fontFamily: 'var(--font-quote)',
-  fontSize: '45px',
-  fontWeight: 300,
-  lineHeight: 1.1,
-  color: 'var(--color-black)',
-  fontFeatureSettings: "'salt' 1",
-};
-
 export default function BigBless() {
   return (
     <div className="bg-[#EDEDED] min-h-screen">
@@ -25,6 +16,7 @@ export default function BigBless() {
         title="Big Bless"
         accentColor={ACCENT_BLESS}
         videoSrc="/videos/big-bless/page-bg.mp4"
+        mobileVideoSrc="/videos/big-bless/page-bg-mobile.mp4"
       />
 
       {/* About Mr.StarCity — Two-column Text Module Header */}
@@ -46,7 +38,7 @@ export default function BigBless() {
           </h2>
         </div>
 
-        {/* Right: Description */}
+        {/* Right: Description (Crimson Pro 26px Light) */}
         <div
           className="flex-1 flex flex-col gap-[20px]"
           style={{
@@ -81,63 +73,122 @@ export default function BigBless() {
         </div>
       </div>
 
-      {/* Editorial photo flow */}
+      {/* Editorial Photo Collage */}
       <div className="px-[60px] max-md:px-[20px] pb-[60px]">
-        <div className="mx-auto flex max-w-[980px] flex-col gap-[20px]">
-          <p style={quoteStyle}>
-            &ldquo;I don&rsquo;t just make art. I live it.&rdquo;
-          </p>
-          <img
-            src="/images/big-bless/flower-bamboo.jpg"
-            alt="Mr.StarCity with flower"
-            className="w-full aspect-[794/993] object-cover rounded-[10px]"
-          />
-          <img
-            src="/images/big-bless/gallery-painting.jpg"
-            alt="Mr.StarCity viewing painting"
-            className="w-full aspect-[794/993] object-cover rounded-[10px]"
-          />
-          <img
-            src="/images/big-bless/studio-apron.jpg"
-            alt="Mr.StarCity in studio"
-            className="w-full aspect-[794/993] object-cover rounded-[10px]"
-          />
-          <p style={quoteStyle}>
-            &ldquo;Art is my love letter to resilience.&rdquo;
-          </p>
-          <img
-            src="/images/big-bless/florence-bridge.jpg"
-            alt="Mr.StarCity walking in Florence"
-            className="w-full aspect-[794/993] object-cover rounded-[10px]"
-          />
-          <img
-            src="/images/big-bless/white-stairs.jpg"
-            alt="Mr.StarCity on white stairs"
-            className="w-full aspect-[794/993] object-cover rounded-[10px]"
-          />
-          <div className="flex flex-col gap-[20px] py-[20px]">
-            <h3 style={quoteStyle}>Social media</h3>
-            <a
-              href="https://instagram.com/mrstarcity"
-              target="_blank"
-              rel="noopener noreferrer"
+        {/* Row 1: Quote left + tall photo right */}
+        <div className="flex gap-[20px] max-md:flex-col mb-[20px]">
+          {/* Left column: quote + small photo below */}
+          <div className="flex-1 flex flex-col gap-[20px]">
+            <p
               style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: '22px',
-                fontWeight: 400,
-                lineHeight: 1.2,
+                fontFamily: 'var(--font-quote)',
+                fontSize: '45px',
+                fontWeight: 300,
+                lineHeight: 1.1,
                 color: 'var(--color-black)',
                 fontFeatureSettings: "'salt' 1",
               }}
             >
-              @mrstarcity
-            </a>
+              &ldquo;I don&rsquo;t just make art. I live it.&rdquo;
+            </p>
+            {/* Small photo — flower/bamboo */}
+            <img
+              src="/images/big-bless/flower-bamboo.jpg"
+              alt="Mr.StarCity with flower"
+              className="w-[48%] max-md:w-full aspect-[387/484] object-cover rounded-[10px]"
+            />
           </div>
-          <img
-            src="/images/big-bless/bucket-hat-portrait.jpg"
-            alt="Mr.StarCity portrait"
-            className="w-full aspect-[794/987] object-cover rounded-[10px]"
-          />
+          {/* Right column: tall photo — gallery/painting */}
+          <div className="flex-1">
+            <img
+              src="/images/big-bless/gallery-painting.jpg"
+              alt="Mr.StarCity viewing painting"
+              className="w-full aspect-[794/993] object-cover rounded-[10px]"
+            />
+          </div>
+        </div>
+
+        {/* Row 2: Tall photo left + quote & small photo right */}
+        <div className="flex gap-[20px] max-md:flex-col mb-[20px]">
+          {/* Left column: tall photo — studio/apron */}
+          <div className="flex-1">
+            <img
+              src="/images/big-bless/studio-apron.jpg"
+              alt="Mr.StarCity in studio"
+              className="w-full aspect-[794/993] object-cover rounded-[10px]"
+            />
+          </div>
+          {/* Right column: quote + small photo */}
+          <div className="flex-1 flex flex-col gap-[20px]">
+            <p
+              style={{
+                fontFamily: 'var(--font-quote)',
+                fontSize: '45px',
+                fontWeight: 300,
+                lineHeight: 1.1,
+                color: 'var(--color-black)',
+                fontFeatureSettings: "'salt' 1",
+              }}
+            >
+              &ldquo;Art is my love letter to resilience.&rdquo;
+            </p>
+            {/* Small photo — Florence bridge */}
+            <img
+              src="/images/big-bless/florence-bridge.jpg"
+              alt="Mr.StarCity walking in Florence"
+              className="w-[48%] max-md:w-full aspect-[387/484] object-cover rounded-[10px]"
+            />
+          </div>
+        </div>
+
+        {/* Row 3: Medium photo left + Social media & tall photo right */}
+        <div className="flex gap-[20px] max-md:flex-col">
+          {/* Left column: medium photo — white stairs */}
+          <div className="flex-1 flex items-start justify-center">
+            <img
+              src="/images/big-bless/white-stairs.jpg"
+              alt="Mr.StarCity on white stairs"
+              className="w-[66%] max-md:w-full aspect-[523/653] object-cover rounded-[10px]"
+            />
+          </div>
+          {/* Right column: social + tall photo */}
+          <div className="flex-1 flex flex-col gap-[20px]">
+            <div className="flex flex-col gap-[20px]">
+              <h3
+                style={{
+                  fontFamily: 'var(--font-quote)',
+                  fontSize: '45px',
+                  fontWeight: 300,
+                  lineHeight: 1.1,
+                  color: 'var(--color-black)',
+                  fontFeatureSettings: "'salt' 1",
+                }}
+              >
+                Social media
+              </h3>
+              <a
+                href="https://instagram.com/mrstarcity"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '22px',
+                  fontWeight: 400,
+                  lineHeight: 1.2,
+                  color: 'var(--color-black)',
+                  fontFeatureSettings: "'salt' 1",
+                }}
+              >
+                @mrstarcity
+              </a>
+            </div>
+            {/* Tall photo — bucket hat portrait */}
+            <img
+              src="/images/big-bless/bucket-hat-portrait.jpg"
+              alt="Mr.StarCity portrait"
+              className="w-full aspect-[794/987] object-cover rounded-[10px]"
+            />
+          </div>
         </div>
       </div>
 

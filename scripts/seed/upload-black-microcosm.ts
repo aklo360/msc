@@ -21,8 +21,16 @@ import {log, sleep, getImageFiles} from './utils.js';
 const HANDLE = 'black-microcosm';
 const TYPE = 'art_exhibition';
 
-const IMG_DIR =
-  '/Users/aklo/Downloads/MSC Website/1_Art/black voices black microcosm';
+const SOURCE_ROOT = process.env.MSC_SOURCE_ROOT;
+if (!SOURCE_ROOT) {
+  throw new Error('MSC_SOURCE_ROOT is required for image uploads.');
+}
+
+const IMG_DIR = path.join(
+  SOURCE_ROOT,
+  '1_Art',
+  'black voices black microcosm',
+);
 
 // ── GraphQL ──────────────────────────────────────────
 

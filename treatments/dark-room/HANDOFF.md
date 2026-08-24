@@ -13,7 +13,7 @@
 
 ## Mini Continuity
 
-- Work from `/Users/llphant/projects/msc`.
+- Work from the repository root.
 - Use tmux session `proj-msc`, window `dark-room`.
 - Use Telegram route/topic `MSC`, which maps to daemon thread `mini-msc`.
 - Main draft file: `treatments/dark-room/TREATMENT.md`.

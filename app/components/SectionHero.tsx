@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 
 interface SectionHeroProps {
   title: string;
@@ -6,6 +6,11 @@ interface SectionHeroProps {
   imageUrl?: string;
   /** Looping background video, styled like the home hero. */
   videoSrc?: string;
+  /** Smaller fast-start encode for narrow/mobile viewports. */
+  mobileVideoSrc?: string;
+  /** Use WebM only when its output is smaller than the MP4 fallback. */
+  desktopWebm?: boolean;
+  mobileWebm?: boolean;
 }
 
 export function SectionHero({
@@ -13,7 +18,12 @@ export function SectionHero({
   accentColor,
   imageUrl,
   videoSrc,
+  mobileVideoSrc,
+  desktopWebm = true,
+  mobileWebm = true,
 }: SectionHeroProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   // Set CSS variable so Header and Footer pick up the section accent color
   useEffect(() => {
     document.documentElement.style.setProperty('--active-accent', accentColor);
@@ -21,6 +31,49 @@ export function SectionHero({
       document.documentElement.style.removeProperty('--active-accent');
     };
   }, [accentColor]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !videoSrc) return;
+
+    // iOS Safari can reject the declarative autoplay request during hydration,
+    // page restoration, Low Power Mode, or before enough media is buffered.
+    // Keep the required properties set at runtime and retry on the next event
+    // that can legally resume muted inline playback.
+    const attemptPlayback = () => {
+      video.autoplay = true;
+      video.defaultMuted = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      void video.play().catch(() => {
+        // Safari may still require a user gesture; the touch listener retries.
+      });
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') attemptPlayback();
+    };
+
+    attemptPlayback();
+    video.addEventListener('loadeddata', attemptPlayback);
+    video.addEventListener('canplay', attemptPlayback);
+    window.addEventListener('pageshow', attemptPlayback);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener('touchstart', attemptPlayback, {passive: true});
+    document.addEventListener('pointerdown', attemptPlayback, {passive: true});
+
+    return () => {
+      video.removeEventListener('loadeddata', attemptPlayback);
+      video.removeEventListener('canplay', attemptPlayback);
+      window.removeEventListener('pageshow', attemptPlayback);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener('touchstart', attemptPlayback);
+      document.removeEventListener('pointerdown', attemptPlayback);
+    };
+  }, [videoSrc]);
 
   return (
     <section
@@ -35,6 +88,7 @@ export function SectionHero({
       {videoSrc && (
         <>
           <video
+            ref={videoRef}
             className="absolute inset-0 z-0 h-full w-full object-cover rounded-none"
             autoPlay
             muted
@@ -44,6 +98,28 @@ export function SectionHero({
             aria-hidden="true"
             style={{filter: 'grayscale(1)'}}
           >
+            {mobileVideoSrc ? (
+              <>
+                {mobileWebm ? (
+                  <source
+                    src={mobileVideoSrc.replace(/\.mp4$/, '.webm')}
+                    type="video/webm"
+                    media="(max-width: 767px)"
+                  />
+                ) : null}
+                <source
+                  src={mobileVideoSrc}
+                  type="video/mp4"
+                  media="(max-width: 767px)"
+                />
+              </>
+            ) : null}
+            {desktopWebm ? (
+              <source
+                src={videoSrc.replace(/\.mp4$/, '.webm')}
+                type="video/webm"
+              />
+            ) : null}
             <source src={videoSrc} type="video/mp4" />
           </video>
           <div

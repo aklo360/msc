@@ -13,7 +13,7 @@ dist
 .cursor
 .claude/*
 !.claude/CLAUDE.md
-AGENTS.md
+.codex/memories.md
 learnings.md
 /memories.md
 test-results

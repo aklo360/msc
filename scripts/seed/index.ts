@@ -28,10 +28,19 @@ import {seedEditorial} from './seed-editorial.js';
 import {seedMusic} from './seed-music.js';
 import {log} from './utils.js';
 
-const ART_DIR = '/Users/aklo/Downloads/MSC Website/1_Art';
-const PROJECTS_DIR = '/Users/aklo/Downloads/MSC Website/3_Projects';
-
 import * as fs from 'fs';
+
+function getSourceDirectories() {
+  const sourceRoot = process.env.MSC_SOURCE_ROOT;
+  if (!sourceRoot) {
+    throw new Error('MSC_SOURCE_ROOT is required for image uploads.');
+  }
+
+  return {
+    artDir: path.join(sourceRoot, '1_Art'),
+    projectsDir: path.join(sourceRoot, '3_Projects'),
+  };
+}
 
 function getSubfolders(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];
@@ -56,12 +65,13 @@ async function main() {
   >();
 
   if (step === 'all' || step === 'upload') {
-    const artFolders = getSubfolders(ART_DIR);
-    const projectFolders = getSubfolders(PROJECTS_DIR);
+    const {artDir, projectsDir} = getSourceDirectories();
+    const artFolders = getSubfolders(artDir);
+    const projectFolders = getSubfolders(projectsDir);
 
     imageMap = await uploadAllImages([
-      {baseDir: ART_DIR, folders: artFolders},
-      {baseDir: PROJECTS_DIR, folders: projectFolders},
+      {baseDir: artDir, folders: artFolders},
+      {baseDir: projectsDir, folders: projectFolders},
     ]);
 
     log(`Image map: ${imageMap.size} folders processed`);

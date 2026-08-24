@@ -21,44 +21,20 @@
   font-display: swap;
 }
 
-/* ABC Diatype — body / navigation typeface */
+/* DM Sans — body / navigation typeface */
 @font-face {
-  font-family: 'ABC Diatype';
-  src: url('/fonts/ABCDiatype-Regular.woff2') format('woff2');
-  font-weight: 400;
+  font-family: 'DM Sans';
+  src: url('/fonts/DMSans-Variable.ttf') format('truetype');
+  font-weight: 100 1000;
   font-style: normal;
   font-display: swap;
 }
 
+/* Crimson Pro — quotes / editorial accent typeface */
 @font-face {
-  font-family: 'ABC Diatype';
-  src: url('/fonts/ABCDiatype-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ABC Diatype';
-  src: url('/fonts/ABCDiatype-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ABC Diatype';
-  src: url('/fonts/ABCDiatype-Heavy.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* ABC Otto Variable — quotes / accent typeface */
-@font-face {
-  font-family: 'ABC Otto Variable Unlicensed Trial';
-  src: url('/fonts/ABCOttoVariable-Light.woff2') format('woff2');
-  font-weight: 300;
+  font-family: 'Crimson Pro';
+  src: url('/fonts/CrimsonPro-Variable.ttf') format('truetype');
+  font-weight: 200 900;
   font-style: normal;
   font-display: swap;
 }
@@ -83,8 +59,8 @@
 
   /* Font families */
   --font-display: 'StarCity', sans-serif;
-  --font-body: 'ABC Diatype', sans-serif;
-  --font-quote: 'ABC Otto Variable Unlicensed Trial', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-quote: 'Crimson Pro', serif;
 
   /* Type scale */
   --text-h1: 200px;
@@ -130,7 +106,7 @@ html {
 
 body {
   font-family: var(--font-body);
-  font-feature-settings: 'salt' 1;
+  font-optical-sizing: auto;
   background-color: var(--color-black);
   color: var(--color-black);
 }
@@ -139,6 +115,26 @@ body {
 
 .font-display-dlig {
   font-feature-settings: 'dlig' 1;
+}
+
+/* Home hero keeps its approved mobile scale. Desktop/tablet sizing is also
+ * constrained by viewport height so all six links retain a safe frame. */
+.home-hero-link {
+  font-size: clamp(40px, 14.5vw, 128px);
+}
+
+@media (min-width: 48rem) {
+  .home-hero-nav {
+    box-sizing: border-box;
+    height: 100%;
+    margin-block: 0;
+    padding-block: 10vh;
+    padding-block: 10svh;
+  }
+
+  .home-hero-link {
+    font-size: min(14.5vw, 12.5vh, 12.5svh, 128px);
+  }
 }
 
 /* ================================================================

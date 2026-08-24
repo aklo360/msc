@@ -219,6 +219,9 @@ export default function ProjectsIndex() {
         title="Projects"
         accentColor={ACCENT_PROJECTS}
         videoSrc="/videos/projects/page-bg.mp4"
+        mobileVideoSrc="/videos/projects/page-bg-mobile.mp4"
+        desktopWebm={false}
+        mobileWebm={false}
       />
 
       {projects.map((proj: any) => {

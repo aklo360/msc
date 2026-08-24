@@ -21,8 +21,16 @@ import {log, sleep} from './utils.js';
 const HANDLE = 'loverboy-x-slr-pendant';
 const TYPE = 'project';
 
-const SLR_DIR =
-  '/Users/aklo/Downloads/MSC Website/3_Projects/SLR x Mr.StarCity Jewelry Collab';
+const SOURCE_ROOT = process.env.MSC_SOURCE_ROOT;
+if (!SOURCE_ROOT) {
+  throw new Error('MSC_SOURCE_ROOT is required for image uploads.');
+}
+
+const SLR_DIR = path.join(
+  SOURCE_ROOT,
+  '3_Projects',
+  'SLR x Mr.StarCity Jewelry Collab',
+);
 
 /** Featured image filename */
 const FEATURED_FILE = '94d9c9aeec1cf24d7bdad7ff2a7468d28ee97b71.jpg';

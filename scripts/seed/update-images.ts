@@ -19,8 +19,13 @@ import {ART_EXHIBITIONS} from './data/art-exhibitions.js';
 import {PROJECTS} from './data/projects.js';
 import {log} from './utils.js';
 
-const ART_DIR = '/Users/aklo/Downloads/MSC Website/1_Art';
-const PROJECTS_DIR = '/Users/aklo/Downloads/MSC Website/3_Projects';
+const SOURCE_ROOT = process.env.MSC_SOURCE_ROOT;
+if (!SOURCE_ROOT) {
+  throw new Error('MSC_SOURCE_ROOT is required for image uploads.');
+}
+
+const ART_DIR = path.join(SOURCE_ROOT, '1_Art');
+const PROJECTS_DIR = path.join(SOURCE_ROOT, '3_Projects');
 
 const UPDATE_METAOBJECT = `
   mutation UpdateMetaobject($id: ID!, $metaobject: MetaobjectUpdateInput!) {

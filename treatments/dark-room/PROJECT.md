@@ -7,7 +7,7 @@ Subproject under the main MSC / Mr Star City workspace for the "Dark Room" music
 ## Operating Context
 
 - Parent project: Mr Star City / MSC
-- Main workspace: `~/projects/msc`
+- Main workspace: the repository root
 - Persistent tmux session: `proj-msc`
 - Mini daemon thread: `mini-msc`
 - Telegram route/topic: MSC

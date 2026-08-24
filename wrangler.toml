@@ -2,6 +2,15 @@ name = "msc-staging"
 main = "./dist/server/index.js"
 compatibility_date = "2024-10-15"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[[routes]]
+pattern = "mrstarcity.com/*"
+zone_name = "mrstarcity.com"
+
+[[routes]]
+pattern = "www.mrstarcity.com/*"
+zone_name = "mrstarcity.com"
 
 [assets]
 directory = "./dist/client"

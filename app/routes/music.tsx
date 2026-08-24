@@ -9,6 +9,8 @@ export const meta: Route.MetaFunction = () => {
 };
 
 const ACCENT_MUSIC = '#FFD770';
+const FEATURED_TRACK_EMBED_URL =
+  'https://open.spotify.com/embed/track/3A1XlvapLyRNBBSaxWC99v?utm_source=generator&si=501ad2b133bb42cb';
 
 export async function loader({context}: Route.LoaderArgs) {
   const {metaobjects} = await context.storefront.query(MUSIC_QUERY, {
@@ -90,27 +92,21 @@ export default function Music() {
           })}
         </div>
       ) : (
-        /* Empty state */
         <div className="px-[60px] max-md:px-[20px] py-[80px]">
-          <div className="max-w-[794px] mx-auto text-center">
-            <h2 className="font-[family-name:var(--font-body,_sans-serif)] text-[60px] max-md:text-[36px] font-normal leading-[1.1] tracking-[-2px] text-black mb-[30px]">
-              Music
-            </h2>
-            <p className="font-[family-name:var(--font-body,_sans-serif)] text-[22px] font-normal leading-[1.2] text-[#7F7F7F] mb-[60px]">
-              Music content coming soon
-            </p>
-            <div className="flex flex-col gap-[40px]">
-              <div className="w-full h-[352px] bg-[#D2D2D2] rounded-[10px] flex items-center justify-center">
-                <span className="font-[family-name:var(--font-body,_sans-serif)] text-[18px] font-medium uppercase text-[#7F7F7F]">
-                  Spotify Embed
-                </span>
-              </div>
-              <div className="w-full aspect-video bg-[#D2D2D2] rounded-[10px] flex items-center justify-center">
-                <span className="font-[family-name:var(--font-body,_sans-serif)] text-[18px] font-medium uppercase text-[#7F7F7F]">
-                  YouTube Embed
-                </span>
-              </div>
-            </div>
+          <div className="max-w-[794px] mx-auto w-full">
+            <iframe
+              data-testid="embed-iframe"
+              src={FEATURED_TRACK_EMBED_URL}
+              width="100%"
+              height="352"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+              className="block w-full border-0"
+              style={{borderRadius: '12px'}}
+              title="Featured Mr.StarCity track on Spotify"
+            />
           </div>
         </div>
       )}

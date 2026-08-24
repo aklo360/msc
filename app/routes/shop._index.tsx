@@ -54,6 +54,7 @@ export default function ShopIndex() {
         title="MSC Shop"
         accentColor={ACCENT_SHOP}
         videoSrc="/videos/shop/page-bg.mp4"
+        mobileVideoSrc="/videos/shop/page-bg-mobile.mp4"
       />
 
       {/* Shop Menu */}
@@ -70,9 +71,6 @@ export default function ShopIndex() {
                 price={formatPrice(product.priceRange.minVariantPrice)}
                 seriesTag={product.tags?.[0] || undefined}
                 imageUrl={product.featuredImage?.url}
-                imageUrls={product.images?.nodes
-                  ?.map((image: any) => image.url)
-                  .filter(Boolean)}
                 href={`/products/${product.handle}`}
               />
             ))}
@@ -102,12 +100,6 @@ const SHOP_COLLECTION_QUERY = `#graphql
           featuredImage {
             url
             altText
-          }
-          images(first: 4) {
-            nodes {
-              url
-              altText
-            }
           }
           priceRange {
             minVariantPrice {

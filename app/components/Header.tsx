@@ -266,7 +266,7 @@ export function Header() {
             backgroundColor: isHomePage ? 'transparent' : 'var(--active-accent, var(--color-accent-art))',
           }}
         >
-          <div className="flex justify-between">
+          <div className={`flex ${hidePageNav ? 'justify-end' : 'justify-between'}`}>
             {/* Nav links */}
             {!hidePageNav && (
               <nav className="flex flex-col gap-[20px]">

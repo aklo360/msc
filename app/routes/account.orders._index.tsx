@@ -23,6 +23,7 @@ import type {
   OrderItemFragment,
 } from 'customer-accountapi.generated';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {isCustomerAccountConfigured} from '~/lib/customerAccount';
 
 type OrdersLoaderData = {
   customer: CustomerOrdersFragment;
@@ -34,6 +35,8 @@ export const meta: Route.MetaFunction = () => {
 };
 
 export async function loader({request, context}: Route.LoaderArgs) {
+  if (!isCustomerAccountConfigured(context.env)) return null;
+
   const {customerAccount} = context;
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 20,

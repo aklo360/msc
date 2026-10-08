@@ -12,6 +12,7 @@ import {
   type Fetcher,
 } from 'react-router';
 import type {Route} from './+types/account.addresses';
+import {isCustomerAccountConfigured} from '~/lib/customerAccount';
 import {
   UPDATE_ADDRESS_MUTATION,
   DELETE_ADDRESS_MUTATION,
@@ -32,6 +33,8 @@ export const meta: Route.MetaFunction = () => {
 };
 
 export async function loader({context}: Route.LoaderArgs) {
+  if (!isCustomerAccountConfigured(context.env)) return {};
+
   context.customerAccount.handleAuthStatus();
 
   return {};

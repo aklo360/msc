@@ -84,7 +84,7 @@
   --border-radius-lg: 20px;
 
   /* Legacy (kept for aside/cart components) */
-  --aside-width: 400px;
+  --aside-width: 480px;
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
   --grid-item-width: 355px;
@@ -115,6 +115,19 @@ body {
 
 .font-display-dlig {
   font-feature-settings: 'dlig' 1;
+}
+
+/* Mobile chrome overlays every full-viewport section hero without consuming
+ * layout height. Desktop section headers retain the approved accent surface. */
+.site-header-bar {
+  background-color: transparent;
+  transition: background-color 0.4s ease;
+}
+
+@media (min-width: 64rem) {
+  .site-header-bar[data-section-header] {
+    background-color: var(--active-accent, var(--color-accent-art));
+  }
 }
 
 /* Home hero keeps its approved mobile scale. Desktop/tablet sizing is also
@@ -149,59 +162,58 @@ body {
 
 aside {
   background: var(--color-white);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
-  height: 100vh;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
+  height: 100dvh;
   width: min(var(--aside-width), 100vw);
   position: fixed;
   right: calc(-1 * var(--aside-width));
   top: 0;
   transition: transform 200ms ease-in-out;
+  display: flex;
+  flex-direction: column;
 }
 
 aside header {
   align-items: center;
-  border-bottom: 1px solid var(--color-black);
+  border-bottom: 1px solid var(--color-neutral-02);
   display: flex;
-  height: var(--nav-height);
+  flex: 0 0 auto;
+  height: 80px;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 30px;
 }
 
 aside header h3 {
   margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-nav);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-feature-settings: 'salt' 1;
 }
 
 aside header .close {
-  font-weight: bold;
-  opacity: 0.8;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  opacity: 0.7;
   text-decoration: none;
-  transition: all 200ms;
-  width: 20px;
+  transition: opacity 200ms;
+  width: 28px;
+  height: 28px;
 }
 
 aside header .close:hover {
   opacity: 1;
 }
 
-aside header h2 {
-  margin-bottom: 0.6rem;
-  margin-top: 0;
-}
-
 aside main {
-  margin: 1rem;
-}
-
-aside p {
-  margin: 0 0 0.25rem;
-}
-
-aside p:last-child {
+  flex: 1 1 auto;
+  min-height: 0;
   margin: 0;
-}
-
-aside li {
-  margin-bottom: 0.125rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .overlay {
@@ -215,7 +227,9 @@ aside li {
   top: 0;
   transition: opacity 400ms ease-in-out;
   visibility: hidden;
-  z-index: 10;
+  /* Must sit above the sticky/fixed Header (z-50) so the cart/search drawer
+     and its backdrop cover the navbar instead of the nav text bleeding through. */
+  z-index: 100;
 }
 
 .overlay .close-outside {
@@ -271,57 +285,126 @@ button.reset:hover:not(:has(> *)) {
 }
 
 /* ================================================================
- * components/Cart (retained from scaffold)
+ * components/Cart (MSC branded)
  * ================================================================ */
 
-.cart-main {
-  height: 100%;
-  max-height: calc(100vh - var(--cart-aside-summary-height));
+/* Slide-out (aside) cart: fills the aside, lines scroll, summary pins. */
+.cart-main--aside {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.cart-main--aside .cart-lines {
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
-  width: auto;
+  padding: 10px 30px;
 }
 
-.cart-main.with-discount {
-  max-height: calc(100vh - var(--cart-aside-summary-height-with-discount));
+.cart-main--aside .cart-summary--aside {
+  flex: 0 0 auto;
+  border-top: 1px solid var(--color-neutral-02);
+  background: var(--color-white);
+  padding: 24px 30px calc(24px + env(safe-area-inset-bottom));
 }
 
-.cart-line {
+/* Full cart page */
+.cart-main--page .cart-lines {
   display: flex;
-  padding: 0.75rem 0;
+  flex-direction: column;
 }
 
-.cart-line img {
-  height: 100%;
-  display: block;
-  margin-right: 0.75rem;
+/* MSC rich-text description / prose */
+.prose-msc {
+  font-family: var(--font-body);
+  font-size: var(--text-copy-sm);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-black);
+  font-feature-settings: 'salt' 1;
 }
 
-.cart-summary-page {
-  position: relative;
+.prose-msc > * + * {
+  margin-top: 1em;
 }
 
-.cart-summary-aside {
-  background: white;
-  border-top: 1px solid var(--color-black);
-  bottom: 0;
-  padding-top: 0.75rem;
-  position: absolute;
-  width: calc(var(--aside-width) - 40px);
+.prose-msc h1,
+.prose-msc h2,
+.prose-msc h3,
+.prose-msc h4 {
+  font-family: var(--font-body);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
-.cart-line-quantity {
-  display: flex;
+.prose-msc h2 {
+  font-size: var(--text-copy-lg);
 }
 
-.cart-discount {
-  align-items: center;
-  display: flex;
-  margin-top: 0.25rem;
+.prose-msc h3,
+.prose-msc h4 {
+  font-size: var(--text-copy-md);
 }
 
-.cart-subtotal {
-  align-items: center;
-  display: flex;
+.prose-msc strong {
+  font-weight: 700;
+}
+
+.prose-msc a {
+  text-decoration: underline;
+}
+
+.prose-msc ul,
+.prose-msc ol {
+  padding-left: 1.25em;
+  list-style: revert;
+}
+
+.prose-msc li + li {
+  margin-top: 0.35em;
+}
+
+.prose-msc img {
+  border-radius: var(--border-radius);
+  max-width: 100%;
+  height: auto;
+}
+
+/* Artisanal / editorial prose — Crimson Pro serif, light. Carries the
+   descriptive "voice" on the product page so it reads like the art pages,
+   not a Shopify product blurb. */
+.prose-artisan {
+  font-family: var(--font-quote);
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--color-black);
+  font-feature-settings: 'salt' 1;
+}
+
+.prose-artisan > * + * {
+  margin-top: 0.8em;
+}
+
+.prose-artisan strong {
+  font-weight: 600;
+}
+
+.prose-artisan a {
+  text-decoration: underline;
+}
+
+.prose-artisan ul,
+.prose-artisan ol {
+  padding-left: 1.1em;
+  list-style: revert;
+}
+
+.prose-artisan li + li {
+  margin-top: 0.3em;
 }
 
 /* ================================================================

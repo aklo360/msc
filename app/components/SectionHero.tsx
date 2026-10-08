@@ -143,7 +143,7 @@ export function SectionHero({
           />
         </div>
       )}
-      {/* Title — centered in the full viewport (offset by header height) */}
+      {/* Title — structurally centered in the full viewport. */}
       <h1
         className="relative z-10 select-none text-center"
         style={{

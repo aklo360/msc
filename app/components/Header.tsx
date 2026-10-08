@@ -10,7 +10,18 @@ const NAV_ITEMS = [
   {label: 'BIG BLESS', to: '/big-bless', color: '#D073A5'},
 ];
 
-function SearchIcon() {
+const CONTACT_HREF = 'mailto:mrstarcity@gmail.com';
+
+const SECTION_HERO_ROUTES = [
+  '/art',
+  '/music',
+  '/projects',
+  '/shop',
+  '/editorial',
+  '/big-bless',
+];
+
+function ContactIcon() {
   return (
     <svg width="35" height="35" viewBox="0 0 45.5015 37" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M22.7528 25.8481C26.9406 25.8481 30.3355 22.453 30.3355 18.2651C30.3355 14.0771 26.9406 10.6821 22.7528 10.6821C18.5649 10.6821 15.17 14.0771 15.17 18.2651C15.17 22.453 18.5649 25.8481 22.7528 25.8481Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -80,15 +91,26 @@ export function Header() {
   const [hoveredIconIndex, setHoveredIconIndex] = useState<number | null>(null);
   const [hoveredLetter, setHoveredLetter] = useState<string | null>(null);
   const isHomePage = location.pathname === '/';
+  const isSectionHeroPage = SECTION_HERO_ROUTES.includes(location.pathname);
+  const isArtDetailPage = location.pathname.startsWith('/art/');
   const hidePageNav = isHomePage;
+  const headerPosition = isHomePage
+    ? 'absolute'
+    : isSectionHeroPage
+      ? 'absolute lg:sticky'
+      : isArtDetailPage
+        ? 'fixed'
+        : 'sticky';
 
   return (
-    <header className={`${isHomePage ? 'absolute' : 'sticky'} top-0 z-50 w-full`}>
+    <header className={`${headerPosition} top-0 z-50 w-full`}>
       <div
-        className="h-[10vh]"
+        className="site-header-bar h-[10vh]"
+        data-section-header={isSectionHeroPage ? '' : undefined}
         style={{
-          backgroundColor: isHomePage ? 'transparent' : 'var(--active-accent, var(--color-accent-art))',
-          transition: 'background-color 0.4s ease',
+          backgroundColor: mobileMenuOpen
+            ? 'var(--active-accent, var(--color-accent-art))'
+            : undefined,
         }}
       >
         {/* Desktop nav */}
@@ -191,7 +213,7 @@ export function Header() {
           {/* Icon buttons */}
           <div className={`flex items-center gap-[10px] ${hidePageNav ? 'ml-auto' : ''}`}>
             {[
-              {href: '/search', icon: <SearchIcon />, label: 'SEARCH'},
+              {href: CONTACT_HREF, icon: <ContactIcon />, label: 'CONTACT'},
               {href: '/account', icon: <ProfileIcon />, label: 'PROFILE'},
               {href: '/cart', icon: <CartIcon />, label: 'CART'},
             ].map((item, i) => {
@@ -294,9 +316,9 @@ export function Header() {
 
             {/* Icons stacked vertically */}
             <div className="flex flex-col gap-[10px] items-center">
-              <NavLink to="/search" prefetch="intent" className="cursor-pointer text-[var(--color-black)]" onClick={() => setMobileMenuOpen(false)}>
-                <SearchIcon />
-              </NavLink>
+              <a href={CONTACT_HREF} className="cursor-pointer text-[var(--color-black)]" onClick={() => setMobileMenuOpen(false)}>
+                <ContactIcon />
+              </a>
               <NavLink to="/account" prefetch="intent" className="cursor-pointer text-[var(--color-black)]" onClick={() => setMobileMenuOpen(false)}>
                 <ProfileIcon />
               </NavLink>
